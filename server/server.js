@@ -23,10 +23,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
+  const name = req.body.name;
+  const description = req.body.description;
   db.query(
-    "INSERT INTO total (name, description) VALUES ('popeyes', 'fried chicken');",
+    "INSERT INTO total (name, description) VALUES (?,?);",
+    [name, description],
     (err, result) => {
       console.log("TOTAL TABLE UPDATED");
+      console.log(err);
     }
   );
 });
