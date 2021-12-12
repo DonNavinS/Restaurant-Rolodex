@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Home() {
-  const getData = () => {};
+  const [retrievedData, setRetrievedData] = useState([]);
+  const getData = () => {
+    fetch("http://localhost:3001", {
+      mode: "cors",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setRetrievedData(data);
+      });
+  };
 
   const postData = () => {
     fetch("http://localhost:3001/add", {
       method: "POST",
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((response) => {
         console.log(response);
@@ -20,6 +32,9 @@ export default function Home() {
     <div>
       <button onClick={getData}>GET</button>
       <button onClick={postData}>POST</button>
+      {retrievedData.map((item) => {
+        return <p>{item.name}</p>;
+      })}
     </div>
   );
 }

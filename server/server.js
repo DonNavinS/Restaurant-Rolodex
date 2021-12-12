@@ -1,5 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
+const cors = require("cors");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -11,16 +12,21 @@ const db = mysql.createConnection({
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("WORKING");
+  db.query("SELECT * FROM total", (err, result) => {
+    res.send(result);
+    console.log(result);
+    console.log("DATA RETRIEVED");
+  });
 });
 
 app.post("/add", (req, res) => {
   db.query(
     "INSERT INTO total (name, description) VALUES ('popeyes', 'fried chicken');",
     (err, result) => {
-      res.send("WORKING");
+      console.log("TOTAL TABLE UPDATED");
     }
   );
 });
