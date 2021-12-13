@@ -44,6 +44,12 @@ app.delete("/remove/:name", (req, res) => {
   });
 });
 
+app.put("/update/:name", (req, res) => {
+  const oldName = req.params.name;
+  const newName = req.body.newName;
+  db.query(`UPDATE total SET name='${newName}' WHERE name ='${oldName}'`);
+});
+
 app.listen(3001, () => {
   console.log("SERVER RUNNING");
 });
