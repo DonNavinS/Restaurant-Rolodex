@@ -35,6 +35,15 @@ app.post("/add", (req, res) => {
   );
 });
 
+app.delete("/remove/:name", (req, res) => {
+  const name = req.params.name;
+  db.query(`DELETE FROM total WHERE name = '${name}'`, (err, result) => {
+    console.log("ITEM DELETED");
+    console.log(err);
+    console.log(result);
+  });
+});
+
 app.listen(3001, () => {
   console.log("SERVER RUNNING");
 });

@@ -22,9 +22,11 @@ export default function Home() {
     Axios.post("http://localhost:3001/add", {
       name: restName,
       description: restDesc,
-    }).then(() => {
-      window.location.reload();
     });
+  };
+
+  const removeItem = (name) => {
+    Axios.delete(`http://localhost:3001/remove/${name}`, {});
   };
 
   const updateRestName = (e) => {
@@ -52,7 +54,13 @@ export default function Home() {
       />
 
       {retrievedData.map((item) => {
-        return <p>{item.name}</p>;
+        return (
+          <div className="home" key={item.idx}>
+            <p className="total-names">{item.name}</p>
+            <p className="total-description">{item.description}</p>
+            <button onClick={() => removeItem(item.name)}>REMOVE</button>
+          </div>
+        );
       })}
     </div>
   );
