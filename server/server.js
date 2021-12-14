@@ -24,7 +24,7 @@ app.get("/total", (req, res) => {
   });
 });
 
-app.post("/add", (req, res) => {
+app.post("/total/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   db.query(
@@ -46,13 +46,13 @@ app.delete("/total/remove/:name", (req, res) => {
   });
 });
 
-app.put("/update/name/:name", (req, res) => {
+app.put("/total/update/name/:name", (req, res) => {
   const oldName = req.params.name;
   const newName = req.body.newName;
   db.query(`UPDATE total SET name='${newName}' WHERE name ='${oldName}'`);
 });
 
-app.put("/update/description/:description", (req, res) => {
+app.put("/total/update/description/:description", (req, res) => {
   const oldDesc = req.params.description;
   const newDesc = req.body.newDesc;
   db.query(

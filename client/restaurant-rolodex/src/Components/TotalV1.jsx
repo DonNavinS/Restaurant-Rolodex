@@ -22,7 +22,7 @@ export default function TotalV1() {
   };
 
   const postData = () => {
-    Axios.post("http://localhost:3001/add", {
+    Axios.post("http://localhost:3001/total/add", {
       name: restName,
       description: restDesc,
     });
@@ -30,22 +30,33 @@ export default function TotalV1() {
   };
 
   const removeItem = (item) => {
-    Axios.delete(`http://localhost:3001/remove/${item.name}`, {});
+    Axios.delete(`http://localhost:3001/total/remove/${item.name}`, {});
     window.location.reload();
   };
 
   const updateName = (item) => {
-    Axios.put(`http://localhost:3001/update/name/${item.name}`, {
+    Axios.put(`http://localhost:3001/total/update/name/${item.name}`, {
       newName: newName,
     });
     window.location.reload();
   };
 
   const updateDesc = (item) => {
-    Axios.put(`http://localhost:3001/update/description/${item.description}`, {
-      newDesc: newDesc,
-    });
+    Axios.put(
+      `http://localhost:3001/total/update/description/${item.description}`,
+      {
+        newDesc: newDesc,
+      }
+    );
     window.location.reload();
+  };
+
+  const moveToTried = (item) => {
+    removeItem(item);
+    Axios.post(`http://localhost:3001/tried/add`, {
+      name: item.name,
+      description: item.description,
+    });
   };
 
   const updateRestName = (e) => {
@@ -90,7 +101,9 @@ export default function TotalV1() {
             <p>{item.description}</p>
             <input type="text" onChange={updateNewDesc} />
             <button onClick={() => updateDesc(item)}>EDIT DESCRIPTION</button>
+
             <button onClick={() => removeItem(item)}>REMOVE</button>
+            <button onClick={() => moveToTried(item)}>TRIED</button>
           </div>
         );
       })}
