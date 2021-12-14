@@ -14,7 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", (req, res) => {
+// ROUTES FOR TOTAL TABLE
+
+app.get("/total", (req, res) => {
   db.query("SELECT * FROM total", (err, result) => {
     res.send(result);
     console.log(result);
@@ -35,7 +37,7 @@ app.post("/add", (req, res) => {
   );
 });
 
-app.delete("/remove/:name", (req, res) => {
+app.delete("/total/remove/:name", (req, res) => {
   const name = req.params.name;
   db.query(`DELETE FROM total WHERE name = '${name}'`, (err, result) => {
     console.log("ITEM DELETED");
@@ -58,6 +60,44 @@ app.put("/update/description/:description", (req, res) => {
   );
 });
 
+// ROUTES FOR TRIED TABLE
+app.get("/tried", (req, res) => {
+  db.query("SELECT * FROM tried", (err, result) => {
+    res.send(result);
+  });
+});
+
+app.post("/tried/add", (req, res) => {
+  const name = req.body.name;
+  const description = req.body.description;
+  db.query(
+    "INSERT INTO tried (name, description) VALUES (?,?);",
+    [name, description],
+    (err, result) => {
+      console.log("TRIED TABLE UPDATED");
+      console.log(err);
+    }
+  );
+});
+
+app.delete("/tried/remove/:name", (req, res) => {
+  const name = req.params.name;
+  db.query(`DELETE FROM tried WHERE name = '${name}'`);
+});
+
+app.put("/tried/update/name/:name", (req, res) => {
+  const oldName = req.params.name;
+  const newName = req.body.newName;
+  db.query(`UPDATE tried SET name='${newName}' WHERE name ='${oldName}'`);
+});
+
+app.put("/tried/update/description/:description", (req, res) => {
+  const oldDesc = req.params.description;
+  const newDesc = req.body.newDesc;
+  db.query(
+    `UPDATE tried SET description='${newDesc}' WHERE description ='${oldDesc}'`
+  );
+});
 app.listen(3001, () => {
   console.log("SERVER RUNNING");
 });

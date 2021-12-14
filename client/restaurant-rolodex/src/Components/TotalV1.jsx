@@ -9,7 +9,7 @@ export default function TotalV1() {
   const [newDesc, setNewDesc] = useState("");
 
   const getData = () => {
-    fetch("http://localhost:3001", {
+    fetch("http://localhost:3001/total", {
       mode: "cors",
     })
       .then((response) => {
@@ -65,7 +65,7 @@ export default function TotalV1() {
 
   useEffect(getData, []);
   return (
-    <div>
+    <div className="total-table">
       <button onClick={getData}>GET</button>
       <button onClick={postData}>POST</button>
       <input
@@ -83,13 +83,13 @@ export default function TotalV1() {
 
       {retrievedData.map((item) => {
         return (
-          <div className="home" key={item.idtotal}>
-            <p className="total-names">{item.name}</p>
+          <div key={item.idtotal}>
+            <p>{item.name}</p>
             <input type="text" onChange={updateNewName} />
-            <button onClick={() => updateName(item)}>UPDATE NAME</button>
-            <p className="total-description">{item.description}</p>
+            <button onClick={() => updateName(item)}>EDIT NAME</button>
+            <p>{item.description}</p>
             <input type="text" onChange={updateNewDesc} />
-            <button onClick={() => updateDesc(item)}>UPDATE DESCRIPTION</button>
+            <button onClick={() => updateDesc(item)}>EDIT DESCRIPTION</button>
             <button onClick={() => removeItem(item)}>REMOVE</button>
           </div>
         );
