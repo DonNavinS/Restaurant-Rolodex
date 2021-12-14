@@ -44,10 +44,18 @@ app.delete("/remove/:name", (req, res) => {
   });
 });
 
-app.put("/update/:name", (req, res) => {
+app.put("/update/name/:name", (req, res) => {
   const oldName = req.params.name;
   const newName = req.body.newName;
   db.query(`UPDATE total SET name='${newName}' WHERE name ='${oldName}'`);
+});
+
+app.put("/update/description/:description", (req, res) => {
+  const oldDesc = req.params.description;
+  const newDesc = req.body.newDesc;
+  db.query(
+    `UPDATE total SET description='${newDesc}' WHERE description ='${oldDesc}'`
+  );
 });
 
 app.listen(3001, () => {

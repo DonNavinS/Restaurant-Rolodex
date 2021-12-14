@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
-export default function Home() {
+export default function TotalV1() {
   const [retrievedData, setRetrievedData] = useState([]);
   const [restName, setRestName] = useState("");
   const [restDesc, setRestDesc] = useState("");
   const [newName, setNewName] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+
   const getData = () => {
     fetch("http://localhost:3001", {
       mode: "cors",
@@ -32,9 +34,16 @@ export default function Home() {
     window.location.reload();
   };
 
-  const updateData = (item) => {
-    Axios.put(`http://localhost:3001/update/${item.name}`, {
+  const updateName = (item) => {
+    Axios.put(`http://localhost:3001/update/name/${item.name}`, {
       newName: newName,
+    });
+    window.location.reload();
+  };
+
+  const updateDesc = (item) => {
+    Axios.put(`http://localhost:3001/update/description/${item.description}`, {
+      newDesc: newDesc,
     });
     window.location.reload();
   };
@@ -48,6 +57,10 @@ export default function Home() {
 
   const updateNewName = (e) => {
     setNewName(e.target.value);
+  };
+
+  const updateNewDesc = (e) => {
+    setNewDesc(e.target.value);
   };
 
   useEffect(getData, []);
@@ -73,8 +86,10 @@ export default function Home() {
           <div className="home" key={item.idtotal}>
             <p className="total-names">{item.name}</p>
             <input type="text" onChange={updateNewName} />
-            <button onClick={() => updateData(item)}>UPDATE</button>
+            <button onClick={() => updateName(item)}>UPDATE NAME</button>
             <p className="total-description">{item.description}</p>
+            <input type="text" onChange={updateNewDesc} />
+            <button onClick={() => updateDesc(item)}>UPDATE DESCRIPTION</button>
             <button onClick={() => removeItem(item)}>REMOVE</button>
           </div>
         );

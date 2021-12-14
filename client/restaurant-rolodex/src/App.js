@@ -1,10 +1,11 @@
 import "./App.css";
-import Home from "../src/Components/Home";
+// import TotalV1 from "../src/Components/TotalV1";
+import TotalV2 from "../src/Components/TotalV2";
 function App() {
   return (
     <div className="App">
       <div className="home">
-        <Home />
+        <TotalV2 />
       </div>
     </div>
   );
