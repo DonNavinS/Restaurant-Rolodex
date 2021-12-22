@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -14,6 +15,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+// ROUTES FOR SIGNUP AND LOGIN
+app.post("/signup", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  db.query(
+    `INSERT INTO users (username, password) VALUES ('${username}','${password}');`,
+    (err, result) => {
+      console.log("NEW USER ADDED ");
+    }
+  );
+});
+
 // ROUTES FOR TOTAL TABLE
 
 app.get("/total", (req, res) => {
@@ -24,12 +37,15 @@ app.get("/total", (req, res) => {
   });
 });
 
+app.get("/test", (req, res) => {
+  console.log(req.sessions);
+});
+
 app.post("/total/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   db.query(
-    "INSERT INTO total (name, description) VALUES (?,?);",
-    [name, description],
+    `INSERT INTO total (name, description) VALUES ('${name}', '${description}');`,
     (err, result) => {
       console.log("TOTAL TABLE UPDATED");
       console.log(err);
@@ -71,8 +87,7 @@ app.post("/tried/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   db.query(
-    "INSERT INTO tried (name, description) VALUES (?,?);",
-    [name, description],
+    `INSERT INTO tried (${name}, ${description}) VALUES (?,?);`,
     (err, result) => {
       console.log("TRIED TABLE UPDATED");
       console.log(err);

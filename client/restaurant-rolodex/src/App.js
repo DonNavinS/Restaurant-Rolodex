@@ -1,15 +1,36 @@
 import "./App.css";
-import TotalV1 from "./Components/TotalV1";
-// import TotalV2 from "./Components/TotalV2";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import TotalV1 from "./Components/TotalV1";
+import TotalV2 from "./Components/TotalV2";
 import TriedV1 from "./Components/TriedV1";
+import Home from "./Components/Home";
+import Header from "./Components/Header";
+import Signup from "./Components/Signup";
 function App() {
   return (
-    <div className="App">
-      <div className="home">
-        <TotalV1 />
-        <TriedV1 />
+    <Router>
+      <div>
+        <div className="header">
+          <Header />
+        </div>
+        <div className="App">
+          <Switch>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/total">
+              <TotalV2 />
+            </Route>
+            <Route exact path="/tried">
+              <TriedV1 />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

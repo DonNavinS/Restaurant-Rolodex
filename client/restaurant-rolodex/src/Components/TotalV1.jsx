@@ -53,7 +53,7 @@ export default function TotalV1() {
 
   const moveToTried = (item) => {
     removeItem(item);
-    Axios.post(`http://localhost:3001/tried/add`, {
+    Axios.post("http://localhost:3001/tried/add", {
       name: item.name,
       description: item.description,
     });

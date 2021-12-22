@@ -5,11 +5,9 @@ export default function TotalV2() {
   const [retrievedData, setRetrievedData] = useState([]);
   const [restName, setRestName] = useState("");
   const [restDesc, setRestDesc] = useState("");
-  //   const [newName, setNewName] = useState("");
-  //   const [newDesc, setNewDesc] = useState("");
 
   const getData = () => {
-    fetch("http://localhost:3001", {
+    fetch("http://localhost:3001/total", {
       mode: "cors",
     })
       .then((response) => {
@@ -22,7 +20,7 @@ export default function TotalV2() {
   };
 
   const postData = () => {
-    Axios.post("http://localhost:3001/add", {
+    Axios.post("http://localhost:3001/total/add", {
       name: restName,
       description: restDesc,
     });
@@ -30,23 +28,9 @@ export default function TotalV2() {
   };
 
   const removeItem = (item) => {
-    Axios.delete(`http://localhost:3001/remove/${item.name}`, {});
+    Axios.delete(`http://localhost:3001/total/remove/${item.name}`, {});
     window.location.reload();
   };
-
-  //   const updateName = (item) => {
-  //     Axios.put(`http://localhost:3001/update/name/${item.name}`, {
-  //       newName: newName,
-  //     });
-  //     window.location.reload();
-  //   };
-
-  //   const updateDesc = (item) => {
-  //     Axios.put(`http://localhost:3001/update/description/${item.description}`, {
-  //       newDesc: newDesc,
-  //     });
-  //     window.location.reload();
-  //   };
 
   const updateRestName = (e) => {
     setRestName(e.target.value);
@@ -55,20 +39,12 @@ export default function TotalV2() {
     setRestDesc(e.target.value);
   };
 
-  //   const updateNewName = (e) => {
-  //     setNewName(e.target.value);
-  //   };
-
-  //   const updateNewDesc = (e) => {
-  //     setNewDesc(e.target.value);
-  //   };
-
   const toggleNameUpdate = (item) => {
     let updatedName = prompt("TEST");
     if (updatedName === null) {
       alert("No changes made");
     } else {
-      Axios.put(`http://localhost:3001/update/name/${item.name}`, {
+      Axios.put(`http://localhost:3001/total/update/name/${item.name}`, {
         newName: updatedName,
       });
       window.location.reload();
@@ -81,7 +57,7 @@ export default function TotalV2() {
       alert("No changes made");
     } else {
       Axios.put(
-        `http://localhost:3001/update/description/${item.description}`,
+        `http://localhost:3001/total/update/description/${item.description}`,
         { newDesc: updatedDesc }
       );
     }
@@ -108,16 +84,11 @@ export default function TotalV2() {
 
       {retrievedData.map((item) => {
         return (
-          <div className="home" key={item.idtotal}>
+          <div className="total-page" key={item.idtotal}>
             <p className="total-names">{item.name}</p>
             <button onClick={() => toggleNameUpdate(item)}>EDIT</button>
-            {/* <input type="text" onChange={updateNewName} /> */}
-            {/* <button onClick={() => updateName(item)}>UPDATE NAME</button> */}
             <p className="total-description">{item.description}</p>
             <button onClick={() => toggleDescUpdate(item)}>EDIT</button>
-
-            {/* <input type="text" onChange={updateNewDesc} /> */}
-            {/* <button onClick={() => updateDesc(item)}>UPDATE DESCRIPTION</button> */}
             <button onClick={() => removeItem(item)}>REMOVE</button>
           </div>
         );
