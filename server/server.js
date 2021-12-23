@@ -2,7 +2,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const { createToken } = require("./JWT");
+const { createToken, checkToken } = require("./JWT");
+const cookieParser = require("cookie-parser");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(cookieParser());
 
 // ROUTES FOR SIGNUP AND LOGIN
 app.post("/signup", (req, res) => {
@@ -55,6 +57,10 @@ app.post("/login", async (req, res) => {
   } else {
     console.log("INCORRECT PASSWORD");
   }
+});
+
+app.get("/user/login", checkToken, (req, res) => {
+  res.send("WORKING");
 });
 
 // ROUTES FOR TOTAL TABLE
