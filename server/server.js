@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const { createToken } = require("./JWT");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -24,6 +24,7 @@ app.post("/signup", (req, res) => {
     `INSERT INTO users (username, password) VALUES ('${username}','${password}');`,
     (err, result) => {
       console.log("NEW USER ADDED ");
+      res.send("new user added");
     }
   );
 });
@@ -37,10 +38,16 @@ app.post("/login", async (req, res) => {
     .query(`SELECT * FROM users WHERE username='${username}'`);
 
   if (user[0][0]) {
-    console.log("FOUND USER");
+    const accessToken = createToken(user[0][0]);
+
+    res.cookie("access_token", accessToken, {
+      maxAge: 1000 * 60 * 60,
+    });
+    res.send("found user");
     console.log(user[0][0]);
   } else {
     console.log("USER DOESN'T EXIST");
+    res.send("no user found");
   }
 
   if (user[0][0].password === password) {
