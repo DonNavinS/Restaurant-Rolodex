@@ -18,6 +18,9 @@ export default function Header() {
           <Link className="link" to="/signup">
             SIGNUP
           </Link>
+          <Link className="link" to="/login">
+            LOGIN
+          </Link>
         </li>
       </ul>
     </nav>

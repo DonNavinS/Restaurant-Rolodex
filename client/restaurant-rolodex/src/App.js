@@ -6,6 +6,7 @@ import TriedV1 from "./Components/TriedV1";
 import Home from "./Components/Home";
 import Header from "./Components/Header";
 import Signup from "./Components/Signup";
+import Login from "./Components/Login";
 function App() {
   return (
     <Router>
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route exact path="/signup">
               <Signup />
+            </Route>
+            <Route exact path="/login">
+              <Login />
             </Route>
           </Switch>
         </div>
