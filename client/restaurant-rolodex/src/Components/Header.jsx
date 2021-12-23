@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+  const logout = () => {
+    localStorage.removeItem("token ");
+    window.location.reload();
+  };
   return (
     <nav>
       <ul>
@@ -21,6 +25,7 @@ export default function Header() {
           <Link className="link" to="/login">
             LOGIN
           </Link>
+          <button onClick={logout}>LOGOUT</button>
         </li>
       </ul>
     </nav>

@@ -39,26 +39,29 @@ app.post("/login", async (req, res) => {
     .promise()
     .query(`SELECT * FROM users WHERE username='${username}'`);
 
-  if (user[0][0]) {
+  console.log(user[0][0]);
+
+  if (user[0][0] === undefined || user[0][0].password !== password) {
+    res.send("Invalid Credentials");
+  } else if (
+    user[0][0].username === username &&
+    user[0][0].password === password
+  ) {
     const accessToken = createToken(user[0][0]);
 
-    res.cookie("access_token", accessToken, {
-      maxAge: 1000 * 60 * 60,
-    });
-    res.send("found user");
+    // res.cookie("access_token", accessToken, {
+    //   maxAge: 1000 * 60 * 60,
+    // });
+    res.send({ user: user[0][0], token: accessToken });
     console.log(user[0][0]);
-  } else {
-    console.log("USER DOESN'T EXIST");
-    res.send("no user found");
-  }
-
-  if (user[0][0].password === password) {
-    console.log("CORRECT PASSWORD");
-  } else {
-    console.log("INCORRECT PASSWORD");
   }
 });
 
+app.get("/cookie", (req, res) => {
+  res.cookie("one", "two");
+  console.log(req.cookies);
+  res.send("cookie");
+});
 app.get("/user/login", checkToken, (req, res) => {
   res.send("WORKING");
 });
