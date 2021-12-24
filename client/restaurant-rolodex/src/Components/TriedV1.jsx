@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function TriedV1() {
   const [retrievedData, setRetrievedData] = useState([]);
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
+
+  const username = useSelector((state) => state.username);
 
   const getData = () => {
     Axios.get("http://localhost:3001/tried").then((response) => {
@@ -16,6 +19,7 @@ export default function TriedV1() {
     Axios.post("http://localhost:3001/tried/add", {
       name: newName,
       description: newDesc,
+      username: username,
     });
     window.location.reload();
   };

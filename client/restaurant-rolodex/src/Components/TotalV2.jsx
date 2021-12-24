@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function TotalV2() {
   const [retrievedData, setRetrievedData] = useState([]);
   const [restName, setRestName] = useState("");
   const [restDesc, setRestDesc] = useState("");
+  const username = useSelector((state) => state.username);
 
   const getData = () => {
     fetch("http://localhost:3001/total", {
@@ -23,6 +25,7 @@ export default function TotalV2() {
     Axios.post("http://localhost:3001/total/add", {
       name: restName,
       description: restDesc,
+      username: username,
     });
     window.location.reload();
   };

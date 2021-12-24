@@ -78,8 +78,9 @@ app.get("/test", (req, res) => {
 app.post("/total/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
+  const username = req.body.username;
   db.query(
-    `INSERT INTO total (name, description) VALUES ('${name}', '${description}');`,
+    `INSERT INTO total (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
     (err, result) => {
       console.log("TOTAL TABLE UPDATED");
       console.log(err);
@@ -120,8 +121,10 @@ app.get("/tried", (req, res) => {
 app.post("/tried/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
+  const username = req.body.username;
   db.query(
-    `INSERT INTO tried (${name}, ${description}) VALUES (?,?);`,
+    `INSERT INTO tried (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
+
     (err, result) => {
       console.log("TRIED TABLE UPDATED");
       console.log(err);
