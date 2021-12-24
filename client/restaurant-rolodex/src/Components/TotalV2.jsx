@@ -31,7 +31,7 @@ export default function TotalV2() {
   };
 
   const removeItem = (item) => {
-    Axios.delete(`http://localhost:3001/total/remove/${item.name}`, {});
+    Axios.delete(`http://localhost:3001/total/remove/${item.idtotal}`, {});
     window.location.reload();
   };
 
@@ -47,7 +47,7 @@ export default function TotalV2() {
     if (updatedName === null) {
       alert("No changes made");
     } else {
-      Axios.put(`http://localhost:3001/total/update/name/${item.name}`, {
+      Axios.put(`http://localhost:3001/total/update/name/${item.idtotal}`, {
         newName: updatedName,
       });
       window.location.reload();
@@ -60,11 +60,20 @@ export default function TotalV2() {
       alert("No changes made");
     } else {
       Axios.put(
-        `http://localhost:3001/total/update/description/${item.description}`,
+        `http://localhost:3001/total/update/description/${item.idtotal}`,
         { newDesc: updatedDesc }
       );
     }
     window.location.reload();
+  };
+
+  const moveToTried = (item) => {
+    removeItem(item);
+    Axios.post("http://localhost:3001/tried/add", {
+      name: item.name,
+      description: item.description,
+      username: item.username,
+    });
   };
 
   useEffect(getData, []);
@@ -89,10 +98,11 @@ export default function TotalV2() {
         return (
           <div className="total-page" key={item.idtotal}>
             <p className="total-names">{item.name}</p>
-            <button onClick={() => toggleNameUpdate(item)}>EDIT</button>
+            <button onClick={() => toggleNameUpdate(item)}>Edit</button>
             <p className="total-description">{item.description}</p>
-            <button onClick={() => toggleDescUpdate(item)}>EDIT</button>
-            <button onClick={() => removeItem(item)}>REMOVE</button>
+            <button onClick={() => toggleDescUpdate(item)}>Edit</button>
+            <button onClick={() => removeItem(item)}>Remove</button>
+            <button onClick={() => moveToTried(item)}>Move To Tried</button>
           </div>
         );
       })}

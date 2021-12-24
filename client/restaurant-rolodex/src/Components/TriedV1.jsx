@@ -25,12 +25,12 @@ export default function TriedV1() {
   };
 
   const removeData = (item) => {
-    Axios.delete(`http://localhost:3001/tried/remove/${item.name}`);
+    Axios.delete(`http://localhost:3001/tried/remove/${item.idtried}`);
     window.location.reload();
   };
 
   const updateName = (item) => {
-    Axios.put(`http://localhost:3001/tried/update/name/${item.name}`, {
+    Axios.put(`http://localhost:3001/tried/update/name/${item.idtried}`, {
       newName: newName,
     });
     window.location.reload();
@@ -38,7 +38,7 @@ export default function TriedV1() {
 
   const updateDesc = (item) => {
     Axios.put(
-      `http://localhost:3001/tried/update/description/${item.description}`,
+      `http://localhost:3001/tried/update/description/${item.idtried}`,
       {
         newDesc: newDesc,
       }

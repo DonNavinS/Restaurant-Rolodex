@@ -88,27 +88,25 @@ app.post("/total/add", (req, res) => {
   );
 });
 
-app.delete("/total/remove/:name", (req, res) => {
-  const name = req.params.name;
-  db.query(`DELETE FROM total WHERE name = '${name}'`, (err, result) => {
+app.delete("/total/remove/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(`DELETE FROM total WHERE idtotal = '${id}'`, (err, result) => {
     console.log("ITEM DELETED");
     console.log(err);
     console.log(result);
   });
 });
 
-app.put("/total/update/name/:name", (req, res) => {
-  const oldName = req.params.name;
+app.put("/total/update/name/:id", (req, res) => {
+  const id = req.params.id;
   const newName = req.body.newName;
-  db.query(`UPDATE total SET name='${newName}' WHERE name ='${oldName}'`);
+  db.query(`UPDATE total SET name='${newName}' WHERE idtotal ='${id}'`);
 });
 
-app.put("/total/update/description/:description", (req, res) => {
-  const oldDesc = req.params.description;
+app.put("/total/update/description/:id", (req, res) => {
+  const id = req.params.id;
   const newDesc = req.body.newDesc;
-  db.query(
-    `UPDATE total SET description='${newDesc}' WHERE description ='${oldDesc}'`
-  );
+  db.query(`UPDATE total SET description='${newDesc}' WHERE idtotal ='${id}'`);
 });
 
 // ROUTES FOR TRIED TABLE
@@ -132,23 +130,21 @@ app.post("/tried/add", (req, res) => {
   );
 });
 
-app.delete("/tried/remove/:name", (req, res) => {
-  const name = req.params.name;
-  db.query(`DELETE FROM tried WHERE name = '${name}'`);
+app.delete("/tried/remove/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(`DELETE FROM tried WHERE idtried = '${id}'`);
 });
 
-app.put("/tried/update/name/:name", (req, res) => {
-  const oldName = req.params.name;
+app.put("/tried/update/name/:id", (req, res) => {
+  const id = req.params.id;
   const newName = req.body.newName;
-  db.query(`UPDATE tried SET name='${newName}' WHERE name ='${oldName}'`);
+  db.query(`UPDATE tried SET name='${newName}' WHERE idtried ='${id}'`);
 });
 
-app.put("/tried/update/description/:description", (req, res) => {
-  const oldDesc = req.params.description;
+app.put("/tried/update/description/:id", (req, res) => {
+  const id = req.params.id;
   const newDesc = req.body.newDesc;
-  db.query(
-    `UPDATE tried SET description='${newDesc}' WHERE description ='${oldDesc}'`
-  );
+  db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
 app.listen(3001, () => {
   console.log("SERVER RUNNING");
