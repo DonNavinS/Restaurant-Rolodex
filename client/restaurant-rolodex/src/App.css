@@ -73,3 +73,13 @@ li {
 .total-page {
   display: flex;
 }
+
+.nav-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+}

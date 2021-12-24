@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, logoutAction } from "../actions/authActions";
+import usernameAction from "../actions/usernameActions";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -19,6 +20,7 @@ export default function Login() {
         alert("Invalid Login Credentials");
       } else {
         dispatch(loginAction());
+        dispatch(usernameAction(username));
         console.log(response);
         localStorage.setItem("token ", response.data.token);
       }

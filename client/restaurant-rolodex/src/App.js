@@ -14,7 +14,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div>
-          <div className="header">
+          <div>
             <Header />
           </div>
           <div className="App">

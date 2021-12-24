@@ -57,11 +57,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/cookie", (req, res) => {
-  res.cookie("one", "two");
-  console.log(req.cookies);
-  res.send("cookie");
-});
 app.get("/user/login", checkToken, (req, res) => {
   res.send("WORKING");
 });
