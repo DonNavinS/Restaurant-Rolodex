@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { store } from "../store";
 
 export default function Header() {
   const logout = () => {
     localStorage.removeItem("token ");
     window.location.reload();
+    store.dispatch({ type: "LOGGED_OUT" });
   };
   return (
     <nav>

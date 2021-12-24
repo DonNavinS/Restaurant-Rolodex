@@ -7,34 +7,38 @@ import Home from "./Components/Home";
 import Header from "./Components/Header";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
+import { Provider } from "react-redux";
+import { store } from "./store";
 function App() {
   return (
-    <Router>
-      <div>
-        <div className="header">
-          <Header />
+    <Provider store={store}>
+      <Router>
+        <div>
+          <div className="header">
+            <Header />
+          </div>
+          <div className="App">
+            <Switch>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route exact path="/total">
+                <TotalV2 />
+              </Route>
+              <Route exact path="/tried">
+                <TriedV1 />
+              </Route>
+              <Route exact path="/signup">
+                <Signup />
+              </Route>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+            </Switch>
+          </div>
         </div>
-        <div className="App">
-          <Switch>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <Route exact path="/total">
-              <TotalV2 />
-            </Route>
-            <Route exact path="/tried">
-              <TriedV1 />
-            </Route>
-            <Route exact path="/signup">
-              <Signup />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-          </Switch>
-        </div>
-      </div>
-    </Router>
+      </Router>
+    </Provider>
   );
 }
 

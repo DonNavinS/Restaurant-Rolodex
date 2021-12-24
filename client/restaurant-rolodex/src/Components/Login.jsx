@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, logoutAction } from "../actions/authActions";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  // const [token, setToken] = useState("");
+
+  const dispatch = useDispatch();
+  const loggedInRedux = useSelector((state) => state.auth);
 
   const login = (req, res) => {
     Axios.post("http://localhost:3001/login", {
@@ -15,9 +18,9 @@ export default function Login() {
       if (response.data === "Invalid Credentials") {
         alert("Invalid Login Credentials");
       } else {
+        dispatch(loginAction());
         console.log(response);
         localStorage.setItem("token ", response.data.token);
-        setLoggedIn(true);
       }
     });
   };
@@ -31,19 +34,19 @@ export default function Login() {
 
   const checkForToken = () => {
     if (!localStorage.getItem("token ")) {
-      setLoggedIn(false);
+      dispatch(logoutAction());
     } else {
-      setLoggedIn(true);
+      dispatch(loginAction());
     }
   };
 
   useEffect(() => {
     checkForToken();
-  }, []);
+  });
 
   return (
     <div>
-      {!loggedIn ? (
+      {!loggedInRedux ? (
         <div>
           <input
             type="text"
