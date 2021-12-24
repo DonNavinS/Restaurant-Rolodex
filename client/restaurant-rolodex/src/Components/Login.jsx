@@ -21,6 +21,8 @@ export default function Login() {
       } else {
         dispatch(loginAction());
         dispatch(usernameAction(username));
+        localStorage.setItem("username", username);
+        localStorage.setItem("loggedIn", loggedInRedux);
         console.log(response);
         localStorage.setItem("token ", response.data.token);
       }

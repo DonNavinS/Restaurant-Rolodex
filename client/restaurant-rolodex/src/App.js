@@ -7,38 +7,54 @@ import Home from "./Components/Home";
 import Header from "./Components/Header";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import { useDispatch } from "react-redux";
+import usernameAction from "./actions/usernameActions";
+import { useEffect } from "react";
+import { loginAction } from "./actions/authActions";
 function App() {
+  const dispatch = useDispatch();
+  const username = localStorage.getItem("username");
+  const loggedIn = localStorage.getItem("loggedIn");
+  const updateRedux = () => {
+    if (username && loggedIn) {
+      dispatch(usernameAction(username));
+      dispatch(loginAction());
+    } else {
+      console.log("NOTHING TO UPDATE");
+    }
+  };
+
+  useEffect(() => {
+    updateRedux();
+  });
+
   return (
-    <Provider store={store}>
-      <Router>
+    <Router>
+      <div>
         <div>
-          <div>
-            <Header />
-          </div>
-          <div className="App">
-            <Switch>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-              <Route exact path="/total">
-                <TotalV2 />
-              </Route>
-              <Route exact path="/tried">
-                <TriedV1 />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
-              </Route>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-            </Switch>
-          </div>
+          <Header />
         </div>
-      </Router>
-    </Provider>
+        <div className="App">
+          <Switch>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/total">
+              <TotalV2 />
+            </Route>
+            <Route exact path="/tried">
+              <TriedV1 />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 

@@ -9,6 +9,8 @@ export default function Header() {
   const username = useSelector((state) => state.username);
   const logout = () => {
     localStorage.removeItem("token ");
+    localStorage.removeItem("username");
+    localStorage.removeItem("loggedIn");
     window.location.reload();
     dispatch(logoutAction());
   };
@@ -38,7 +40,7 @@ export default function Header() {
             </div>
           ) : (
             <div className="nav-right">
-              <p className="nav-right">welcome {username}</p>
+              <p>welcome {username}</p>
               <button onClick={logout}>LOGOUT</button>
             </div>
           )}
