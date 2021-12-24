@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, logoutAction } from "../actions/authActions";
 import usernameAction from "../actions/usernameActions";
+import { idAction } from "../actions/IdAction";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -19,12 +20,15 @@ export default function Login() {
       if (response.data === "Invalid Credentials") {
         alert("Invalid Login Credentials");
       } else {
+        const user_id = response.data.user.ID;
+        console.log(response);
         dispatch(loginAction());
         dispatch(usernameAction(username));
+        dispatch(idAction(user_id));
+        localStorage.setItem("user_id", user_id);
         localStorage.setItem("username", username);
         localStorage.setItem("loggedIn", loggedInRedux);
-        console.log(response);
-        localStorage.setItem("token ", response.data.token);
+        localStorage.setItem("token", response.data.token);
       }
     });
   };
@@ -46,7 +50,7 @@ export default function Login() {
 
   useEffect(() => {
     checkForToken();
-  });
+  }, []);
 
   return (
     <div>

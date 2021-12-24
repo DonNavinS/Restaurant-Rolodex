@@ -63,16 +63,13 @@ app.get("/user/login", checkToken, (req, res) => {
 
 // ROUTES FOR TOTAL TABLE
 
-app.get("/total", (req, res) => {
-  db.query("SELECT * FROM total", (err, result) => {
+app.get("/total/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
     res.send(result);
     console.log(result);
     console.log("DATA RETRIEVED");
   });
-});
-
-app.get("/test", (req, res) => {
-  console.log(req.sessions);
 });
 
 app.post("/total/add", (req, res) => {

@@ -7,9 +7,10 @@ export default function TotalV2() {
   const [restName, setRestName] = useState("");
   const [restDesc, setRestDesc] = useState("");
   const username = useSelector((state) => state.username);
+  const user_id = useSelector((state) => state.user_id);
 
   const getData = () => {
-    fetch("http://localhost:3001/total", {
+    fetch(`http://localhost:3001/total/${user_id}`, {
       mode: "cors",
     })
       .then((response) => {
@@ -76,7 +77,9 @@ export default function TotalV2() {
     });
   };
 
-  useEffect(getData, []);
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div>
       <button onClick={getData}>GET</button>
