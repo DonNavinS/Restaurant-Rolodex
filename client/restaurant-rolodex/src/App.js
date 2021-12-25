@@ -11,14 +11,17 @@ import { useDispatch } from "react-redux";
 import usernameAction from "./actions/usernameActions";
 import { useEffect } from "react";
 import { loginAction } from "./actions/authActions";
+import { idAction } from "./actions/IdAction";
 function App() {
   const dispatch = useDispatch();
   const username = localStorage.getItem("username");
   const loggedIn = localStorage.getItem("loggedIn");
+  const user_id = localStorage.getItem("user_id");
   const updateRedux = () => {
-    if (username && loggedIn) {
+    if (username && loggedIn && user_id) {
       dispatch(usernameAction(username));
       dispatch(loginAction());
+      dispatch(idAction(user_id));
     } else {
       console.log("NOTHING TO UPDATE");
     }

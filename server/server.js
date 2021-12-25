@@ -62,7 +62,6 @@ app.get("/user/login", checkToken, (req, res) => {
 });
 
 // ROUTES FOR TOTAL TABLE
-
 app.get("/total/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
@@ -76,11 +75,18 @@ app.post("/total/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const username = req.body.username;
+  const user_id = req.body.user_id;
   db.query(
     `INSERT INTO total (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
     (err, result) => {
       console.log("TOTAL TABLE UPDATED");
       console.log(err);
+      res.send({
+        idtotal: result.insertId,
+        name: name,
+        description: description,
+        user_id: parseInt(user_id),
+      });
     }
   );
 });
@@ -90,8 +96,8 @@ app.delete("/total/remove/:id", (req, res) => {
   db.query(`DELETE FROM total WHERE idtotal = '${id}'`, (err, result) => {
     console.log("ITEM DELETED");
     console.log(err);
-    console.log(result);
   });
+  res.send({ id: id });
 });
 
 app.put("/total/update/name/:id", (req, res) => {
@@ -107,8 +113,9 @@ app.put("/total/update/description/:id", (req, res) => {
 });
 
 // ROUTES FOR TRIED TABLE
-app.get("/tried", (req, res) => {
-  db.query("SELECT * FROM tried", (err, result) => {
+app.get("/tried/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(`SELECT * FROM tried WHERE user_id='${id}'`, (err, result) => {
     res.send(result);
   });
 });

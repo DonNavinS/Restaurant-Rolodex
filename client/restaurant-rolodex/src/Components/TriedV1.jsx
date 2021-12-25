@@ -8,9 +8,10 @@ export default function TriedV1() {
   const [newDesc, setNewDesc] = useState("");
 
   const username = useSelector((state) => state.username);
+  const user_id = useSelector((state) => state.user_id);
 
   const getData = () => {
-    Axios.get("http://localhost:3001/tried").then((response) => {
+    Axios.get(`http://localhost:3001/tried/${user_id}`).then((response) => {
       setRetrievedData(response.data);
     });
   };
@@ -55,7 +56,9 @@ export default function TriedV1() {
 
   useEffect(() => {
     getData();
+    //eslint-disable-next-line
   }, []);
+
   return (
     <div className="tried-table">
       <button onClick={getData}>GET</button>

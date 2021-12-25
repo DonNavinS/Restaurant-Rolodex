@@ -1,39 +1,54 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addDataAction,
+  removeDataAction,
+  totalDataAction,
+} from "../actions/totalDataAction";
 
 export default function TotalV2() {
-  const [retrievedData, setRetrievedData] = useState([]);
+  // const [retrievedData, setRetrievedData] = useState([]);
   const [restName, setRestName] = useState("");
   const [restDesc, setRestDesc] = useState("");
   const username = useSelector((state) => state.username);
   const user_id = useSelector((state) => state.user_id);
+  const totalData = useSelector((state) => state.totalData);
 
+  const dispatch = useDispatch();
   const getData = () => {
-    fetch(`http://localhost:3001/total/${user_id}`, {
-      mode: "cors",
-    })
-      .then((response) => {
-        return response.json();
+    if (user_id !== null) {
+      fetch(`http://localhost:3001/total/${user_id}`, {
+        mode: "cors",
       })
-      .then((data) => {
-        console.log(data);
-        setRetrievedData(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          dispatch(totalDataAction(data));
+        });
+    }
   };
 
-  const postData = () => {
-    Axios.post("http://localhost:3001/total/add", {
+  const postData = async () => {
+    const response = await Axios.post("http://localhost:3001/total/add", {
       name: restName,
       description: restDesc,
       username: username,
+      user_id: user_id,
     });
-    window.location.reload();
+    console.log(response);
+    dispatch(addDataAction(response.data));
+    setRestName("");
+    setRestDesc("");
   };
 
-  const removeItem = (item) => {
-    Axios.delete(`http://localhost:3001/total/remove/${item.idtotal}`, {});
-    window.location.reload();
+  const removeItem = async (item) => {
+    const response = await Axios.delete(
+      `http://localhost:3001/total/remove/${item.idtotal}`
+    );
+    dispatch(removeDataAction(parseInt(response.data.id)));
   };
 
   const updateRestName = (e) => {
@@ -51,7 +66,6 @@ export default function TotalV2() {
       Axios.put(`http://localhost:3001/total/update/name/${item.idtotal}`, {
         newName: updatedName,
       });
-      window.location.reload();
     }
   };
 
@@ -65,7 +79,6 @@ export default function TotalV2() {
         { newDesc: updatedDesc }
       );
     }
-    window.location.reload();
   };
 
   const moveToTried = (item) => {
@@ -79,7 +92,8 @@ export default function TotalV2() {
 
   useEffect(() => {
     getData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user_id]);
   return (
     <div>
       <button onClick={getData}>GET</button>
@@ -88,18 +102,20 @@ export default function TotalV2() {
         placeholder="Restaurant Name"
         type="text"
         name="totalName"
+        value={restName}
         onChange={updateRestName}
       />
       <input
         placeholder="Restaurant Description"
         type="text"
+        value={restDesc}
         name="totalDesc"
         onChange={updateRestDesc}
       />
 
-      {retrievedData.map((item) => {
+      {totalData.map((item, index) => {
         return (
-          <div className="total-page" key={item.idtotal}>
+          <div className="total-page" key={index}>
             <p className="total-names">{item.name}</p>
             <button onClick={() => toggleNameUpdate(item)}>Edit</button>
             <p className="total-description">{item.description}</p>

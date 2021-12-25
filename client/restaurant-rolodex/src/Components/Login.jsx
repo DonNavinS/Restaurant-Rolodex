@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginAction, logoutAction } from "../actions/authActions";
 import usernameAction from "../actions/usernameActions";
 import { idAction } from "../actions/IdAction";
+import { Redirect } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -50,6 +51,7 @@ export default function Login() {
 
   useEffect(() => {
     checkForToken();
+    //eslint-disable-next-line
   }, []);
 
   return (
@@ -69,7 +71,7 @@ export default function Login() {
           <button onClick={login}>LOGIN</button>
         </div>
       ) : (
-        <div>Successful Login !</div>
+        <Redirect to="/total" />
       )}
     </div>
   );
