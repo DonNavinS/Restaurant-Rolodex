@@ -28,7 +28,7 @@ export default function Login() {
         dispatch(idAction(user_id));
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("username", username);
-        localStorage.setItem("loggedIn", loggedInRedux);
+        localStorage.setItem("loggedIn", true);
         localStorage.setItem("token", response.data.token);
       }
     });
@@ -41,18 +41,18 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
-  const checkForToken = () => {
-    if (!localStorage.getItem("token ")) {
-      dispatch(logoutAction());
-    } else {
-      dispatch(loginAction());
-    }
-  };
+  // const checkForToken = () => {
+  //   if (!localStorage.getItem("token ")) {
+  //     dispatch(logoutAction());
+  //   } else {
+  //     dispatch(loginAction());
+  //   }
+  // };
 
-  useEffect(() => {
-    checkForToken();
-    //eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   checkForToken();
+  //   //eslint-disable-next-line
+  // }, []);
 
   return (
     <div>

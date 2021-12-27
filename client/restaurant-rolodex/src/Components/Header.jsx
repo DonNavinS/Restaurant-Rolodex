@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../actions/authActions";
 
@@ -31,6 +31,7 @@ export default function Header() {
           </div>
           {!loggedIn ? (
             <div className="nav-right">
+              <Redirect to="/login" />
               <Link className="link" to="/signup">
                 SIGNUP
               </Link>

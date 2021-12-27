@@ -1,40 +1,61 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addTriedDataAction,
+  removeTriedDataAction,
+  triedDataAction,
+} from "../actions/triedDataAction";
 
 export default function TriedV1() {
-  const [retrievedData, setRetrievedData] = useState([]);
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
+  const dispatch = useDispatch();
 
+  const triedData = useSelector((state) => state.triedData);
   const username = useSelector((state) => state.username);
   const user_id = useSelector((state) => state.user_id);
 
-  const getData = () => {
-    Axios.get(`http://localhost:3001/tried/${user_id}`).then((response) => {
-      setRetrievedData(response.data);
-    });
+  const getData = async () => {
+    if (user_id !== null) {
+      const response = await Axios.get(
+        `http://localhost:3001/tried/${user_id}`
+      );
+      // const ids = triedData.map((item) => item.idtried);
+      if (
+        // !ids.includes(response.data[response.data.length - 1].idtried) ||
+        triedData.length === 0
+      ) {
+        dispatch(triedDataAction(response.data));
+      }
+    }
   };
 
-  const postData = () => {
-    Axios.post("http://localhost:3001/tried/add", {
+  const postData = async () => {
+    const response = await Axios.post("http://localhost:3001/tried/add", {
       name: newName,
       description: newDesc,
       username: username,
+      user_id: user_id,
     });
-    window.location.reload();
+    console.log(response.data);
+    dispatch(addTriedDataAction(response.data));
+    setNewDesc("");
+    setNewName("");
   };
 
-  const removeData = (item) => {
-    Axios.delete(`http://localhost:3001/tried/remove/${item.idtried}`);
-    window.location.reload();
+  const removeData = async (item) => {
+    const response = await Axios.delete(
+      `http://localhost:3001/tried/remove/${item.idtried}`
+    );
+    const id = parseInt(response.data.idtried);
+    dispatch(removeTriedDataAction(id));
   };
 
   const updateName = (item) => {
     Axios.put(`http://localhost:3001/tried/update/name/${item.idtried}`, {
       newName: newName,
     });
-    window.location.reload();
   };
 
   const updateDesc = (item) => {
@@ -57,15 +78,25 @@ export default function TriedV1() {
   useEffect(() => {
     getData();
     //eslint-disable-next-line
-  }, []);
+  }, [username]);
 
   return (
     <div className="tried-table">
       <button onClick={getData}>GET</button>
       <button onClick={postData}>POST</button>
-      <input placeholder="New Name" type="text" onChange={updateNewName} />
-      <input placeholder="New Desc" type="text" onChange={updateNewDesc} />
-      {retrievedData.map((item) => {
+      <input
+        value={newName}
+        placeholder="New Name"
+        type="text"
+        onChange={updateNewName}
+      />
+      <input
+        value={newDesc}
+        placeholder="New Desc"
+        type="text"
+        onChange={updateNewDesc}
+      />
+      {triedData.map((item) => {
         return (
           <div key={item.idtotal}>
             <div>{item.name}</div>

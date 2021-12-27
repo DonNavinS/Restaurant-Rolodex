@@ -5,6 +5,7 @@ import {
   addDataAction,
   removeDataAction,
   totalDataAction,
+  updateTotalDataAction,
 } from "../actions/totalDataAction";
 
 export default function TotalV2() {
@@ -16,18 +17,11 @@ export default function TotalV2() {
   const totalData = useSelector((state) => state.totalData);
 
   const dispatch = useDispatch();
-  const getData = () => {
-    if (user_id !== null) {
-      fetch(`http://localhost:3001/total/${user_id}`, {
-        mode: "cors",
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          dispatch(totalDataAction(data));
-        });
+
+  const getData = async () => {
+    const response = await Axios.get(`http://localhost:3001/total/${user_id}`);
+    if (totalData.length === 0) {
+      dispatch(totalDataAction(response.data));
     }
   };
 
@@ -58,7 +52,7 @@ export default function TotalV2() {
     setRestDesc(e.target.value);
   };
 
-  const toggleNameUpdate = (item) => {
+  const toggleNameUpdate = async (item) => {
     let updatedName = prompt("TEST");
     if (updatedName === null) {
       alert("No changes made");
@@ -66,12 +60,13 @@ export default function TotalV2() {
       Axios.put(`http://localhost:3001/total/update/name/${item.idtotal}`, {
         newName: updatedName,
       });
+      dispatch(updateTotalDataAction(item.idtotal, updatedName));
     }
   };
 
   const toggleDescUpdate = (item) => {
     let updatedDesc = prompt("Enter new Description");
-    if (updatedDesc === null) {
+    if (!updatedDesc) {
       alert("No changes made");
     } else {
       Axios.put(

@@ -15,10 +15,9 @@ import { idAction } from "./actions/IdAction";
 function App() {
   const dispatch = useDispatch();
   const username = localStorage.getItem("username");
-  const loggedIn = localStorage.getItem("loggedIn");
   const user_id = localStorage.getItem("user_id");
   const updateRedux = () => {
-    if (username && loggedIn && user_id) {
+    if (username && user_id) {
       dispatch(usernameAction(username));
       dispatch(loginAction());
       dispatch(idAction(user_id));
