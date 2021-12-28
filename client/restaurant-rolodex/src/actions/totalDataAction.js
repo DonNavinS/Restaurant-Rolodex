@@ -2,7 +2,8 @@ import {
   ADD_TOTAL_DATA,
   TOTAL_DATA,
   REMOVE_TOTAL_DATA,
-  UPDATE_TOTAL_DATA,
+  UPDATE_TOTAL_NAME,
+  UPDATE_TOTAL_DESCRIPTION,
 } from ".";
 export const totalDataAction = (data) => {
   return {
@@ -25,10 +26,18 @@ export const removeDataAction = (id) => {
   };
 };
 
-export const updateTotalDataAction = (id, data) => {
+export const updateTotalDataName = (id, data) => {
   return {
-    type: UPDATE_TOTAL_DATA,
+    type: UPDATE_TOTAL_NAME,
     id: id,
     payload: data,
+  };
+};
+
+export const updateTotalDataDescription = (id, description) => {
+  return {
+    type: UPDATE_TOTAL_DESCRIPTION,
+    id: id,
+    payload: description,
   };
 };

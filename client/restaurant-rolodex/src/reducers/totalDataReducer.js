@@ -2,7 +2,8 @@ import {
   TOTAL_DATA,
   ADD_TOTAL_DATA,
   REMOVE_TOTAL_DATA,
-  UPDATE_TOTAL_DATA,
+  UPDATE_TOTAL_NAME,
+  UPDATE_TOTAL_DESCRIPTION,
 } from "../actions";
 
 export const totalDataReducer = (state = [], action) => {
@@ -13,32 +14,38 @@ export const totalDataReducer = (state = [], action) => {
       return (state = [...state, action.payload]);
     case REMOVE_TOTAL_DATA:
       return (state = state.filter((item) => item.idtotal !== action.payload));
-    case UPDATE_TOTAL_DATA:
-      const oldValue = state.find((item) => {
+    case UPDATE_TOTAL_NAME:
+      const oldName = state.find((item) => {
         return item.idtotal === action.id;
       });
-      const oldIndex = state.indexOf(oldValue);
+      const oldIndex = state.indexOf(oldName);
       const firstHalf = state.slice(0, oldIndex);
       const secondHalf = state.slice(oldIndex + 1, state.length);
       return (state = [
         ...firstHalf,
         {
-          idtotal: oldValue.idtotal,
+          idtotal: oldName.idtotal,
           name: action.payload,
-          description: oldValue.description,
-          user_id: oldValue.user_id,
+          description: oldName.description,
+          user_id: oldName.user_id,
         },
         ...secondHalf,
       ]);
-    // return (state = [
-    //   ...state.filter((item) => item.idtotal !== oldValue.idtotal),
-    //   {
-    //     idtotal: oldValue.idtotal,
-    //     name: action.payload,
-    //     description: oldValue.description,
-    //     user_id: oldValue.user_id,
-    //   },
-    // ]);
+    case UPDATE_TOTAL_DESCRIPTION:
+      const oldDescription = state.find((item) => item.idtotal === action.id);
+      const prevIndex = state.indexOf(oldDescription);
+      const firstHalfDesc = state.slice(0, prevIndex);
+      const secondHalfDesc = state.slice(prevIndex + 1, state.length);
+      return (state = [
+        ...firstHalfDesc,
+        {
+          idtotal: oldDescription.idtotal,
+          name: oldDescription.name,
+          description: action.payload,
+          user_id: oldDescription.user_id,
+        },
+        ...secondHalfDesc,
+      ]);
     default:
       return state;
   }

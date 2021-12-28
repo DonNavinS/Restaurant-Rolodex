@@ -5,7 +5,8 @@ import {
   addDataAction,
   removeDataAction,
   totalDataAction,
-  updateTotalDataAction,
+  updateTotalDataDescription,
+  updateTotalDataName,
 } from "../actions/totalDataAction";
 
 export default function TotalV2() {
@@ -53,14 +54,14 @@ export default function TotalV2() {
   };
 
   const toggleNameUpdate = async (item) => {
-    let updatedName = prompt("TEST");
+    let updatedName = prompt("Enter new Restaurant Name");
     if (updatedName === null) {
       alert("No changes made");
     } else {
       Axios.put(`http://localhost:3001/total/update/name/${item.idtotal}`, {
         newName: updatedName,
       });
-      dispatch(updateTotalDataAction(item.idtotal, updatedName));
+      dispatch(updateTotalDataName(item.idtotal, updatedName));
     }
   };
 
@@ -73,6 +74,7 @@ export default function TotalV2() {
         `http://localhost:3001/total/update/description/${item.idtotal}`,
         { newDesc: updatedDesc }
       );
+      dispatch(updateTotalDataDescription(item.idtotal, updatedDesc));
     }
   };
 

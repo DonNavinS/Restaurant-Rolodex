@@ -5,7 +5,13 @@ import {
   addTriedDataAction,
   removeTriedDataAction,
   triedDataAction,
+  updateTriedDescription,
+  updateTriedName,
 } from "../actions/triedDataAction";
+import {
+  updateTotalDataDescription,
+  updateTotalDataName,
+} from "../actions/totalDataAction";
 
 export default function TriedV1() {
   const [newName, setNewName] = useState("");
@@ -21,11 +27,7 @@ export default function TriedV1() {
       const response = await Axios.get(
         `http://localhost:3001/tried/${user_id}`
       );
-      // const ids = triedData.map((item) => item.idtried);
-      if (
-        // !ids.includes(response.data[response.data.length - 1].idtried) ||
-        triedData.length === 0
-      ) {
+      if (triedData.length === 0) {
         dispatch(triedDataAction(response.data));
       }
     }
@@ -44,7 +46,7 @@ export default function TriedV1() {
     setNewName("");
   };
 
-  const removeData = async (item) => {
+  const removeItem = async (item) => {
     const response = await Axios.delete(
       `http://localhost:3001/tried/remove/${item.idtried}`
     );
@@ -52,22 +54,30 @@ export default function TriedV1() {
     dispatch(removeTriedDataAction(id));
   };
 
-  const updateName = (item) => {
-    Axios.put(`http://localhost:3001/tried/update/name/${item.idtried}`, {
-      newName: newName,
-    });
+  const toggleNameUpdate = async (item) => {
+    let updatedName = prompt("Enter new Restaurant Name");
+    if (updatedName === null) {
+      alert("No changes made");
+    } else {
+      Axios.put(`http://localhost:3001/tried/update/name/${item.idtried}`, {
+        newName: updatedName,
+      });
+      dispatch(updateTriedName(item.idtried, updatedName));
+    }
   };
 
-  const updateDesc = (item) => {
-    Axios.put(
-      `http://localhost:3001/tried/update/description/${item.idtried}`,
-      {
-        newDesc: newDesc,
-      }
-    );
-    window.location.reload();
+  const toggleDescUpdate = (item) => {
+    let updatedDesc = prompt("Enter new Description");
+    if (!updatedDesc) {
+      alert("No changes made");
+    } else {
+      Axios.put(
+        `http://localhost:3001/tried/update/description/${item.idtried}`,
+        { newDesc: updatedDesc }
+      );
+      dispatch(updateTriedDescription(item.idtried, updatedDesc));
+    }
   };
-
   const updateNewName = (e) => {
     setNewName(e.target.value);
   };
@@ -96,16 +106,14 @@ export default function TriedV1() {
         type="text"
         onChange={updateNewDesc}
       />
-      {triedData.map((item) => {
+      {triedData.map((item, index) => {
         return (
-          <div key={item.idtotal}>
-            <div>{item.name}</div>
-            <input type="text" onChange={updateNewName} />
-            <button onClick={() => updateName(item)}>EDIT NAME</button>
-            <div>{item.description}</div>
-            <input type="text" onChange={updateNewDesc} />
-            <button onClick={() => updateDesc(item)}>EDIT DESCRIPTION</button>
-            <button onClick={() => removeData(item)}>REMOVE</button>
+          <div className="total-page" key={index}>
+            <p className="total-names">{item.name}</p>
+            <button onClick={() => toggleNameUpdate(item)}>Edit</button>
+            <p className="total-description">{item.description}</p>
+            <button onClick={() => toggleDescUpdate(item)}>Edit</button>
+            <button onClick={() => removeItem(item)}>Remove</button>
           </div>
         );
       })}
