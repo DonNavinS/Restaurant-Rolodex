@@ -124,7 +124,6 @@ app.post("/tried/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const username = req.body.username;
-  const user_id = req.body.user_id;
   db.query(
     `INSERT INTO tried (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
 
@@ -133,7 +132,7 @@ app.post("/tried/add", (req, res) => {
         idtried: result.insertId,
         name: name,
         description: description,
-        user_id: parseInt(user_id),
+        username: username,
       });
     }
   );

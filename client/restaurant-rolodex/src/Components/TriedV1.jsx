@@ -40,7 +40,6 @@ export default function TriedV1() {
       username: username,
       user_id: user_id,
     });
-    console.log(response.data);
     dispatch(addTriedDataAction(response.data));
     setNewDesc("");
     setNewName("");
@@ -54,7 +53,7 @@ export default function TriedV1() {
     dispatch(removeTriedDataAction(id));
   };
 
-  const toggleNameUpdate = async (item) => {
+  const toggleNameUpdate = (item) => {
     let updatedName = prompt("Enter new Restaurant Name");
     if (updatedName === null) {
       alert("No changes made");

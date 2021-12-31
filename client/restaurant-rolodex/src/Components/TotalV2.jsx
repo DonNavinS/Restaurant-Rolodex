@@ -33,7 +33,6 @@ export default function TotalV2() {
       username: username,
       user_id: user_id,
     });
-    console.log(response);
     dispatch(addDataAction(response.data));
     setRestName("");
     setRestDesc("");
@@ -83,8 +82,9 @@ export default function TotalV2() {
     Axios.post("http://localhost:3001/tried/add", {
       name: item.name,
       description: item.description,
-      username: item.username,
+      username: username,
     });
+    console.log(item);
   };
 
   useEffect(() => {

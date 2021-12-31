@@ -17,17 +17,17 @@ export const triedDataReducer = (state = [], action) => {
     case UPDATE_TRIED_NAME:
       const oldName = state.find((item) => item.idtried === action.id);
       const oldNameIndex = state.indexOf(oldName);
-      const firstHalf = state.slice(0, oldNameIndex);
-      const secondHalf = state.slice(oldNameIndex + 1, state.length);
+      const firstHalfName = state.slice(0, oldNameIndex);
+      const secondHalfName = state.slice(oldNameIndex + 1, state.length);
       return (state = [
-        ...firstHalf,
+        ...firstHalfName,
         {
           idtried: oldName.idtried,
           name: action.payload,
           description: oldName.description,
           user_id: oldName.user_id,
         },
-        ...secondHalf,
+        ...secondHalfName,
       ]);
     case UPDATE_TRIED_DESCRIPTION:
       const oldDescription = state.find((item) => item.idtried === action.id);
@@ -44,6 +44,7 @@ export const triedDataReducer = (state = [], action) => {
         },
         ...secondHalfDesc,
       ]);
+
     default:
       return state;
   }
