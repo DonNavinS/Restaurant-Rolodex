@@ -4,6 +4,7 @@ import {
   TRIED_DATA,
   UPDATE_TRIED_DESCRIPTION,
   UPDATE_TRIED_NAME,
+  WIPE_ALL_DATA,
 } from ".";
 
 export const triedDataAction = (data) => {
@@ -40,5 +41,11 @@ export const updateTriedDescription = (id, description) => {
     type: UPDATE_TRIED_DESCRIPTION,
     id: id,
     payload: description,
+  };
+};
+
+export const wipeTriedData = () => {
+  return {
+    type: WIPE_ALL_DATA,
   };
 };

@@ -8,6 +8,7 @@ import {
   updateTotalDataDescription,
   updateTotalDataName,
 } from "../actions/totalDataAction";
+import { wipeTriedData } from "../actions/triedDataAction";
 
 export default function TotalV2() {
   // const [retrievedData, setRetrievedData] = useState([]);
@@ -23,6 +24,7 @@ export default function TotalV2() {
     const response = await Axios.get(`http://localhost:3001/total/${user_id}`);
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
+      dispatch(wipeTriedData());
     }
   };
 

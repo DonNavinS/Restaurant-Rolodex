@@ -4,6 +4,7 @@ import {
   TRIED_DATA,
   UPDATE_TRIED_DESCRIPTION,
   UPDATE_TRIED_NAME,
+  WIPE_ALL_DATA,
 } from "../actions";
 
 export const triedDataReducer = (state = [], action) => {
@@ -44,7 +45,8 @@ export const triedDataReducer = (state = [], action) => {
         },
         ...secondHalfDesc,
       ]);
-
+    case WIPE_ALL_DATA:
+      return (state = []);
     default:
       return state;
   }
