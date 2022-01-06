@@ -4,7 +4,7 @@ import {
   REMOVE_TOTAL_DATA,
   UPDATE_TOTAL_NAME,
   UPDATE_TOTAL_DESCRIPTION,
-} from ".";
+} from "./index";
 export const totalDataAction = (data) => {
   return {
     type: TOTAL_DATA,

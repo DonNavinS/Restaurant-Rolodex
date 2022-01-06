@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import TotalV1 from "./Components/TotalV1";
 import TotalV2 from "./Components/TotalV2";
@@ -32,7 +31,8 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div className="bg-red-400 h-full w-full">
+        <h1 className="text-center underline">TEST</h1>
         <div>
           <Header />
         </div>

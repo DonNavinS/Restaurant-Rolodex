@@ -94,7 +94,7 @@ export default function TotalV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
   return (
-    <div>
+    <div className="bg-slate-800">
       <button onClick={getData}>GET</button>
       <button onClick={postData}>POST</button>
       <input

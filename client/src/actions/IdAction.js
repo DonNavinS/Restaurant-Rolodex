@@ -1,4 +1,4 @@
-const { UPDATE_USER_ID } = require(".");
+import { UPDATE_USER_ID } from "./index";
 
 export const idAction = (id) => {
   return {

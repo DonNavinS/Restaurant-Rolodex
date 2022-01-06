@@ -19,7 +19,7 @@ export default function Header() {
       <ul>
         <li>
           <div className="nav-left">
-            <Link className="link" to="/total">
+            <Link className="link " to="/total">
               TOTAL
             </Link>
             <Link className="link" to="/tried">

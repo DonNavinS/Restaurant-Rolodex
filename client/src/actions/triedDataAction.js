@@ -5,7 +5,7 @@ import {
   UPDATE_TRIED_DESCRIPTION,
   UPDATE_TRIED_NAME,
   WIPE_ALL_DATA,
-} from ".";
+} from "./index";
 
 export const triedDataAction = (data) => {
   return {

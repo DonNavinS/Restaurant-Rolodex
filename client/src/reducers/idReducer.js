@@ -1,4 +1,4 @@
-const { UPDATE_USER_ID } = require("../actions");
+import { UPDATE_USER_ID } from "../actions";
 
 export const idReducer = (state = null, action) => {
   switch (action.type) {
