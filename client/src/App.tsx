@@ -7,8 +7,8 @@ import Header from "./Components/Header";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import { useDispatch } from "react-redux";
-import usernameAction from "./actions/usernameActions";
 import { useEffect } from "react";
+import usernameAction from "./actions/usernameActions";
 import { loginAction } from "./actions/authActions";
 import { idAction } from "./actions/IdAction";
 function App() {
@@ -31,8 +31,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-red-400 h-full w-full">
-        <h1 className="text-center underline">TEST</h1>
+      <div className="bg-red-500 h-screen w-full">
         <div>
           <Header />
         </div>

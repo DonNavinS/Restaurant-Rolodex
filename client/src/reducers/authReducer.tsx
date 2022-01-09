@@ -1,6 +1,9 @@
 import { LOGGED_IN, LOGGED_OUT } from "../actions";
+import { AnyAction } from "redux";
 
-const authReducer = (state = false, action) => {
+export type ActionObject = {};
+
+const authReducer = (state = false, action: AnyAction) => {
   switch (action.type) {
     case LOGGED_IN:
       return (state = true);

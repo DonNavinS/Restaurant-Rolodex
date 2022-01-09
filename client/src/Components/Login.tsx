@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction, logoutAction } from "../actions/authActions";
+import { loginAction } from "../actions/authActions";
 import usernameAction from "../actions/usernameActions";
 import { idAction } from "../actions/IdAction";
 import { Redirect } from "react-router-dom";
+import { GlobalState } from "../Type";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const loggedInRedux = useSelector((state) => state.auth);
+  const loggedInRedux = useSelector((state: GlobalState) => state.auth);
 
-  const login = (req, res) => {
+  const login = () => {
     Axios.post("http://localhost:3001/login", {
       username: username,
       password: password,
@@ -28,16 +29,20 @@ export default function Login() {
         dispatch(idAction(user_id));
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("username", username);
-        localStorage.setItem("loggedIn", true);
+        localStorage.setItem("loggedIn", "true");
         localStorage.setItem("token", response.data.token);
       }
     });
   };
 
-  const setUsernameState = (e) => {
+  const setUsernameState = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setUsername(e.target.value);
   };
-  const setPasswordState = (e) => {
+  const setPasswordState = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setPassword(e.target.value);
   };
 

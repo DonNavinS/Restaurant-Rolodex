@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TotalV1 from "./TotalV1";
+import TotalV2 from "./TotalV2";
 import TriedV1 from "./TriedV1";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
     <div>
       {loggedIn ? (
         <div>
-          <TotalV1 />
+          <TotalV2 />
           <TriedV1 />
         </div>
       ) : (

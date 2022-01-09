@@ -13,11 +13,15 @@ export default function Signup() {
     window.location.reload();
   };
 
-  const setNewUsername = (e) => {
+  const setNewUsername = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setUsername(e.target.value);
   };
 
-  const setNewPassword = (e) => {
+  const setNewPassword = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setPassword(e.target.value);
   };
   return (

@@ -5,28 +5,28 @@ import {
   UPDATE_TOTAL_NAME,
   UPDATE_TOTAL_DESCRIPTION,
 } from "./index";
-export const totalDataAction = (data) => {
+export const totalDataAction = (data: any) => {
   return {
     type: TOTAL_DATA,
     payload: data,
   };
 };
 
-export const addDataAction = (data) => {
+export const addDataAction = (data: any) => {
   return {
     type: ADD_TOTAL_DATA,
     payload: data,
   };
 };
 
-export const removeDataAction = (id) => {
+export const removeDataAction = (id: number) => {
   return {
     type: REMOVE_TOTAL_DATA,
     payload: id,
   };
 };
 
-export const updateTotalDataName = (id, data) => {
+export const updateTotalDataName = (id: any, data: string) => {
   return {
     type: UPDATE_TOTAL_NAME,
     id: id,
@@ -34,7 +34,7 @@ export const updateTotalDataName = (id, data) => {
   };
 };
 
-export const updateTotalDataDescription = (id, description) => {
+export const updateTotalDataDescription = (id: any, description: string) => {
   return {
     type: UPDATE_TOTAL_DESCRIPTION,
     id: id,

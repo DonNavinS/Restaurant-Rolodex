@@ -8,19 +8,16 @@ import {
   updateTriedDescription,
   updateTriedName,
 } from "../actions/triedDataAction";
-import {
-  updateTotalDataDescription,
-  updateTotalDataName,
-} from "../actions/totalDataAction";
+import { GlobalState, TriedRestaurant } from "../Type";
 
 export default function TriedV1() {
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const dispatch = useDispatch();
 
-  const triedData = useSelector((state) => state.triedData);
-  const username = useSelector((state) => state.username);
-  const user_id = useSelector((state) => state.user_id);
+  const triedData = useSelector((state: GlobalState) => state.triedData);
+  const username = useSelector((state: GlobalState) => state.username);
+  const user_id = useSelector((state: GlobalState) => state.user_id);
 
   const getData = async () => {
     if (user_id !== null) {
@@ -45,7 +42,7 @@ export default function TriedV1() {
     setNewName("");
   };
 
-  const removeItem = async (item) => {
+  const removeItem = async (item: TriedRestaurant) => {
     const response = await Axios.delete(
       `http://localhost:3001/tried/remove/${item.idtried}`
     );
@@ -53,7 +50,7 @@ export default function TriedV1() {
     dispatch(removeTriedDataAction(id));
   };
 
-  const toggleNameUpdate = (item) => {
+  const toggleNameUpdate = (item: TriedRestaurant) => {
     let updatedName = prompt("Enter new Restaurant Name");
     if (updatedName === null) {
       alert("No changes made");
@@ -65,7 +62,7 @@ export default function TriedV1() {
     }
   };
 
-  const toggleDescUpdate = (item) => {
+  const toggleDescUpdate = (item: TriedRestaurant) => {
     let updatedDesc = prompt("Enter new Description");
     if (!updatedDesc) {
       alert("No changes made");
@@ -77,10 +74,14 @@ export default function TriedV1() {
       dispatch(updateTriedDescription(item.idtried, updatedDesc));
     }
   };
-  const updateNewName = (e) => {
+  const updateNewName = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setNewName(e.target.value);
   };
-  const updateNewDesc = (e) => {
+  const updateNewDesc = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setNewDesc(e.target.value);
   };
 
@@ -105,17 +106,18 @@ export default function TriedV1() {
         type="text"
         onChange={updateNewDesc}
       />
-      {triedData.map((item, index) => {
-        return (
-          <div className="total-page" key={index}>
-            <p className="total-names">{item.name}</p>
-            <button onClick={() => toggleNameUpdate(item)}>Edit</button>
-            <p className="total-description">{item.description}</p>
-            <button onClick={() => toggleDescUpdate(item)}>Edit</button>
-            <button onClick={() => removeItem(item)}>Remove</button>
-          </div>
-        );
-      })}
+      {triedData &&
+        triedData.map((item, index) => {
+          return (
+            <div className="total-page" key={index}>
+              <p className="total-names">{item.name}</p>
+              <button onClick={() => toggleNameUpdate(item)}>Edit</button>
+              <p className="total-description">{item.description}</p>
+              <button onClick={() => toggleDescUpdate(item)}>Edit</button>
+              <button onClick={() => removeItem(item)}>Remove</button>
+            </div>
+          );
+        })}
     </div>
   );
 }
