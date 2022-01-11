@@ -91,30 +91,68 @@ export default function TriedV1() {
   }, [username]);
 
   return (
-    <div className="tried-table">
-      <button onClick={getData}>GET</button>
-      <button onClick={postData}>POST</button>
-      <input
-        value={newName}
-        placeholder="New Name"
-        type="text"
-        onChange={updateNewName}
-      />
-      <input
-        value={newDesc}
-        placeholder="New Desc"
-        type="text"
-        onChange={updateNewDesc}
-      />
+    <div>
+      <div className="flex justify-center p-2">
+        <button
+          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+          onClick={getData}
+        >
+          GET
+        </button>
+        <button
+          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out mx-2"
+          onClick={postData}
+        >
+          POST
+        </button>
+        <input
+          className="mr-2 p-1 rounded"
+          value={newName}
+          placeholder="Restaurant Name"
+          type="text"
+          onChange={updateNewName}
+        />
+        <input
+          className=" p-1 rounded"
+          value={newDesc}
+          placeholder="Restaurant Description"
+          type="text"
+          onChange={updateNewDesc}
+        />
+      </div>
       {triedData &&
         triedData.map((item, index) => {
           return (
-            <div className="total-page" key={index}>
-              <p className="total-names">{item.name}</p>
-              <button onClick={() => toggleNameUpdate(item)}>Edit</button>
-              <p className="total-description">{item.description}</p>
-              <button onClick={() => toggleDescUpdate(item)}>Edit</button>
-              <button onClick={() => removeItem(item)}>Remove</button>
+            <div
+              className="grid grid-cols-3 justify-items-center mx-60"
+              key={index}
+            >
+              <div className="px-6 my-2">
+                <span className="pl-11 m-2 ">{item.name}</span>
+                <button
+                  className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  onClick={() => toggleNameUpdate(item)}
+                >
+                  Edit Name
+                </button>
+              </div>
+              <div className="my-2">
+                <span className="px-2 m-2 ">{item.description}</span>
+                <button
+                  className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  onClick={() => toggleDescUpdate(item)}
+                >
+                  Edit Description
+                </button>
+              </div>
+              <div className="my-2">
+                <button
+                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  onClick={() => removeItem(item)}
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           );
         })}

@@ -87,7 +87,7 @@ export default function TotalV2() {
   const moveToTried = (item: TotalRestaurant) => {
     removeItem(item);
     Axios.post("http://localhost:3001/tried/add", {
-      name: item,
+      name: item.name,
       description: item.description,
       username: username,
     });
@@ -99,7 +99,7 @@ export default function TotalV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
   return (
-    <div className="">
+    <div>
       <div className="flex justify-center p-2">
         <button
           className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
@@ -131,40 +131,73 @@ export default function TotalV2() {
         />
       </div>
 
-      {totalData.map(
-        (item: TotalRestaurant, index: React.Key | null | undefined) => {
-          return (
-            <div className="grid grid-cols-3 mx-60" key={index}>
-              <div className="px-6">
-                <span className="m-2 px-2">{item.name}</span>
-                <button onClick={() => toggleNameUpdate(item)}>
-                  Edit Name
-                </button>
-              </div>
-              <div className="px-6">
-                <span className="m-2 px-2">{item.description}</span>
-                <button onClick={() => toggleDescUpdate(item)}>
-                  Edit Description
-                </button>
-              </div>
-              <div className="px-6">
-                <button
-                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-                  onClick={() => removeItem(item)}
+      {totalData.map((item, index) => {
+        return (
+          <div
+            className="grid gap-x-10 justify-items-center grid-cols-3 mx-60  "
+            key={index}
+          >
+            <div className="px-6 my-2 ">
+              <span className="ml-6 mr-1">{item.name}</span>
+              <button
+                className="opacity-20 hover:opacity-80"
+                onClick={() => toggleNameUpdate(item)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  Remove
-                </button>
-                <button
-                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-                  onClick={() => moveToTried(item)}
-                >
-                  Move To Tried
-                </button>
-              </div>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  />
+                </svg>
+              </button>
             </div>
-          );
-        }
-      )}
+            <div className="mx-6 my-2">
+              <span className="m-2 px-2">{item.description}</span>
+              <button
+                className="opacity-20 hover:opacity-100 transition duration-150"
+                onClick={() => toggleDescUpdate(item)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="px-6 my-2">
+              <button
+                className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                onClick={() => removeItem(item)}
+              >
+                Remove
+              </button>
+              <button
+                className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                onClick={() => moveToTried(item)}
+              >
+                Move To Tried
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
