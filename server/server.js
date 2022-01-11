@@ -6,10 +6,10 @@ const { createToken, checkToken } = require("./JWT");
 const cookieParser = require("cookie-parser");
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "LaptopWaterParis1027$",
-  database: "rest-rolo",
+  host: "us-cdbr-east-05.cleardb.net",
+  user: "b6a3b0afd0bdbd",
+  password: "0aba06ee",
+  database: "heroku_c053088a3022d84",
 });
 
 const app = express();
