@@ -1,0 +1,24 @@
+{
+  "name": "restaurant-rolodex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonNavinS/Restaurant-Rolodex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DonNavinS/Restaurant-Rolodex/issues"
+  },
+  "homepage": "https://github.com/DonNavinS/Restaurant-Rolodex#readme"
+}
