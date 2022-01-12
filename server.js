@@ -4,7 +4,7 @@ const cors = require("cors");
 const { createToken, checkToken } = require("./server/JWT");
 const cookieParser = require("cookie-parser");
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: "us-cdbr-east-05.cleardb.net",
   user: "b6a3b0afd0bdbd",
   password: "0aba06ee",
