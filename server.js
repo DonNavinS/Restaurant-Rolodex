@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const { createToken, checkToken } = require("./JWT");
+const { createToken, checkToken } = require("./server/JWT");
 const cookieParser = require("cookie-parser");
 
 const db = mysql.createConnection({
