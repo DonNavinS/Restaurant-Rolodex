@@ -1,1 +1,1 @@
-web:node server/serverasd.js
+web:node ./server/server.js
