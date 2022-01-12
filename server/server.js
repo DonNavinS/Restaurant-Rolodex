@@ -156,6 +156,8 @@ app.put("/tried/update/description/:id", (req, res) => {
   const newDesc = req.body.newDesc;
   db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
-app.listen(3001, () => {
-  console.log("SERVER RUNNING");
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
