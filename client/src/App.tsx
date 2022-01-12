@@ -37,7 +37,7 @@ function App() {
         </div>
         <div className="App">
           <Switch>
-            <Route exact path="/home">
+            <Route exact path="/">
               <Home />
             </Route>
             <Route exact path="/total">
