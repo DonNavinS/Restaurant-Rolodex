@@ -3,6 +3,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const { createToken, checkToken } = require("./server/JWT");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const db = mysql.createPool({
   host: "us-cdbr-east-05.cleardb.net",
