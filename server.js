@@ -17,6 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/client/index.html"));
+});
+
 // ROUTES FOR SIGNUP AND LOGIN
 app.post("/signup", (req, res) => {
   const username = req.body.username;
