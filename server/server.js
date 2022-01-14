@@ -21,9 +21,9 @@ app.use(cookieParser());
 const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
-app.get("/total", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
-});
+// app.get("/total", (req, res) => {
+//   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
+// });
 // app.get("(/*)?", (req, res) => {
 //   console.log("it made it in here");
 //   res.sendFile(path.join(buildFolder, "index.html"));
@@ -74,7 +74,7 @@ app.get("/api/user/login", checkToken, (req, res) => {
 });
 
 // ROUTES FOR TOTAL TABLE
-app.post("/api/total/:id", (req, res) => {
+app.get("/api/total/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
     res.send(result);
