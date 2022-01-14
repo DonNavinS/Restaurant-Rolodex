@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import { apiClient } from "./ApiClient";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   addDataAction,
@@ -22,7 +23,7 @@ export default function TotalV2() {
   const dispatch = useDispatch();
 
   const getData = async () => {
-    const response = await Axios.get(`http://localhost:3001/total/${user_id}`);
+    const response = await apiClient.get(`/total/${user_id}`);
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
       dispatch(wipeTriedData());
@@ -30,7 +31,7 @@ export default function TotalV2() {
   };
 
   const postData = async () => {
-    const response = await Axios.post("http://localhost:3001/total/add", {
+    const response = await apiClient.post("/total/add", {
       name: restName,
       description: restDesc,
       username: username,
@@ -42,9 +43,7 @@ export default function TotalV2() {
   };
 
   const removeItem = async (item: TotalRestaurant) => {
-    const response = await Axios.delete(
-      `http://localhost:3001/total/remove/${item.idtotal}`
-    );
+    const response = await apiClient.delete(`/total/remove/${item.idtotal}`);
     dispatch(removeDataAction(parseInt(response.data.id)));
   };
 
@@ -64,7 +63,7 @@ export default function TotalV2() {
     if (updatedName === null) {
       alert("No changes made");
     } else {
-      Axios.put(`http://localhost:3001/total/update/name/${item.idtotal}`, {
+      apiClient.put(`/total/update/name/${item.idtotal}`, {
         newName: updatedName,
       });
       dispatch(updateTotalDataName(item.idtotal, updatedName));
@@ -76,17 +75,16 @@ export default function TotalV2() {
     if (!updatedDesc) {
       alert("No changes made");
     } else {
-      Axios.put(
-        `http://localhost:3001/total/update/description/${item.idtotal}`,
-        { newDesc: updatedDesc }
-      );
+      apiClient.put(`/total/update/description/${item.idtotal}`, {
+        newDesc: updatedDesc,
+      });
       dispatch(updateTotalDataDescription(item.idtotal, updatedDesc));
     }
   };
 
   const moveToTried = (item: TotalRestaurant) => {
     removeItem(item);
-    Axios.post("http://localhost:3001/tried/add", {
+    apiClient.post("/tried/add", {
       name: item.name,
       description: item.description,
       username: username,

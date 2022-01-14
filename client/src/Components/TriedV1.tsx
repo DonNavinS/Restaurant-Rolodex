@@ -21,9 +21,7 @@ export default function TriedV1() {
 
   const getData = async () => {
     if (user_id !== null) {
-      const response = await Axios.get(
-        `http://localhost:3001/tried/${user_id}`
-      );
+      const response = await Axios.get(`/tried/${user_id}`);
       if (triedData.length === 0) {
         dispatch(triedDataAction(response.data));
       }
@@ -31,7 +29,7 @@ export default function TriedV1() {
   };
 
   const postData = async () => {
-    const response = await Axios.post("http://localhost:3001/tried/add", {
+    const response = await Axios.post("/tried/add", {
       name: newName,
       description: newDesc,
       username: username,
@@ -43,9 +41,7 @@ export default function TriedV1() {
   };
 
   const removeItem = async (item: TriedRestaurant) => {
-    const response = await Axios.delete(
-      `http://localhost:3001/tried/remove/${item.idtried}`
-    );
+    const response = await Axios.delete(`/tried/remove/${item.idtried}`);
     const id = parseInt(response.data.idtried);
     dispatch(removeTriedDataAction(id));
   };
@@ -55,7 +51,7 @@ export default function TriedV1() {
     if (updatedName === null) {
       alert("No changes made");
     } else {
-      Axios.put(`http://localhost:3001/tried/update/name/${item.idtried}`, {
+      Axios.put(`/tried/update/name/${item.idtried}`, {
         newName: updatedName,
       });
       dispatch(updateTriedName(item.idtried, updatedName));
@@ -67,10 +63,9 @@ export default function TriedV1() {
     if (!updatedDesc) {
       alert("No changes made");
     } else {
-      Axios.put(
-        `http://localhost:3001/tried/update/description/${item.idtried}`,
-        { newDesc: updatedDesc }
-      );
+      Axios.put(`/tried/update/description/${item.idtried}`, {
+        newDesc: updatedDesc,
+      });
       dispatch(updateTriedDescription(item.idtried, updatedDesc));
     }
   };

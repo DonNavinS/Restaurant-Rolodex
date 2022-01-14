@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { apiClient } from "./ApiClient";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const createNewUser = () => {
-    Axios.post("http://localhost:3001/signup", {
+    apiClient.post("/signup", {
       username: username,
       password: password,
     });

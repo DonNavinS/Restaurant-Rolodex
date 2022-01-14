@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../actions/authActions";
 import usernameAction from "../actions/usernameActions";
 import { idAction } from "../actions/IdAction";
 import { Redirect } from "react-router-dom";
 import { GlobalState } from "../Type";
+import { apiClient } from "./ApiClient";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -15,24 +15,26 @@ export default function Login() {
   const loggedInRedux = useSelector((state: GlobalState) => state.auth);
 
   const login = () => {
-    Axios.post("http://localhost:3001/login", {
-      username: username,
-      password: password,
-    }).then((response) => {
-      if (response.data === "Invalid Credentials") {
-        alert("Invalid Login Credentials");
-      } else {
-        const user_id = response.data.user.ID;
-        console.log(response);
-        dispatch(loginAction());
-        dispatch(usernameAction(username));
-        dispatch(idAction(user_id));
-        localStorage.setItem("user_id", user_id);
-        localStorage.setItem("username", username);
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("token", response.data.token);
-      }
-    });
+    apiClient
+      .post("/login", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        if (response.data === "Invalid Credentials") {
+          alert("Invalid Login Credentials");
+        } else {
+          const user_id = response.data.user.ID;
+          console.log(response);
+          dispatch(loginAction());
+          dispatch(usernameAction(username));
+          dispatch(idAction(user_id));
+          localStorage.setItem("user_id", user_id);
+          localStorage.setItem("username", username);
+          localStorage.setItem("loggedIn", "true");
+          localStorage.setItem("token", response.data.token);
+        }
+      });
   };
 
   const setUsernameState = (e: {

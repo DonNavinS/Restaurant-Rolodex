@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 //   const [newDesc, setNewDesc] = useState("");
 
 //   const getData = () => {
-//     fetch("http://localhost:3001/total", {
+//     fetch("/total", {
 //       mode: "cors",
 //     })
 //       .then((response) => {
@@ -22,7 +22,7 @@ import React, { useEffect, useState } from "react";
 //   };
 
 //   const postData = () => {
-//     Axios.post("http://localhost:3001/total/add", {
+//     Axios.post("/total/add", {
 //       name: restName,
 //       description: restDesc,
 //     });
@@ -30,12 +30,12 @@ import React, { useEffect, useState } from "react";
 //   };
 
 //   const removeItem = (item) => {
-//     Axios.delete(`http://localhost:3001/total/remove/${item.name}`, {});
+//     Axios.delete(`/total/remove/${item.name}`, {});
 //     window.location.reload();
 //   };
 
 //   const updateName = (item) => {
-//     Axios.put(`http://localhost:3001/total/update/name/${item.name}`, {
+//     Axios.put(`/total/update/name/${item.name}`, {
 //       newName: newName,
 //     });
 //     window.location.reload();
@@ -43,7 +43,7 @@ import React, { useEffect, useState } from "react";
 
 //   const updateDesc = (item) => {
 //     Axios.put(
-//       `http://localhost:3001/total/update/description/${item.description}`,
+//       `/total/update/description/${item.description}`,
 //       {
 //         newDesc: newDesc,
 //       }
@@ -53,7 +53,7 @@ import React, { useEffect, useState } from "react";
 
 //   const moveToTried = (item) => {
 //     removeItem(item);
-//     Axios.post("http://localhost:3001/tried/add", {
+//     Axios.post("/tried/add", {
 //       name: item.name,
 //       description: item.description,
 //     });
