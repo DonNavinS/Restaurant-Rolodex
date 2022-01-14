@@ -21,7 +21,7 @@ app.use(cookieParser());
 const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
-app.get("*", (req, res) => {
+app.get("/total", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 // app.get("(/*)?", (req, res) => {
