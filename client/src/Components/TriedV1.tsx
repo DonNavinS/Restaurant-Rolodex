@@ -22,7 +22,9 @@ export default function TriedV1() {
 
   const getData = async () => {
     if (user_id !== null) {
-      const response = await apiClient.get(`/tried/${user_id}`);
+      const response = await Axios.get(
+        "https://restaurant-rolodex.herokuapp.com/api/tried/4"
+      );
       if (triedData.length === 0 && response.data.length < 100) {
         dispatch(triedDataAction(response.data));
       }
