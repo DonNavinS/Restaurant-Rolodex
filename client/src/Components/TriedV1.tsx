@@ -23,7 +23,7 @@ export default function TriedV1() {
   const getData = async () => {
     if (user_id !== null) {
       const response = await apiClient.get(`/tried/${user_id}`);
-      if (triedData.length === 0 && response.data.length < 200) {
+      if (triedData.length === 0 && response.data.length < 100) {
         dispatch(triedDataAction(response.data));
       }
     }
