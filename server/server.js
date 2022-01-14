@@ -22,7 +22,7 @@ const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(buildFolder, "index.html"));
+  res.sendFile(buildFolder, "index.html");
 });
 // app.get("(/*)?", (req, res) => {
 //   console.log("it made it in here");
