@@ -21,9 +21,7 @@ app.use(cookieParser());
 const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
-// app.get("/total", (req, res) => {
-//   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
-// });
+
 // app.get("(/*)?", (req, res) => {
 //   console.log("it made it in here");
 //   res.sendFile(path.join(buildFolder, "index.html"));
@@ -169,6 +167,9 @@ app.put("/api/tried/update/description/:id", (req, res) => {
   db.query(`UPDATE tried SET descriptin='${newDesc}' WHERE idtried ='${id}'`);
 });
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
+});
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`SERVER RUNNING ON PORT ${PORT}`);
