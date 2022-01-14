@@ -74,7 +74,7 @@ app.get("/api/user/login", checkToken, (req, res) => {
 });
 
 // ROUTES FOR TOTAL TABLE
-app.get("/api/total/:id", (req, res) => {
+app.post("/api/total/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
     res.send(result);

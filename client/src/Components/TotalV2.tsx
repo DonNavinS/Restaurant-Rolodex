@@ -23,7 +23,7 @@ export default function TotalV2() {
   const dispatch = useDispatch();
 
   const getData = async () => {
-    const response = await apiClient.get(`/total/${user_id}`);
+    const response = await apiClient.post(`/total/${user_id}`);
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
       dispatch(wipeTriedData());
