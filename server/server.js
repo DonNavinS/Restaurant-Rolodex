@@ -18,10 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, "dist")));
-app.get("/*", (req, res) => {
-  // res.sendFile(path.resolve(__dirname + "/client/dist/index.html"));
-  res.send("working");
+app.use("/", express.static(path.join(__dirname, "../client/dist")));
+app.get("/", (req, res) => {
+  console.log("it made it in here");
+  res.sendFile(path.join(__dirname + "../client/dist/index.html"));
 });
 
 // ROUTES FOR SIGNUP AND LOGIN
