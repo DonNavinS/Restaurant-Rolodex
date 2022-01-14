@@ -21,10 +21,10 @@ app.use(cookieParser());
 const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
-app.get("(/*)?", (req, res) => {
-  console.log("it made it in here");
-  res.sendFile(path.join(buildFolder, "index.html"));
-});
+// app.get("(/*)?", (req, res) => {
+//   console.log("it made it in here");
+//   res.sendFile(path.join(buildFolder, "index.html"));
+// });
 
 // ROUTES FOR SIGNUP AND LOGIN
 app.post("/api/signup", (req, res) => {
