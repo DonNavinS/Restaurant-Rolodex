@@ -22,7 +22,7 @@ export default function TriedV1() {
   const getData = async () => {
     if (user_id !== null) {
       const response = await Axios.get(`/tried/${user_id}`);
-      if (triedData.length === 0) {
+      if (triedData.length === 0 && response.data.length < 200) {
         dispatch(triedDataAction(response.data));
       }
     }
