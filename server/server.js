@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
-const { createToken, checkToken } = require("./server/JWT");
+const { createToken, checkToken } = require("./JWT");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
