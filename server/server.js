@@ -19,7 +19,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "../client/dist")));
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   console.log("it made it in here");
   res.sendFile(path.join(__dirname + "../client/dist/index.html"));
 });
