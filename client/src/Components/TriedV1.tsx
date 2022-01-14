@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTriedDataAction,
@@ -22,9 +21,7 @@ export default function TriedV1() {
 
   const getData = async () => {
     if (user_id !== null) {
-      const response = await Axios.get(
-        "https://restaurant-rolodex.herokuapp.com/api/tried/4"
-      );
+      const response = await apiClient.get(`/tried/${user_id}`);
       if (triedData.length === 0 && response.data.length < 100) {
         dispatch(triedDataAction(response.data));
       }
@@ -32,7 +29,7 @@ export default function TriedV1() {
   };
 
   const postData = async () => {
-    const response = await Axios.post("/tried/add", {
+    const response = await apiClient.post("/tried/add", {
       name: newName,
       description: newDesc,
       username: username,
@@ -44,7 +41,7 @@ export default function TriedV1() {
   };
 
   const removeItem = async (item: TriedRestaurant) => {
-    const response = await Axios.delete(`/tried/remove/${item.idtried}`);
+    const response = await apiClient.delete(`/tried/remove/${item.idtried}`);
     const id = parseInt(response.data.idtried);
     dispatch(removeTriedDataAction(id));
   };
@@ -54,7 +51,7 @@ export default function TriedV1() {
     if (updatedName === null) {
       alert("No changes made");
     } else {
-      Axios.put(`/tried/update/name/${item.idtried}`, {
+      apiClient.put(`/tried/update/name/${item.idtried}`, {
         newName: updatedName,
       });
       dispatch(updateTriedName(item.idtried, updatedName));
@@ -66,7 +63,7 @@ export default function TriedV1() {
     if (!updatedDesc) {
       alert("No changes made");
     } else {
-      Axios.put(`/tried/update/description/${item.idtried}`, {
+      apiClient.put(`/tried/update/description/${item.idtried}`, {
         newDesc: updatedDesc,
       });
       dispatch(updateTriedDescription(item.idtried, updatedDesc));
