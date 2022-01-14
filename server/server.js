@@ -67,6 +67,7 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/user/login", checkToken, (req, res) => {
   res.send("WORKING");
+  console.log("WORKING");
 });
 
 // ROUTES FOR TOTAL TABLE
