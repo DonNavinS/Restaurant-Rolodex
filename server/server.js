@@ -20,10 +20,6 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/client/dist/index.html"));
-});
-
 // ROUTES FOR SIGNUP AND LOGIN
 app.post("/signup", (req, res) => {
   const username = req.body.username;
@@ -161,6 +157,10 @@ app.put("/tried/update/description/:id", (req, res) => {
   const id = req.params.id;
   const newDesc = req.body.newDesc;
   db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/client/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 3001;
