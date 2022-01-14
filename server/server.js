@@ -19,13 +19,13 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "../client/dist")));
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
   console.log("it made it in here");
   res.sendFile(path.join(__dirname + "../client/dist/index.html"));
 });
 
 // ROUTES FOR SIGNUP AND LOGIN
-app.post("/signup", (req, res) => {
+app.post("/api/signup", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   db.query(
@@ -37,7 +37,7 @@ app.post("/signup", (req, res) => {
   );
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -63,12 +63,12 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/user/login", checkToken, (req, res) => {
+app.get("/api/user/login", checkToken, (req, res) => {
   res.send("WORKING");
 });
 
 // ROUTES FOR TOTAL TABLE
-app.get("/total/:id", (req, res) => {
+app.get("/api/total/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
     res.send(result);
@@ -77,7 +77,7 @@ app.get("/total/:id", (req, res) => {
   });
 });
 
-app.post("/total/add", (req, res) => {
+app.post("/api/total/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const username = req.body.username;
@@ -97,7 +97,7 @@ app.post("/total/add", (req, res) => {
   );
 });
 
-app.delete("/total/remove/:id", (req, res) => {
+app.delete("/api/total/remove/:id", (req, res) => {
   const id = req.params.id;
   db.query(`DELETE FROM total WHERE idtotal = '${id}'`, (err, result) => {
     console.log("ITEM DELETED");
@@ -106,27 +106,27 @@ app.delete("/total/remove/:id", (req, res) => {
   res.send({ id: id });
 });
 
-app.put("/total/update/name/:id", (req, res) => {
+app.put("/api/total/update/name/:id", (req, res) => {
   const id = req.params.id;
   const newName = req.body.newName;
   db.query(`UPDATE total SET name='${newName}' WHERE idtotal ='${id}'`);
 });
 
-app.put("/total/update/description/:id", (req, res) => {
+app.put("/api/total/update/description/:id", (req, res) => {
   const id = req.params.id;
   const newDesc = req.body.newDesc;
   db.query(`UPDATE total SET description='${newDesc}' WHERE idtotal ='${id}'`);
 });
 
 // ROUTES FOR TRIED TABLE
-app.get("/tried/:id", (req, res) => {
+app.get("/api/tried/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * FROM tried WHERE user_id='${id}'`, (err, result) => {
     res.send(result);
   });
 });
 
-app.post("/tried/add", (req, res) => {
+app.post("/api/tried/add", (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const username = req.body.username;
@@ -144,20 +144,20 @@ app.post("/tried/add", (req, res) => {
   );
 });
 
-app.delete("/tried/remove/:id", (req, res) => {
+app.delete("/api/tried/remove/:id", (req, res) => {
   const id = req.params.id;
   db.query(`DELETE FROM tried WHERE idtried = '${id}'`);
 
   res.send({ idtried: id });
 });
 
-app.put("/tried/update/name/:id", (req, res) => {
+app.put("/api/tried/update/name/:id", (req, res) => {
   const id = req.params.id;
   const newName = req.body.newName;
   db.query(`UPDATE tried SET name='${newName}' WHERE idtried ='${id}'`);
 });
 
-app.put("/tried/update/description/:id", (req, res) => {
+app.put("/api/tried/update/description/:id", (req, res) => {
   const id = req.params.id;
   const newDesc = req.body.newDesc;
   db.query(`UPDATE tried SET descriptin='${newDesc}' WHERE idtried ='${id}'`);
