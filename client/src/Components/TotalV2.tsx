@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { apiClient } from "./ApiClient";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   addDataAction,
@@ -11,6 +10,7 @@ import {
 } from "../actions/totalDataAction";
 import { wipeTriedData } from "../actions/triedDataAction";
 import { TotalRestaurant, GlobalState } from "../Type";
+import { pencilIcon } from "../icons/icons";
 
 export default function TotalV2() {
   // const [retrievedData, setRetrievedData] = useState([]);
@@ -100,12 +100,6 @@ export default function TotalV2() {
     <div>
       <div className="flex justify-center p-2">
         <button
-          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-          onClick={getData}
-        >
-          GET
-        </button>
-        <button
           className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out mx-2"
           onClick={postData}
         >
@@ -141,20 +135,7 @@ export default function TotalV2() {
                 className="opacity-20 hover:opacity-80"
                 onClick={() => toggleNameUpdate(item)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  />
-                </svg>
+                <span>{pencilIcon}</span>
               </button>
             </div>
             <div className="mx-6 my-2">
@@ -163,20 +144,7 @@ export default function TotalV2() {
                 className="opacity-20 hover:opacity-100 transition duration-150"
                 onClick={() => toggleDescUpdate(item)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  />
-                </svg>
+                <span>{pencilIcon}</span>
               </button>
             </div>
             <div className="px-6 my-2">

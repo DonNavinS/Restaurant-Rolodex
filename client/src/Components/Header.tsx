@@ -37,12 +37,18 @@ export default function Header() {
         </Link>
       </div>
       {!loggedIn ? (
-        <div className="flex">
+        <div className="m-2 inline-flex">
           <Redirect to="/login" />
-          <Link className="p-2" to="/signup">
+          <Link
+            to="/signup"
+            className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+          >
             SIGNUP
           </Link>
-          <Link className="p-2" to="/login">
+          <Link
+            to="/login"
+            className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+          >
             LOGIN
           </Link>
         </div>

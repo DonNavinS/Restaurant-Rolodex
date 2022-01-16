@@ -89,12 +89,6 @@ export default function TriedV1() {
     <div>
       <div className="flex justify-center p-2">
         <button
-          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-          onClick={getData}
-        >
-          GET
-        </button>
-        <button
           className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out mx-2"
           onClick={postData}
         >
@@ -125,19 +119,45 @@ export default function TriedV1() {
               <div className="px-6 my-2">
                 <span className="pl-11 m-2 ">{item.name}</span>
                 <button
-                  className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  className="opacity-20 hover:opacity-80"
                   onClick={() => toggleNameUpdate(item)}
                 >
-                  Edit Name
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                    />
+                  </svg>
                 </button>
               </div>
               <div className="my-2">
                 <span className="px-2 m-2 ">{item.description}</span>
                 <button
-                  className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  className="opacity-20 hover:opacity-80"
                   onClick={() => toggleDescUpdate(item)}
                 >
-                  Edit Description
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                    />
+                  </svg>
                 </button>
               </div>
               <div className="my-2">

@@ -170,7 +170,7 @@ app.put("/api/tried/update/name/:id", (req, res) => {
 app.put("/api/tried/update/description/:id", (req, res) => {
   const id = req.params.id;
   const newDesc = req.body.newDesc;
-  db.query(`UPDATE tried SET descriptin='${newDesc}' WHERE idtried ='${id}'`);
+  db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
 
 app.get("*", (req, res) => {
