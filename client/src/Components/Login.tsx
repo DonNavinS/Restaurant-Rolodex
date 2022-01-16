@@ -64,18 +64,25 @@ export default function Login() {
   return (
     <div>
       {!loggedInRedux ? (
-        <div>
+        <div className="flex justify-center mt-4">
           <input
+            className="m-2 rounded p-1"
             type="text"
             placeholder="Username"
             onChange={setUsernameState}
           />
           <input
+            className="m-2 rounded p-1"
             type="text"
             placeholder="Password"
             onChange={setPasswordState}
           />
-          <button onClick={login}>LOGIN</button>
+          <button
+            className="m-2 bg-blue-300 rounded hover:bg-blue-500  p-2 transition duration-300 ease-in-out"
+            onClick={login}
+          >
+            LOGIN
+          </button>
         </div>
       ) : (
         <Redirect to="/total" />
