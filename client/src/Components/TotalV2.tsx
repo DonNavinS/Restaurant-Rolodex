@@ -129,7 +129,7 @@ export default function TotalV2() {
             className="grid gap-x-10 justify-items-center grid-cols-3 mx-60  "
             key={index}
           >
-            <div className="px-6 my-2 ">
+            <div className="px-6 my-2 flex">
               <span className="ml-6 mr-1">{item.name}</span>
               <button
                 className="opacity-20 hover:opacity-80"
@@ -138,7 +138,7 @@ export default function TotalV2() {
                 <span>{pencilIcon}</span>
               </button>
             </div>
-            <div className="mx-6 my-2">
+            <div className="mx-6 my-2 flex">
               <span className="m-2 px-2">{item.description}</span>
               <button
                 className="opacity-20 hover:opacity-100 transition duration-150"

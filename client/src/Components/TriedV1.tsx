@@ -7,6 +7,7 @@ import {
   updateTriedDescription,
   updateTriedName,
 } from "../actions/triedDataAction";
+import { pencilIcon } from "../icons/icons";
 import { GlobalState, TriedRestaurant } from "../Type";
 import { apiClient } from "./ApiClient";
 
@@ -116,48 +117,22 @@ export default function TriedV1() {
               className="grid grid-cols-3 justify-items-center mx-60"
               key={index}
             >
-              <div className="px-6 my-2">
+              <div className="px-6 my-2 flex">
                 <span className="pl-11 m-2 ">{item.name}</span>
                 <button
-                  className="opacity-20 hover:opacity-80"
+                  className="opacity-20 hover:opacity-80 transition duration-500 ease-in-out"
                   onClick={() => toggleNameUpdate(item)}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    />
-                  </svg>
+                  <span>{pencilIcon}</span>
                 </button>
               </div>
-              <div className="my-2">
+              <div className="my-2 flex">
                 <span className="px-2 m-2 ">{item.description}</span>
                 <button
-                  className="opacity-20 hover:opacity-80"
+                  className="opacity-20 hover:opacity-80 transition duration-500 ease-in-out"
                   onClick={() => toggleDescUpdate(item)}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    />
-                  </svg>
+                  <span>{pencilIcon}</span>
                 </button>
               </div>
               <div className="my-2">

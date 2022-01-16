@@ -15,8 +15,8 @@ export default function Header() {
     dispatch(logoutAction());
   };
   return (
-    <nav className="flex justify-around bg-blue-400">
-      <div className="my-4">
+    <nav className="flex justify-around bg-blue-400 pb-6 text-xl w-full">
+      <div className="mt-6 my-auto inline-flex">
         <Link
           className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
           to="/home"
@@ -37,7 +37,7 @@ export default function Header() {
         </Link>
       </div>
       {!loggedIn ? (
-        <div className="m-2 inline-flex">
+        <div className="mt-6 inline-flex">
           <Redirect to="/login" />
           <Link
             to="/signup"

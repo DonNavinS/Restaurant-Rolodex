@@ -42,7 +42,7 @@ export default function Signup() {
         <div className="flex-col text-center mt-4 ">
           {/* USERNAME INPUT  */}
           <input
-            className="m-2 rounded p-1 mr-9"
+            className="m-2 rounded p-2 mr-9"
             type="text"
             placeholder="Enter Username"
             onChange={(e) => {
@@ -52,7 +52,7 @@ export default function Signup() {
           <div className="flex justify-center">
             {/* PASSWORD INPUT  */}
             <input
-              className="m-2 rounded p-1"
+              className="m-2 rounded p-2"
               type={!showPassword ? "password" : "text"}
               placeholder="Enter Password"
               onChange={(e) => {
@@ -66,7 +66,7 @@ export default function Signup() {
           <div className="flex justify-center">
             {/* CONFIRM PASSWORD INPUT */}
             <input
-              className="m-2 rounded p-1"
+              className="m-2 rounded p-2"
               type={!showConfirmPassword ? "password" : "text"}
               placeholder="Confirm Password"
               onChange={(e) => {
