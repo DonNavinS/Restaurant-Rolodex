@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../actions/authActions";
-import usernameAction from "../actions/usernameActions";
+import { usernameAction } from "../actions/usernameActions";
 import { idAction } from "../actions/IdAction";
 import { Redirect } from "react-router-dom";
 import { GlobalState } from "../Type";
 import { apiClient } from "./ApiClient";
+import { totalDataAction } from "../actions/totalDataAction";
+import { triedDataAction } from "../actions/triedDataAction";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -13,6 +15,17 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const loggedInRedux = useSelector((state: GlobalState) => state.auth);
+
+  const getTotalData = async (id: Number) => {
+    const totalResponse = await apiClient.get(`/total/${id}`);
+    dispatch(totalDataAction(totalResponse.data));
+    console.log(totalResponse);
+  };
+
+  const getTriedData = async (id: Number) => {
+    const triedResponse = await apiClient.get(`tried/${id}`);
+    dispatch(triedDataAction(triedResponse.data));
+  };
 
   const login = () => {
     apiClient
@@ -24,15 +37,16 @@ export default function Login() {
         if (response.data === "Invalid Credentials") {
           alert("Invalid Login Credentials");
         } else {
-          const user_id = response.data.user.ID;
-          console.log(response);
+          const userID = response.data.user.ID;
           dispatch(loginAction());
           dispatch(usernameAction(username));
-          dispatch(idAction(user_id));
-          localStorage.setItem("user_id", user_id);
+          dispatch(idAction(userID));
+          localStorage.setItem("user_id", userID);
           localStorage.setItem("username", username);
           localStorage.setItem("loggedIn", "true");
           localStorage.setItem("token", response.data.token);
+          getTotalData(userID);
+          getTriedData(userID);
         }
       });
   };
@@ -85,7 +99,7 @@ export default function Login() {
           </button>
         </div>
       ) : (
-        <Redirect to="/total" />
+        <Redirect to="/tried" />
       )}
     </div>
   );

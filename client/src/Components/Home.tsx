@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import TotalV2 from "./TotalV2";
-import TriedV1 from "./TriedV1";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, logoutAction } from "../actions/authActions";
+import { GlobalState } from "../Type";
+import { apiClient } from "./ApiClient";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state: GlobalState) => state.auth);
+  const getToken = () => {
+    return localStorage.getItem("token");
+  };
   const checkForToken = () => {
-    if (!localStorage.getItem("token ")) {
-      setLoggedIn(false);
+    const token = getToken();
+    if (token) {
+      dispatch(loginAction());
     } else {
-      setLoggedIn(true);
+      dispatch(logoutAction());
     }
   };
 
@@ -18,10 +25,7 @@ export default function Home() {
   return (
     <div>
       {loggedIn ? (
-        <div>
-          <TotalV2 />
-          <TriedV1 />
-        </div>
+        <div className="flex"></div>
       ) : (
         <div>Log in to see restaurants!</div>
       )}

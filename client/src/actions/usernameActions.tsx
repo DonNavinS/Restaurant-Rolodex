@@ -1,9 +1,13 @@
-import { UPDATE_USERNAME } from "./index";
-const usernameAction = (username: string) => {
+import { REMOVE_USERNAME, UPDATE_USERNAME } from "./index";
+export const usernameAction = (username: string) => {
   return {
     type: UPDATE_USERNAME,
     payload: username,
   };
 };
 
-export default usernameAction;
+export const removeUsernameAction = () => {
+  return {
+    type: REMOVE_USERNAME,
+  };
+};

@@ -26,7 +26,7 @@ export default function TotalV2() {
     const response = await apiClient.get(`/total/${user_id}`);
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
-      dispatch(wipeTriedData());
+      // dispatch(wipeTriedData());
     }
   };
 

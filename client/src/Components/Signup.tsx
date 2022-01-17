@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { loginAction } from "../actions/authActions";
 import { idAction } from "../actions/IdAction";
-import usernameAction from "../actions/usernameActions";
+import { usernameAction } from "../actions/usernameActions";
 import { closedEyeIcon, openEyeIcon } from "../icons/icons";
 import { GlobalState } from "../Type";
 import { apiClient } from "./ApiClient";

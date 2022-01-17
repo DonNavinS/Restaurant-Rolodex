@@ -3,16 +3,19 @@ import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../actions/authActions";
 import { GlobalState } from "../Type";
+import { removeUsernameAction } from "../actions/usernameActions";
 
 export default function Header() {
   const dispatch = useDispatch();
   const loggedIn = useSelector((state: GlobalState) => state.auth);
   const username = useSelector((state: GlobalState) => state.username);
   const logout = () => {
-    localStorage.removeItem("token ");
+    localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("loggedIn");
+    localStorage.removeItem("user_id");
     dispatch(logoutAction());
+    dispatch(removeUsernameAction());
   };
   return (
     <nav className="flex justify-around bg-blue-400 pb-6 text-xl w-full">
@@ -54,7 +57,7 @@ export default function Header() {
         </div>
       ) : (
         <div className="m-2 inline-flex">
-          <p className="p-2">welcome {username}</p>
+          <p className="p-2">Welcome {username}!</p>
           <button
             className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
             onClick={logout}
