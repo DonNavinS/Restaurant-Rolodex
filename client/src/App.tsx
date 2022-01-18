@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-red-500 h-screen w-full">
+      <div className="bg-rose-500 h-screen w-full">
         <div>
           <Header />
         </div>

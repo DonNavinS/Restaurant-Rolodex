@@ -18,8 +18,8 @@ export default function Header() {
     dispatch(removeUsernameAction());
   };
   return (
-    <nav className="flex justify-around bg-blue-400 pb-6 text-xl w-full">
-      <div className="mt-6 my-auto inline-flex">
+    <nav className="flex justify-around items-center bg-blue-400 pb-6 w-full py-4 text-2xl">
+      <div className="inline-flex items-center">
         <Link
           className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
           to="/home"
@@ -40,7 +40,7 @@ export default function Header() {
         </Link>
       </div>
       {!loggedIn ? (
-        <div className="mt-6 inline-flex">
+        <div className="inline-flex">
           <Redirect to="/login" />
           <Link
             to="/signup"
@@ -56,7 +56,7 @@ export default function Header() {
           </Link>
         </div>
       ) : (
-        <div className="m-2 inline-flex">
+        <div className="m-2 inline-flex items-center">
           <p className="p-2">Welcome {username}!</p>
           <button
             className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"

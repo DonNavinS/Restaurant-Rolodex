@@ -13,8 +13,8 @@ export default function Home() {
   const totalData = useSelector((state: GlobalState) => state.totalData);
   const triedData = useSelector((state: GlobalState) => state.triedData);
 
-  const triedDataDisplay = triedData.slice(-5);
-  const totalDataDisplay = totalData.slice(-5);
+  const triedDataDisplay = triedData.slice(-5).reverse();
+  const totalDataDisplay = totalData.slice(-5).reverse();
 
   // const getToken = () => {
   //   return localStorage.getItem("token");
@@ -45,17 +45,28 @@ export default function Home() {
   return (
     <div>
       {loggedIn ? (
-        <div className="flex justify-center my-8 gap-x-20 text-2xl">
-          <div className="flex flex-col-reverse ">
-            {totalDataDisplay.map((item) => {
-              return <div>name: {item.name}</div>;
-            })}
+        <div>
+          <div className="flex justify-center text-5xl">
+            Recently Updated Restaurants
           </div>
+          <div className="flex justify-center text-xl mt-6">
+            To view the complete lists of your total and tried restaurants,
+            click the links at the top of the page!
+          </div>
+          <div className="flex justify-center items-center my-8 gap-x-20 text-2xl">
+            <div className="flex flex-col justify-center items-center">
+              <div>TOTAL</div>
+              {totalDataDisplay.map((item) => {
+                return <div>name: {item.name}</div>;
+              })}
+            </div>
 
-          <div className="flex flex-col-reverse">
-            {triedDataDisplay.map((item) => {
-              return <div>{item.name}</div>;
-            })}
+            <div className="flex flex-col justify-center items-center">
+              <div>TRIED</div>
+              {triedDataDisplay.map((item) => {
+                return <div>{item.name}</div>;
+              })}
+            </div>
           </div>
         </div>
       ) : (
