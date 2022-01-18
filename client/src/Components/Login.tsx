@@ -99,7 +99,7 @@ export default function Login() {
           </button>
         </div>
       ) : (
-        <Redirect to="/tried" />
+        <Redirect to="/home" />
       )}
     </div>
   );

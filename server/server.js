@@ -173,7 +173,7 @@ app.put("/api/tried/update/description/:id", (req, res) => {
   db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 const PORT = process.env.PORT || 3001;
