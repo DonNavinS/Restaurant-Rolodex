@@ -50,8 +50,9 @@ export default function Home() {
             Recently Updated Restaurants
           </div>
           <div className="flex justify-center text-xl mt-6">
-            To view the complete lists of your total and tried restaurants,
-            click the links at the top of the page!
+            To view the complete lists of your total and tried restaurants, and
+            to add, update, or delete restaurants, click the links at the top of
+            the page!
           </div>
           <div className="flex justify-center items-center my-8 gap-x-20 text-2xl">
             <div className="flex flex-col justify-center items-center">

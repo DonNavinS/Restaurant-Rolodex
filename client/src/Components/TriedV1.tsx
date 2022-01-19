@@ -19,6 +19,7 @@ export default function TriedV1() {
   const triedData = useSelector((state: GlobalState) => state.triedData);
   const username = useSelector((state: GlobalState) => state.username);
   const user_id = useSelector((state: GlobalState) => state.user_id);
+  const loggedIn = useSelector((state: GlobalState) => state.auth);
 
   const getData = async () => {
     if (user_id !== null) {
@@ -88,29 +89,7 @@ export default function TriedV1() {
 
   return (
     <div>
-      <div className="flex justify-center p-2">
-        <button
-          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out mx-2"
-          onClick={postData}
-        >
-          POST
-        </button>
-        <input
-          className="mr-2 p-1 rounded"
-          value={newName}
-          placeholder="Restaurant Name"
-          type="text"
-          onChange={updateNewName}
-        />
-        <input
-          className=" p-1 rounded"
-          value={newDesc}
-          placeholder="Restaurant Description"
-          type="text"
-          onChange={updateNewDesc}
-        />
-      </div>
-      {triedData &&
+      {loggedIn && triedData ? (
         triedData.map((item, index) => {
           return (
             <div
@@ -145,7 +124,10 @@ export default function TriedV1() {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div>Log in to see your restaurants!</div>
+      )}
     </div>
   );
 }

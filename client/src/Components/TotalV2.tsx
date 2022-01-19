@@ -19,6 +19,7 @@ export default function TotalV2() {
   const username = useSelector((state: GlobalState) => state.username);
   const user_id = useSelector((state: GlobalState) => state.user_id);
   const totalData = useSelector((state: GlobalState) => state.totalData);
+  const loggedIn = useSelector((state: GlobalState) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -123,47 +124,51 @@ export default function TotalV2() {
         />
       </div>
 
-      {totalData.map((item, index) => {
-        return (
-          <div
-            className="grid gap-x-10 justify-items-center grid-cols-3 mx-60  "
-            key={index}
-          >
-            <div className="px-6 my-2 flex">
-              <span className="ml-6 mr-1">{item.name}</span>
-              <button
-                className="opacity-20 hover:opacity-80"
-                onClick={() => toggleNameUpdate(item)}
-              >
-                <span>{pencilIcon}</span>
-              </button>
+      {loggedIn && totalData ? (
+        totalData.map((item, index) => {
+          return (
+            <div
+              className="grid gap-x-10 justify-items-center grid-cols-3 mx-60  "
+              key={index}
+            >
+              <div className="px-6 my-2 flex">
+                <span className="ml-6 mr-1">{item.name}</span>
+                <button
+                  className="opacity-20 hover:opacity-80"
+                  onClick={() => toggleNameUpdate(item)}
+                >
+                  <span>{pencilIcon}</span>
+                </button>
+              </div>
+              <div className="mx-6 my-2 flex">
+                <span className="m-2 px-2">{item.description}</span>
+                <button
+                  className="opacity-20 hover:opacity-100 transition duration-150"
+                  onClick={() => toggleDescUpdate(item)}
+                >
+                  <span>{pencilIcon}</span>
+                </button>
+              </div>
+              <div className="px-6 my-2">
+                <button
+                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  onClick={() => removeItem(item)}
+                >
+                  Remove
+                </button>
+                <button
+                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  onClick={() => moveToTried(item)}
+                >
+                  Move To Tried
+                </button>
+              </div>
             </div>
-            <div className="mx-6 my-2 flex">
-              <span className="m-2 px-2">{item.description}</span>
-              <button
-                className="opacity-20 hover:opacity-100 transition duration-150"
-                onClick={() => toggleDescUpdate(item)}
-              >
-                <span>{pencilIcon}</span>
-              </button>
-            </div>
-            <div className="px-6 my-2">
-              <button
-                className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-                onClick={() => removeItem(item)}
-              >
-                Remove
-              </button>
-              <button
-                className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-                onClick={() => moveToTried(item)}
-              >
-                Move To Tried
-              </button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div>Log in to see your restaurants!</div>
+      )}
     </div>
   );
 }
