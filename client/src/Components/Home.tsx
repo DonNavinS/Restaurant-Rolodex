@@ -55,31 +55,33 @@ export default function Home() {
             to add, update, or delete restaurants, click the links at the top of
             the page!
           </div>
-          <div className="flex justify-center items-center my-8 gap-x-20 text-2xl">
-            <div className="flex flex-col justify-center items-center">
+          <div className="flex justify-center gap-x-20 p-10">
+            <div className="flex flex-col items-center">
               <Link
                 to="/total"
                 className="font-semibold text-3xl hover:text-white transition duration-200 "
               >
                 TOTAL
               </Link>
-
-              {totalDataDisplay.map((item) => {
-                return <div>Name: {item.name}</div>;
-              })}
+              <div className="flex flex-col items-center text-2xl">
+                {totalDataDisplay.map((item) => {
+                  return <div>Name: {item.name}</div>;
+                })}
+              </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center">
               <Link
                 to="/tried"
                 className="font-semibold text-3xl hover:text-white transition duration-200 "
               >
                 TRIED
               </Link>
-
-              {triedDataDisplay.map((item) => {
-                return <div>Name: {item.name}</div>;
-              })}
+              <div className="text-2xl">
+                {triedDataDisplay.map((item) => {
+                  return <div>Name: {item.name}</div>;
+                })}
+              </div>
             </div>
           </div>
         </div>
