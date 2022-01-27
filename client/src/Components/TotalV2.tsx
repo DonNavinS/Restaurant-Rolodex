@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { apiClient } from "./ApiClient";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addDataAction,
   removeDataAction,
@@ -61,6 +62,7 @@ export default function TotalV2() {
 
   const toggleNameUpdate = async (item: TotalRestaurant) => {
     let updatedName = prompt("Enter new Restaurant Name");
+
     if (updatedName === null) {
       alert("No changes made");
     } else {
@@ -98,41 +100,43 @@ export default function TotalV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
   return (
-    <div>
-      <div className="flex justify-center p-2">
-        <button
-          className="bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out mx-2"
-          onClick={postData}
-        >
-          POST
-        </button>
-        <input
-          className="mr-2 p-1 rounded"
-          placeholder="Restaurant Name"
-          type="text"
-          name="totalName"
-          value={restName}
-          onChange={updateRestName}
-        />
-        <input
-          className="p-1 rounded"
-          placeholder="Restaurant Description"
-          type="text"
-          value={restDesc}
-          name="totalDesc"
-          onChange={updateRestDesc}
-        />
-      </div>
+    <div className="font-medium">
+      {loggedIn && (
+        <div className="flex justify-center p-2">
+          <button
+            className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white py-1 px-2 transition duration-200 ease-in-out mx-2"
+            onClick={postData}
+          >
+            POST
+          </button>
+          <input
+            className="mx-2 p-1 rounded"
+            placeholder="Restaurant Name"
+            type="text"
+            name="totalName"
+            value={restName}
+            onChange={updateRestName}
+          />
+          <input
+            className="p-1 rounded"
+            placeholder="Restaurant Description"
+            type="text"
+            value={restDesc}
+            name="totalDesc"
+            onChange={updateRestDesc}
+          />
+        </div>
+      )}
 
       {loggedIn && totalData ? (
         totalData.map((item, index) => {
           return (
             <div
-              className="grid gap-x-10 justify-items-center grid-cols-3 mx-60  "
+              className="grid grid-cols-12 items-center rounded mx-4 p-1 hover:bg-blue-500 hover:bg-opacity-80 transition duration-200"
               key={index}
             >
-              <div className="px-6 my-2 flex">
-                <span className="ml-6 mr-1">{item.name}</span>
+              <div className="flex items-center col-start-2 h-fit">
+                <span className="p-2">{item.name}</span>
                 <button
                   className="opacity-20 hover:opacity-80"
                   onClick={() => toggleNameUpdate(item)}
@@ -140,7 +144,7 @@ export default function TotalV2() {
                   <span>{pencilIcon}</span>
                 </button>
               </div>
-              <div className="mx-6 my-2 flex">
+              <div className="flex items-center justify-center col-start-5 col-span-4">
                 <span className="m-2 px-2">{item.description}</span>
                 <button
                   className="opacity-20 hover:opacity-100 transition duration-150"
@@ -149,25 +153,30 @@ export default function TotalV2() {
                   <span>{pencilIcon}</span>
                 </button>
               </div>
-              <div className="px-6 my-2">
+              <div className="col-start-11 col-span-2">
                 <button
-                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
-                  onClick={() => removeItem(item)}
-                >
-                  Remove
-                </button>
-                <button
-                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
                   onClick={() => moveToTried(item)}
                 >
                   Move To Tried
+                </button>
+                <button
+                  className="font-medium mx-2 bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                  onClick={() => removeItem(item)}
+                >
+                  Remove
                 </button>
               </div>
             </div>
           );
         })
       ) : (
-        <div>Log in to see your restaurants!</div>
+        <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
+          <Link to="/login" className="pr-2 font-semibold hover:underline">
+            Login
+          </Link>
+          to see your restaurants!
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addTriedDataAction,
   removeTriedDataAction,
@@ -88,16 +89,42 @@ export default function TriedV1() {
   }, [username]);
 
   return (
-    <div>
+    <div className="font-medium">
+      {loggedIn && (
+        <div className="flex justify-center p-2">
+          <button
+            className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white py-1 px-2 transition duration-200 ease-in-out mx-2"
+            onClick={postData}
+          >
+            POST
+          </button>
+          <input
+            className="mx-2 p-1 rounded"
+            placeholder="Restaurant Name"
+            type="text"
+            name="totalName"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+          <input
+            className="rounded"
+            placeholder="Restaurant Description"
+            type="text"
+            value={newDesc}
+            name="totalDesc"
+            onChange={(e) => setNewDesc(e.target.value)}
+          />
+        </div>
+      )}
       {loggedIn && triedData ? (
         triedData.map((item, index) => {
           return (
             <div
-              className="grid grid-cols-3 justify-items-center mx-60"
+              className="grid grid-cols-12 items-center rounded mx-4 p-1 hover:bg-blue-500 hover:bg-opacity-80 transition duration-200"
               key={index}
             >
-              <div className="px-6 my-2 flex">
-                <span className="pl-11 m-2 ">{item.name}</span>
+              <div className="flex items-center col-start-2 h-fit">
+                <span className="p-2">{item.name}</span>
                 <button
                   className="opacity-20 hover:opacity-80 transition duration-500 ease-in-out"
                   onClick={() => toggleNameUpdate(item)}
@@ -105,18 +132,18 @@ export default function TriedV1() {
                   <span>{pencilIcon}</span>
                 </button>
               </div>
-              <div className="my-2 flex">
-                <span className="px-2 m-2 ">{item.description}</span>
+              <div className="flex items-center justify-center col-start-5 col-span-4">
+                <span className="m-2 px-2">{item.description}</span>
                 <button
-                  className="opacity-20 hover:opacity-80 transition duration-500 ease-in-out"
+                  className="opacity-20 hover:opacity-100 transition duration-150"
                   onClick={() => toggleDescUpdate(item)}
                 >
                   <span>{pencilIcon}</span>
                 </button>
               </div>
-              <div className="my-2">
+              <div className="col-start-12">
                 <button
-                  className=" mx-2 bg-blue-300 rounded hover:bg-blue-500  p-1 transition duration-300 ease-in-out"
+                  className="font-medium mx-2 bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
                   onClick={() => removeItem(item)}
                 >
                   Remove
@@ -126,7 +153,12 @@ export default function TriedV1() {
           );
         })
       ) : (
-        <div>Log in to see your restaurants!</div>
+        <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
+          <Link to="/login" className="pr-2 font-semibold hover:underline">
+            Login
+          </Link>
+          to see your restaurants!
+        </div>
       )}
     </div>
   );

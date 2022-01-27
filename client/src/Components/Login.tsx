@@ -92,7 +92,7 @@ export default function Login() {
             onChange={setPasswordState}
           />
           <button
-            className="m-2 bg-blue-300 rounded hover:bg-blue-500  p-2 transition duration-300 ease-in-out"
+            className="m-2 bg-red-300 rounded hover:bg-red-500 hover:text-white  p-2 transition duration-300 ease-in-out"
             onClick={login}
           >
             LOGIN

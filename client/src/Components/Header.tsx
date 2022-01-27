@@ -18,22 +18,22 @@ export default function Header() {
     dispatch(removeUsernameAction());
   };
   return (
-    <nav className="flex justify-around items-center bg-blue-400 pb-6 w-full py-4 text-2xl">
+    <nav className="flex justify-around items-center bg-red-500  pb-6 w-full py-4 text-2xl font-semibold">
       <div className="inline-flex items-center">
         <Link
-          className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+          className="p-2 bg-transparent  hover:text-white rounded transition duration-300 ease-in-out"
           to="/home"
         >
           HOME
         </Link>
         <Link
-          className=" p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out "
+          className=" p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out "
           to="/total"
         >
           TOTAL
         </Link>
         <Link
-          className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+          className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
           to="/tried"
         >
           TRIED
@@ -44,13 +44,13 @@ export default function Header() {
           <Redirect to="/login" />
           <Link
             to="/signup"
-            className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+            className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
           >
             SIGNUP
           </Link>
           <Link
             to="/login"
-            className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+            className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
           >
             LOGIN
           </Link>
@@ -59,7 +59,7 @@ export default function Header() {
         <div className="m-2 inline-flex items-center">
           <p className="p-2">Welcome {username}!</p>
           <button
-            className="p-2 bg-transparent hover:bg-blue-500 rounded transition duration-300 ease-in-out"
+            className="font-semibold p-2 hover:text-white transition duration-300 ease-in-out"
             onClick={logout}
           >
             LOGOUT

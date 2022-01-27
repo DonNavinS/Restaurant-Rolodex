@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-rose-500 h-screen w-full">
+      <div className="bg-gradient-to-tr from-cyan-400 to-blue-400 h-screen w-full">
         <div>
           <Header />
         </div>
