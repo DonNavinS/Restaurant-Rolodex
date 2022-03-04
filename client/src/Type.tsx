@@ -17,3 +17,7 @@ export interface GlobalState {
   totalData: TotalRestaurant[];
   triedData: TriedRestaurant[];
 }
+
+export interface Props {
+  table: String;
+}

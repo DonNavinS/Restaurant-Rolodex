@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  addTriedDataAction,
   removeTriedDataAction,
   triedDataAction,
   updateTriedDescription,
@@ -10,11 +9,10 @@ import {
 } from "../actions/triedDataAction";
 import { pencilIcon } from "../icons/icons";
 import { GlobalState, TriedRestaurant } from "../Type";
+import AddAction from "./AddAction";
 import { apiClient } from "./ApiClient";
 
 export default function TriedV1() {
-  const [newName, setNewName] = useState("");
-  const [newDesc, setNewDesc] = useState("");
   const dispatch = useDispatch();
 
   const triedData = useSelector((state: GlobalState) => state.triedData);
@@ -29,18 +27,6 @@ export default function TriedV1() {
         dispatch(triedDataAction(response.data));
       }
     }
-  };
-
-  const postData = async () => {
-    const response = await apiClient.post("/tried/add", {
-      name: newName,
-      description: newDesc,
-      username: username,
-      user_id: user_id,
-    });
-    dispatch(addTriedDataAction(response.data));
-    setNewDesc("");
-    setNewName("");
   };
 
   const removeItem = async (item: TriedRestaurant) => {
@@ -72,16 +58,6 @@ export default function TriedV1() {
       dispatch(updateTriedDescription(item.idtried, updatedDesc));
     }
   };
-  const updateNewName = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setNewName(e.target.value);
-  };
-  const updateNewDesc = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setNewDesc(e.target.value);
-  };
 
   useEffect(() => {
     getData();
@@ -90,32 +66,7 @@ export default function TriedV1() {
 
   return (
     <div className="font-medium">
-      {loggedIn && (
-        <div className="flex justify-center p-2">
-          <button
-            className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white py-1 px-2 transition duration-200 ease-in-out mx-2"
-            onClick={postData}
-          >
-            POST
-          </button>
-          <input
-            className="mx-2 p-1 rounded"
-            placeholder="Restaurant Name"
-            type="text"
-            name="totalName"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-          />
-          <input
-            className="rounded"
-            placeholder="Restaurant Description"
-            type="text"
-            value={newDesc}
-            name="totalDesc"
-            onChange={(e) => setNewDesc(e.target.value)}
-          />
-        </div>
-      )}
+      {loggedIn && <AddAction table={"tried"} />}
       {loggedIn && triedData ? (
         triedData.map((item, index) => {
           return (

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { apiClient } from "./ApiClient";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  addDataAction,
   removeDataAction,
   totalDataAction,
   updateTotalDataDescription,
@@ -12,13 +11,13 @@ import {
 import { wipeTriedData } from "../actions/triedDataAction";
 import { TotalRestaurant, GlobalState } from "../Type";
 import { pencilIcon } from "../icons/icons";
+import AddAction from "./AddAction";
 
 export default function TotalV2() {
   // const [retrievedData, setRetrievedData] = useState([]);
-  const [restName, setRestName] = useState("");
-  const [restDesc, setRestDesc] = useState("");
-  const username = useSelector((state: GlobalState) => state.username);
   const user_id = useSelector((state: GlobalState) => state.user_id);
+  const username = useSelector((state: GlobalState) => state.username);
+
   const totalData = useSelector((state: GlobalState) => state.totalData);
   const loggedIn = useSelector((state: GlobalState) => state.auth);
 
@@ -32,32 +31,9 @@ export default function TotalV2() {
     }
   };
 
-  const postData = async () => {
-    const response = await apiClient.post("/total/add", {
-      name: restName,
-      description: restDesc,
-      username: username,
-      user_id: user_id,
-    });
-    dispatch(addDataAction(response.data));
-    setRestName("");
-    setRestDesc("");
-  };
-
   const removeItem = async (item: TotalRestaurant) => {
     const response = await apiClient.delete(`/total/remove/${item.idtotal}`);
     dispatch(removeDataAction(parseInt(response.data.id)));
-  };
-
-  const updateRestName = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setRestName(e.target.value);
-  };
-  const updateRestDesc = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setRestDesc(e.target.value);
   };
 
   const toggleNameUpdate = async (item: TotalRestaurant) => {
@@ -101,71 +77,55 @@ export default function TotalV2() {
   }, [user_id]);
   return (
     <div className="font-medium">
-      {loggedIn && (
-        <div className="flex justify-center p-2">
-          <button
-            className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white py-1 px-2 transition duration-200 ease-in-out mx-2"
-            onClick={postData}
-          >
-            POST
-          </button>
-          <input
-            className="mx-2 p-1 rounded"
-            placeholder="Restaurant Name"
-            type="text"
-            name="totalName"
-            value={restName}
-            onChange={updateRestName}
-          />
-          <input
-            className="p-1 rounded"
-            placeholder="Restaurant Description"
-            type="text"
-            value={restDesc}
-            name="totalDesc"
-            onChange={updateRestDesc}
-          />
-        </div>
-      )}
+      {loggedIn && <AddAction table={"total"} />}
 
       {loggedIn && totalData ? (
         totalData.map((item, index) => {
           return (
-            <div
-              className="grid grid-cols-12 items-center rounded mx-4 p-1 hover:bg-blue-500 hover:bg-opacity-80 transition duration-200"
-              key={index}
-            >
-              <div className="flex items-center col-start-2 h-fit">
-                <span className="p-2">{item.name}</span>
-                <button
-                  className="opacity-20 hover:opacity-80"
-                  onClick={() => toggleNameUpdate(item)}
-                >
-                  <span>{pencilIcon}</span>
-                </button>
-              </div>
-              <div className="flex items-center justify-center col-start-5 col-span-4">
-                <span className="m-2 px-2">{item.description}</span>
-                <button
-                  className="opacity-20 hover:opacity-100 transition duration-150"
-                  onClick={() => toggleDescUpdate(item)}
-                >
-                  <span>{pencilIcon}</span>
-                </button>
-              </div>
-              <div className="col-start-11 col-span-2">
-                <button
-                  className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                  onClick={() => moveToTried(item)}
-                >
-                  Move To Tried
-                </button>
-                <button
-                  className="font-medium mx-2 bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                  onClick={() => removeItem(item)}
-                >
-                  Remove
-                </button>
+            <div className="flex  justify-around">
+              <div
+                style={{ width: "90%" }}
+                className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
+                key={index}
+              >
+                <div className="flex justify-between ">
+                  <div className="flex justify-center w-3/12 items-center">
+                    <span className="text-center">{item.name}</span>
+                    <button
+                      className="opacity-20 hover:opacity-80"
+                      onClick={() => toggleNameUpdate(item)}
+                    >
+                      <span>{pencilIcon}</span>
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-center w-4/12">
+                    <span className="text-center">{item.description}</span>
+                    {/* <button
+                      className="opacity-20 hover:opacity-100 transition duration-150"
+                      onClick={() => toggleDescUpdate(item)}
+                    >
+                      <span>{pencilIcon}</span>
+                    </button> */}
+                  </div>
+                  <div className="flex gap-x-2">
+                    <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
+                      Edit
+                    </button>
+
+                    <button
+                      className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                      onClick={() => moveToTried(item)}
+                    >
+                      Move To Tried
+                    </button>
+                    <button
+                      className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                      onClick={() => removeItem(item)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           );

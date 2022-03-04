@@ -1,3 +1,4 @@
+import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TotalV2 from "./Components/TotalV2";
 import TriedV1 from "./Components/TriedV1";
@@ -32,7 +33,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-gradient-to-tr from-violet-400 to-blue-400 h-screen w-full">
+      <div className="bg-zinc-200 min-h-screen w-full">
         <div>
           <Header />
         </div>

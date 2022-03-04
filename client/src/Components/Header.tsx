@@ -18,7 +18,10 @@ export default function Header() {
     dispatch(removeUsernameAction());
   };
   return (
-    <nav className="flex justify-around items-center bg-red-500  pb-6 w-full py-4 text-2xl font-semibold">
+    <nav
+      style={{ height: "15vh" }}
+      className="flex justify-around items-center bg-slate-500 w-full text-2xl font-semibold"
+    >
       <div className="inline-flex items-center">
         <Link
           className="p-2 bg-transparent  hover:text-white rounded transition duration-300 ease-in-out"
