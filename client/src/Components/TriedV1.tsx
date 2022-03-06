@@ -65,44 +65,44 @@ export default function TriedV1() {
   }, [username]);
 
   return (
-    <div className="font-medium">
-      {loggedIn && <AddAction table={"tried"} />}
+    <div className="fade-in">
       {loggedIn && triedData ? (
-        triedData.map((item, index) => {
-          return (
-            <div
-              className="grid grid-cols-12 items-center rounded mx-4 p-1 hover:bg-blue-500 hover:bg-opacity-80 transition duration-200"
-              key={index}
-            >
-              <div className="flex items-center col-start-2 h-fit">
-                <span className="p-2">{item.name}</span>
-                <button
-                  className="opacity-20 hover:opacity-80 transition duration-500 ease-in-out"
-                  onClick={() => toggleNameUpdate(item)}
-                >
-                  <span>{pencilIcon}</span>
-                </button>
-              </div>
-              <div className="flex items-center justify-center col-start-5 col-span-4">
-                <span className="m-2 px-2">{item.description}</span>
-                <button
-                  className="opacity-20 hover:opacity-100 transition duration-150"
-                  onClick={() => toggleDescUpdate(item)}
-                >
-                  <span>{pencilIcon}</span>
-                </button>
-              </div>
-              <div className="col-start-12">
-                <button
-                  className="font-medium mx-2 bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                  onClick={() => removeItem(item)}
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          );
-        })
+        <div className="total-page">
+          <AddAction table={"total"} />
+          <div>
+            {triedData.map((item, index) => {
+              return (
+                <div className="flex justify-around">
+                  <div
+                    style={{ width: "80%" }}
+                    className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
+                    key={index}
+                  >
+                    <div className="flex justify-between ">
+                      <div className="flex justify-center w-3/12 items-center">
+                        <span className="text-center">{item.name}</span>
+                      </div>
+                      <div className="flex items-center justify-center w-4/12">
+                        <span className="text-center">{item.description}</span>
+                      </div>
+                      <div className="flex gap-x-2">
+                        <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
+                          Edit
+                        </button>
+                        <button
+                          className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                          onClick={() => removeItem(item)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       ) : (
         <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
           <Link to="/login" className="pr-2 font-semibold hover:underline">

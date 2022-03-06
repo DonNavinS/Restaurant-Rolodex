@@ -44,7 +44,7 @@ export default function Home() {
 
   useEffect(() => retrieveData(), []);
   return (
-    <div className="background">
+    <div className="fade-in background">
       {loggedIn ? (
         <div
           style={{ height: "100vh", background: "rgba(0,0,0,0.6)" }}

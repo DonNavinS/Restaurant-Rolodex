@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../actions/authActions";
@@ -6,6 +6,7 @@ import { GlobalState } from "../Type";
 import { removeUsernameAction } from "../actions/usernameActions";
 
 export default function Header() {
+  const [headerBG, setHeaderBG] = useState("");
   const dispatch = useDispatch();
   const loggedIn = useSelector((state: GlobalState) => state.auth);
   const username = useSelector((state: GlobalState) => state.username);
@@ -20,24 +21,27 @@ export default function Header() {
   return (
     <nav
       style={{ height: "15vh" }}
-      className="flex justify-around items-center absolute text-white w-full text-2xl font-semibold"
+      className={`z-20 flex justify-around items-center absolute ${headerBG} text-white w-full text-2xl font-semibold`}
     >
       <div className="inline-flex gap-x-3 items-center">
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/home"
+          onClick={() => setHeaderBG("")}
         >
           HOME
         </Link>
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/total"
+          onClick={() => setHeaderBG("bg-blue-300")}
         >
           TOTAL
         </Link>
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/tried"
+          onClick={() => setHeaderBG("bg-blue-300")}
         >
           TRIED
         </Link>

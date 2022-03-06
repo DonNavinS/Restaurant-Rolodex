@@ -33,7 +33,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-zinc-200 min-h-screen w-full">
+      <div className="bg-zinc-200 min-h-screen w-full fade-in">
         <div>
           <Header />
         </div>

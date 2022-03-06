@@ -17,7 +17,6 @@ export default function TotalV2() {
   // const [retrievedData, setRetrievedData] = useState([]);
   const user_id = useSelector((state: GlobalState) => state.user_id);
   const username = useSelector((state: GlobalState) => state.username);
-
   const totalData = useSelector((state: GlobalState) => state.totalData);
   const loggedIn = useSelector((state: GlobalState) => state.auth);
 
@@ -49,18 +48,6 @@ export default function TotalV2() {
     }
   };
 
-  const toggleDescUpdate = (item: TotalRestaurant) => {
-    let updatedDesc = prompt("Enter new Description");
-    if (!updatedDesc) {
-      alert("No changes made");
-    } else {
-      apiClient.put(`/total/update/description/${item.idtotal}`, {
-        newDesc: updatedDesc,
-      });
-      dispatch(updateTotalDataDescription(item.idtotal, updatedDesc));
-    }
-  };
-
   const moveToTried = (item: TotalRestaurant) => {
     removeItem(item);
     apiClient.post("/tried/add", {
@@ -76,60 +63,51 @@ export default function TotalV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
   return (
-    <div className="font-medium">
-      {loggedIn && <AddAction table={"total"} />}
-
+    <div className="fade-in">
       {loggedIn && totalData ? (
-        totalData.map((item, index) => {
-          return (
-            <div className="flex  justify-around">
-              <div
-                style={{ width: "90%" }}
-                className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
-                key={index}
-              >
-                <div className="flex justify-between ">
-                  <div className="flex justify-center w-3/12 items-center">
-                    <span className="text-center">{item.name}</span>
-                    <button
-                      className="opacity-20 hover:opacity-80"
-                      onClick={() => toggleNameUpdate(item)}
-                    >
-                      <span>{pencilIcon}</span>
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-center w-4/12">
-                    <span className="text-center">{item.description}</span>
-                    {/* <button
-                      className="opacity-20 hover:opacity-100 transition duration-150"
-                      onClick={() => toggleDescUpdate(item)}
-                    >
-                      <span>{pencilIcon}</span>
-                    </button> */}
-                  </div>
-                  <div className="flex gap-x-2">
-                    <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
-                      Edit
-                    </button>
+        <div className="total-page">
+          <AddAction table={"total"} />
+          <div>
+            {totalData.map((item, index) => {
+              return (
+                <div className="flex justify-around">
+                  <div
+                    style={{ width: "90%" }}
+                    className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
+                    key={index}
+                  >
+                    <div className="flex justify-between ">
+                      <div className="flex justify-center w-3/12 items-center">
+                        <span className="text-center">{item.name}</span>
+                      </div>
+                      <div className="flex items-center justify-center w-4/12">
+                        <span className="text-center">{item.description}</span>
+                      </div>
+                      <div className="flex gap-x-2">
+                        <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
+                          Edit
+                        </button>
 
-                    <button
-                      className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                      onClick={() => moveToTried(item)}
-                    >
-                      Move To Tried
-                    </button>
-                    <button
-                      className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                      onClick={() => removeItem(item)}
-                    >
-                      Remove
-                    </button>
+                        <button
+                          className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                          onClick={() => moveToTried(item)}
+                        >
+                          Move To Tried
+                        </button>
+                        <button
+                          className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                          onClick={() => removeItem(item)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          );
-        })
+              );
+            })}
+          </div>
+        </div>
       ) : (
         <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
           <Link to="/login" className="pr-2 font-semibold hover:underline">

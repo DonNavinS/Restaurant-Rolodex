@@ -7,6 +7,13 @@
   background-size: 100% 100%;
 }
 
+.total-page {
+  position: absolute;
+  top: 20vh;
+  left: 0;
+  right: 0;
+}
+
 .link-underline {
   border-bottom-width: 0;
   background-image: linear-gradient(transparent, transparent),
@@ -20,4 +27,30 @@
 .link-underline:hover {
   background-size: 100% 3px;
   background-position: 0 100%;
+}
+
+.fade-in {
+  -webkit-animation: fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  100% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  100% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
 }
