@@ -20,23 +20,23 @@ export default function Header() {
   return (
     <nav
       style={{ height: "15vh" }}
-      className="flex justify-around items-center bg-slate-500 w-full text-2xl font-semibold"
+      className="flex justify-around items-center absolute text-white w-full text-2xl font-semibold"
     >
-      <div className="inline-flex items-center">
+      <div className="inline-flex gap-x-3 items-center">
         <Link
-          className="p-2 bg-transparent  hover:text-white rounded transition duration-300 ease-in-out"
+          className="bg-transparent link-underline:hover link-underline rounded"
           to="/home"
         >
           HOME
         </Link>
         <Link
-          className=" p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out "
+          className="bg-transparent link-underline:hover link-underline rounded"
           to="/total"
         >
           TOTAL
         </Link>
         <Link
-          className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
+          className="bg-transparent link-underline:hover link-underline rounded"
           to="/tried"
         >
           TRIED
@@ -53,7 +53,7 @@ export default function Header() {
           </Link>
           <Link
             to="/login"
-            className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
+            className="bg-transparent link-underline:hover link-underline rounded"
           >
             LOGIN
           </Link>
@@ -62,7 +62,7 @@ export default function Header() {
         <div className="m-2 inline-flex items-center">
           <p className="p-2">Welcome {username}!</p>
           <button
-            className="font-semibold p-2 hover:text-white transition duration-300 ease-in-out"
+            className="bg-transparent link-underline:hover link-underline rounded "
             onClick={logout}
           >
             LOGOUT

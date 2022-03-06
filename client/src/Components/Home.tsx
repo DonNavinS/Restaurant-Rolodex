@@ -45,22 +45,22 @@ export default function Home() {
   useEffect(() => retrieveData(), []);
   return (
     <div className="background">
-      <div className="mx-auto bg-opacity-50">
-        {loggedIn ? (
-          <div
-            style={{ height: "85vh", background: "rgba(0,0,0,0.6)" }}
-            className="flex flex-col justify-evenly items-center text-white"
-          >
-            <h1 className="text-center text-5xl font-semibold ">
-              Recently Updated Restaurants
+      {loggedIn ? (
+        <div
+          style={{ height: "100vh", background: "rgba(0,0,0,0.6)" }}
+          className="flex flex-col-reverse text-white"
+        >
+          <div className="h-5/6 flex flex-col justify-evenly items-center ">
+            <h1 className="text-center text-6xl font-semibold ">
+              Restaurant Rolodex
             </h1>
             <h3 className="text-center text-xl" style={{ width: "60vw" }}>
               To view the complete lists of your total and tried restaurants,
               and to add, update, or delete restaurants, click the links at the
               top of the page!
             </h3>
-            <div className="flex justify-center gap-x-20">
-              <div className="flex flex-col items-center">
+            <div className="flex gap-x-10">
+              <div className="flex flex-col items-center justify-start gap-x-20">
                 <Link
                   to="/total"
                   className="font-semibold text-3xl link-underline:hover link-underline"
@@ -74,14 +74,14 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center justify-start">
                 <Link
                   to="/tried"
                   className="font-semibold text-3xl link-underline:hover link-underline"
                 >
                   TRIED
                 </Link>
-                <div className="text-2xl">
+                <div className="flex flex-col items-center text-2xl">
                   {triedDataDisplay.map((item) => {
                     return <div>Name: {item.name}</div>;
                   })}
@@ -89,15 +89,15 @@ export default function Home() {
               </div>
             </div>
           </div>
-        ) : (
-          <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
-            <Link to="/login" className="pr-2 font-semibold hover:underline">
-              Login
-            </Link>
-            to see your restaurants!
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
+          <Link to="/login" className="pr-2 font-semibold hover:underline">
+            Login
+          </Link>
+          to see your restaurants!
+        </div>
+      )}
     </div>
   );
 }
