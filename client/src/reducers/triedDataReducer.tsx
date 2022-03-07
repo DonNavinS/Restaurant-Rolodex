@@ -2,6 +2,7 @@ import {
   ADD_TRIED_DATA,
   REMOVE_TRIED_DATA,
   TRIED_DATA,
+  UPDATE_TRIED,
   UPDATE_TRIED_DESCRIPTION,
   UPDATE_TRIED_NAME,
   WIPE_ALL_DATA,
@@ -20,6 +21,24 @@ export const triedDataReducer = (
       return (state = [...state, action.payload]);
     case REMOVE_TRIED_DATA:
       return (state = state.filter((item) => item.idtried !== action.payload));
+    case UPDATE_TRIED:
+      const oldItem = state.find((item) => item.idtried === action.id);
+      if (oldItem !== undefined) {
+        const oldItemIndex = state.indexOf(oldItem);
+        const firstHalf = state.slice(0, oldItemIndex);
+        const secondHalf = state.slice(oldItemIndex + 1, state.length);
+        return (state = [
+          ...firstHalf,
+          {
+            idtried: oldItem.idtried,
+            name: action.payload.name,
+            description: action.payload.description,
+            user_id: oldItem.user_id,
+          },
+          ...secondHalf,
+        ]);
+      }
+      return;
     case UPDATE_TRIED_NAME:
       const oldName = state.find((item) => item.idtried === action.id);
       if (oldName !== undefined) {

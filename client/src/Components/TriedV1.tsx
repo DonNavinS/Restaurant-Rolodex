@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -11,8 +11,11 @@ import { pencilIcon } from "../icons/icons";
 import { GlobalState, TriedRestaurant } from "../Type";
 import AddAction from "./AddAction";
 import { apiClient } from "./ApiClient";
+import EditModal from "./EditModal";
 
 export default function TriedV1() {
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(0);
   const dispatch = useDispatch();
 
   const triedData = useSelector((state: GlobalState) => state.triedData);
@@ -35,30 +38,6 @@ export default function TriedV1() {
     dispatch(removeTriedDataAction(id));
   };
 
-  const toggleNameUpdate = (item: TriedRestaurant) => {
-    let updatedName = prompt("Enter new Restaurant Name");
-    if (updatedName === null) {
-      alert("No changes made");
-    } else {
-      apiClient.put(`/tried/update/name/${item.idtried}`, {
-        newName: updatedName,
-      });
-      dispatch(updateTriedName(item.idtried, updatedName));
-    }
-  };
-
-  const toggleDescUpdate = (item: TriedRestaurant) => {
-    let updatedDesc = prompt("Enter new Description");
-    if (!updatedDesc) {
-      alert("No changes made");
-    } else {
-      apiClient.put(`/tried/update/description/${item.idtried}`, {
-        newDesc: updatedDesc,
-      });
-      dispatch(updateTriedDescription(item.idtried, updatedDesc));
-    }
-  };
-
   useEffect(() => {
     getData();
     //eslint-disable-next-line
@@ -68,7 +47,7 @@ export default function TriedV1() {
     <div className="fade-in">
       {loggedIn && triedData ? (
         <div className="total-page">
-          <AddAction table={"total"} />
+          <AddAction table={"tried"} />
           <div>
             {triedData.map((item, index) => {
               return (
@@ -78,6 +57,9 @@ export default function TriedV1() {
                     className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
                     key={index}
                   >
+                    {openModal && (
+                      <EditModal setOpenModal={setOpenModal} item={id} />
+                    )}
                     <div className="flex justify-between ">
                       <div className="flex justify-center w-3/12 items-center">
                         <span className="text-center">{item.name}</span>
@@ -86,7 +68,13 @@ export default function TriedV1() {
                         <span className="text-center">{item.description}</span>
                       </div>
                       <div className="flex gap-x-2">
-                        <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
+                        <button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setId(item.idtried);
+                          }}
+                          className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                        >
                           Edit
                         </button>
                         <button

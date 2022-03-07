@@ -2,6 +2,7 @@ import {
   ADD_TRIED_DATA,
   REMOVE_TRIED_DATA,
   TRIED_DATA,
+  UPDATE_TRIED,
   UPDATE_TRIED_DESCRIPTION,
   UPDATE_TRIED_NAME,
   WIPE_ALL_DATA,
@@ -44,6 +45,20 @@ export const updateTriedDescription = (id: any, description: string) => {
   };
 };
 
+export const updateTriedData = (
+  id: Number,
+  name: string,
+  description: string
+) => {
+  return {
+    type: UPDATE_TRIED,
+    id: id,
+    payload: {
+      name: name,
+      description: description,
+    },
+  };
+};
 export const wipeTriedData = () => {
   return {
     type: WIPE_ALL_DATA,

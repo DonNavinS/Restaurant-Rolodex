@@ -1,23 +1,25 @@
 export interface Restaurant {
-  name: String;
-  description: String;
-  user_id: Number;
+  name: string;
+  description: string;
+  user_id: number;
 }
 export interface TriedRestaurant extends Restaurant {
-  idtried: Number;
+  idtried: number;
 }
 export interface TotalRestaurant extends Restaurant {
-  idtotal: Number;
+  idtotal: number;
 }
 
 export interface GlobalState {
   auth: Boolean;
-  username: String;
+  username: string;
   user_id: Number;
   totalData: TotalRestaurant[];
   triedData: TriedRestaurant[];
 }
 
 export interface Props {
-  table: String;
+  table?: string;
+  setOpenModal?: Function;
+  item?: number;
 }
