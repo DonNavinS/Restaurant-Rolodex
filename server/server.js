@@ -173,6 +173,15 @@ app.put("/api/tried/update/description/:id", (req, res) => {
   db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
 
+app.put("/api/tried/update/:id", (req, res) => {
+  const id = req.params.id;
+  const newName = req.body.name;
+  const newDescription = req.body.description;
+  db.query(
+    `UPDATE tried SET name='${newName}', description='${newDescription}' WHERE idtried ='${id}'`
+  );
+});
+
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });

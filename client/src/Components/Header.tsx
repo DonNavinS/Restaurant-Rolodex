@@ -20,8 +20,7 @@ export default function Header() {
   };
   return (
     <nav
-      style={{ height: "15vh" }}
-      className={`z-20 flex justify-around items-center absolute ${headerBG} text-white w-full text-2xl font-semibold`}
+      className={`z-20 flex justify-around items-center fixed ${headerBG} text-white w-full text-2xl font-semibold`}
     >
       <div className="inline-flex gap-x-3 items-center">
         <Link

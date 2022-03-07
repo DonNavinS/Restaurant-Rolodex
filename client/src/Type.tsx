@@ -21,5 +21,5 @@ export interface GlobalState {
 export interface Props {
   table?: string;
   setOpenModal?: Function;
-  item?: number;
+  id?: number;
 }

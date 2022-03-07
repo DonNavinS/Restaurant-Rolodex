@@ -44,7 +44,8 @@ export default function TriedV1() {
   }, [username]);
 
   return (
-    <div className="fade-in">
+    <div className="fade-in ">
+      {openModal && <EditModal setOpenModal={setOpenModal} id={id} />}
       {loggedIn && triedData ? (
         <div className="total-page">
           <AddAction table={"tried"} />
@@ -57,9 +58,6 @@ export default function TriedV1() {
                     className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
                     key={index}
                   >
-                    {openModal && (
-                      <EditModal setOpenModal={setOpenModal} item={id} />
-                    )}
                     <div className="flex justify-between ">
                       <div className="flex justify-center w-3/12 items-center">
                         <span className="text-center">{item.name}</span>
