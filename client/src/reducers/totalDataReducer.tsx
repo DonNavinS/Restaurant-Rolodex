@@ -17,13 +17,11 @@ export const totalDataReducer = (
     case ADD_TOTAL_DATA:
       return (state = [...state, action.payload]);
     case REMOVE_TOTAL_DATA:
-      return (state = state.filter((item) => item.idtotal !== action.payload));
+      return (state = state.filter((item) => item.id !== action.payload));
     case UPDATE_TOTAL:
       const stateClone = [...state];
-      const updatedEntry = stateClone.find(
-        (item) => item.idtotal === action.id
-      );
-
+      const updatedEntry = stateClone.find((item) => item.id === action.id);
+      console.log(updatedEntry);
       updatedEntry!.name = action.payload.name;
       updatedEntry!.description = action.payload.description;
 

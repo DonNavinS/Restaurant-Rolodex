@@ -31,8 +31,8 @@ export default function TriedV1() {
   };
 
   const removeItem = async (item: TriedRestaurant) => {
-    const response = await apiClient.delete(`/tried/remove/${item.idtried}`);
-    const id = parseInt(response.data.idtried);
+    const response = await apiClient.delete(`/tried/remove/${item.id}`);
+    const id = parseInt(response.data.id);
     dispatch(removeTriedDataAction(id));
   };
 
@@ -41,7 +41,7 @@ export default function TriedV1() {
   }, [username]);
 
   return (
-    <div className="fade-in ">
+    <div style={{ height: "100vh" }} className="fade-in ">
       {openModal && (
         <EditModal setOpenModal={setOpenModal} id={id} pageType={"tried"} />
       )}
@@ -67,7 +67,7 @@ export default function TriedV1() {
                         <button
                           onClick={() => {
                             setOpenModal(true);
-                            setId(item.idtried);
+                            setId(item.id);
                           }}
                           className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
                         >

@@ -18,11 +18,11 @@ export const triedDataReducer = (
     case ADD_TRIED_DATA:
       return (state = [...state, action.payload]);
     case REMOVE_TRIED_DATA:
-      return (state = state.filter((item) => item.idtried !== action.payload));
+      return (state = state.filter((item) => item.id !== action.payload));
     case UPDATE_TRIED:
       const stateClone = [...state];
       const updatedEntry = stateClone.find((item) => {
-        return item.idtried === action.id;
+        return item.id === action.id;
       });
       updatedEntry!.description = action.payload.description;
       updatedEntry!.name = action.payload.name;

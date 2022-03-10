@@ -21,6 +21,8 @@ const AddAction: React.FC<Props> = ({ table }) => {
       user_id: user_id,
     });
 
+    console.log(response);
+
     table === "total"
       ? dispatch(addDataAction(response.data))
       : dispatch(addTriedDataAction(response.data));

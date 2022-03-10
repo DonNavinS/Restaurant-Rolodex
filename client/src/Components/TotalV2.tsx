@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { apiClient } from "./ApiClient";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  removeDataAction,
-  totalDataAction,
-  updateTotalData,
-} from "../actions/totalDataAction";
-import { wipeTriedData } from "../actions/triedDataAction";
+import { removeDataAction, totalDataAction } from "../actions/totalDataAction";
+import { addTriedDataAction } from "../actions/triedDataAction";
 import { TotalRestaurant, GlobalState } from "../Type";
 import { pencilIcon } from "../icons/icons";
 import AddAction from "./AddAction";
@@ -33,25 +29,26 @@ export default function TotalV2() {
   };
 
   const removeItem = async (item: TotalRestaurant) => {
-    const response = await apiClient.delete(`/total/remove/${item.idtotal}`);
+    const response = await apiClient.delete(`/total/remove/${item.id}`);
     dispatch(removeDataAction(parseInt(response.data.id)));
   };
 
-  const moveToTried = (item: TotalRestaurant) => {
+  const moveToTried = async (item: TotalRestaurant) => {
     removeItem(item);
-    apiClient.post("/tried/add", {
+    const response = await apiClient.post("/tried/add", {
       name: item.name,
       description: item.description,
       username: username,
+      user_id: user_id,
     });
-    console.log(item);
+    dispatch(addTriedDataAction(response.data));
   };
 
   useEffect(() => {
     getData();
   }, [user_id]);
   return (
-    <div className="fade-in ">
+    <div style={{ height: "100vh" }} className="fade-in ">
       {openModal && (
         <EditModal setOpenModal={setOpenModal} id={id} pageType={"total"} />
       )}
@@ -77,7 +74,8 @@ export default function TotalV2() {
                         <button
                           onClick={() => {
                             setOpenModal(true);
-                            setId(item.idtotal);
+                            setId(item.id);
+                            console.log(item);
                           }}
                           className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
                         >

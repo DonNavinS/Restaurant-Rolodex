@@ -4,10 +4,10 @@ export interface Restaurant {
   user_id: number;
 }
 export interface TriedRestaurant extends Restaurant {
-  idtried: number;
+  id: number;
 }
 export interface TotalRestaurant extends Restaurant {
-  idtotal: number;
+  id: number;
 }
 
 export interface GlobalState {

@@ -77,28 +77,32 @@ app.get("/api/user/login", checkToken, (req, res) => {
   console.log("WORKING");
 });
 
-// ROUTES FOR TOTAL TABLE
-app.get("/api/total/:id", (req, res) => {
+// ROUTES FOR BOTH TABLES
+app.get("/api/:table/:id", (req, res) => {
   const id = req.params.id;
-  db.query(`SELECT * FROM total WHERE user_id='${id}'`, (err, result) => {
-    res.send(result);
-    console.log(result);
-    console.log("DATA RETRIEVED");
-  });
+  const tableType = req.params.table;
+  db.query(
+    `SELECT * FROM ${tableType} WHERE user_id='${id}'`,
+    (err, result) => {
+      res.send(result);
+      console.log(result);
+      console.log("DATA RETRIEVED");
+    }
+  );
 });
 
-app.post("/api/total/add", (req, res) => {
+app.post(`/api/:table/add`, (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const username = req.body.username;
   const user_id = req.body.user_id;
+  const tableType = req.params.table;
   db.query(
-    `INSERT INTO total (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
+    `INSERT INTO ${tableType} (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
     (err, result) => {
-      console.log("TOTAL TABLE UPDATED");
-      console.log(err);
+      console.log(`${tableType} TABLE UPDATED`);
       res.send({
-        idtotal: result.insertId,
+        id: result.insertId,
         name: name,
         description: description,
         user_id: parseInt(user_id),
@@ -107,63 +111,22 @@ app.post("/api/total/add", (req, res) => {
   );
 });
 
-app.delete("/api/total/remove/:id", (req, res) => {
+app.delete("/api/:table/remove/:id", (req, res) => {
   const id = req.params.id;
-  db.query(`DELETE FROM total WHERE idtotal = '${id}'`, (err, result) => {
+  const tableType = req.params.table;
+  db.query(`DELETE FROM ${tableType} WHERE id = '${id}'`, (err, result) => {
     console.log("ITEM DELETED");
-    console.log(err);
   });
   res.send({ id: id });
 });
 
-app.put("/api/total/update/:id", (req, res) => {
+app.put("/api/:table/update/:id", (req, res) => {
   const id = req.params.id;
   const newName = req.body.name;
   const newDescription = req.body.description;
+  const tableType = req.params.table;
   db.query(
-    `UPDATE total SET name='${newName}', description='${newDescription}' WHERE idtotal ='${id}'`
-  );
-});
-
-// ROUTES FOR TRIED TABLE
-app.get("/api/tried/:id", (req, res) => {
-  const id = req.params.id;
-  db.query(`SELECT * FROM tried WHERE user_id='${id}'`, (err, result) => {
-    res.send(result);
-  });
-});
-
-app.post("/api/tried/add", (req, res) => {
-  const name = req.body.name;
-  const description = req.body.description;
-  const username = req.body.username;
-  db.query(
-    `INSERT INTO tried (name, description, user_id) VALUES ('${name}', '${description}', (SELECT ID from users WHERE username='${username}'));`,
-
-    (err, result) => {
-      res.send({
-        idtried: result.insertId,
-        name: name,
-        description: description,
-        username: username,
-      });
-    }
-  );
-});
-
-app.delete("/api/tried/remove/:id", (req, res) => {
-  const id = req.params.id;
-  db.query(`DELETE FROM tried WHERE idtried = '${id}'`);
-
-  res.send({ idtried: id });
-});
-
-app.put("/api/tried/update/:id", (req, res) => {
-  const id = req.params.id;
-  const newName = req.body.name;
-  const newDescription = req.body.description;
-  db.query(
-    `UPDATE tried SET name='${newName}', description='${newDescription}' WHERE idtried ='${id}'`
+    `UPDATE ${tableType} SET name='${newName}', description='${newDescription}' WHERE id ='${id}'`
   );
 });
 
