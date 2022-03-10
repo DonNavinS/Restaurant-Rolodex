@@ -5,19 +5,19 @@ const { createToken, checkToken } = require("./JWT");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "LaptopWaterParis1027$",
-  database: "rest-rolo",
-});
-
-// const db = mysql.createPool({
-//   host: "us-cdbr-east-05.cleardb.net",
-//   user: "b6a3b0afd0bdbd",
-//   password: "0aba06ee",
-//   database: "heroku_c053088a3022d84",
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "LaptopWaterParis1027$",
+//   database: "rest-rolo",
 // });
+
+const db = mysql.createPool({
+  host: "us-cdbr-east-05.cleardb.net",
+  user: "b6a3b0afd0bdbd",
+  password: "0aba06ee",
+  database: "heroku_c053088a3022d84",
+});
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
