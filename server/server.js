@@ -116,16 +116,13 @@ app.delete("/api/total/remove/:id", (req, res) => {
   res.send({ id: id });
 });
 
-app.put("/api/total/update/name/:id", (req, res) => {
+app.put("/api/total/update/:id", (req, res) => {
   const id = req.params.id;
-  const newName = req.body.newName;
-  db.query(`UPDATE total SET name='${newName}' WHERE idtotal ='${id}'`);
-});
-
-app.put("/api/total/update/description/:id", (req, res) => {
-  const id = req.params.id;
-  const newDesc = req.body.newDesc;
-  db.query(`UPDATE total SET description='${newDesc}' WHERE idtotal ='${id}'`);
+  const newName = req.body.name;
+  const newDescription = req.body.description;
+  db.query(
+    `UPDATE total SET name='${newName}', description='${newDescription}' WHERE idtotal ='${id}'`
+  );
 });
 
 // ROUTES FOR TRIED TABLE
@@ -159,18 +156,6 @@ app.delete("/api/tried/remove/:id", (req, res) => {
   db.query(`DELETE FROM tried WHERE idtried = '${id}'`);
 
   res.send({ idtried: id });
-});
-
-app.put("/api/tried/update/name/:id", (req, res) => {
-  const id = req.params.id;
-  const newName = req.body.newName;
-  db.query(`UPDATE tried SET name='${newName}' WHERE idtried ='${id}'`);
-});
-
-app.put("/api/tried/update/description/:id", (req, res) => {
-  const id = req.params.id;
-  const newDesc = req.body.newDesc;
-  db.query(`UPDATE tried SET description='${newDesc}' WHERE idtried ='${id}'`);
 });
 
 app.put("/api/tried/update/:id", (req, res) => {

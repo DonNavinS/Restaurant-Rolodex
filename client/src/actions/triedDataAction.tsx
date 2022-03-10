@@ -3,8 +3,6 @@ import {
   REMOVE_TRIED_DATA,
   TRIED_DATA,
   UPDATE_TRIED,
-  UPDATE_TRIED_DESCRIPTION,
-  UPDATE_TRIED_NAME,
   WIPE_ALL_DATA,
 } from "./index";
 
@@ -29,24 +27,8 @@ export const removeTriedDataAction = (id: number) => {
   };
 };
 
-export const updateTriedName = (id: any, name: string) => {
-  return {
-    type: UPDATE_TRIED_NAME,
-    id: id,
-    payload: name,
-  };
-};
-
-export const updateTriedDescription = (id: any, description: string) => {
-  return {
-    type: UPDATE_TRIED_DESCRIPTION,
-    id: id,
-    payload: description,
-  };
-};
-
 export const updateTriedData = (
-  id: Number,
+  id: number,
   name: string,
   description: string
 ) => {

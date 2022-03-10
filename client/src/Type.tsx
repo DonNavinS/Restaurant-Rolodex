@@ -22,4 +22,5 @@ export interface Props {
   table?: string;
   setOpenModal?: Function;
   id?: number;
+  pageType?: string;
 }

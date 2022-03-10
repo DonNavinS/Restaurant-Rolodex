@@ -3,11 +3,9 @@ import {
   REMOVE_TRIED_DATA,
   TRIED_DATA,
   UPDATE_TRIED,
-  UPDATE_TRIED_DESCRIPTION,
-  UPDATE_TRIED_NAME,
   WIPE_ALL_DATA,
 } from "../actions";
-import { TotalRestaurant, TriedRestaurant } from "../Type";
+import { TriedRestaurant } from "../Type";
 import { AnyAction } from "redux";
 
 export const triedDataReducer = (
@@ -16,66 +14,20 @@ export const triedDataReducer = (
 ) => {
   switch (action.type) {
     case TRIED_DATA:
-      return (state = [...state, ...action.payload]);
+      return (state = [...action.payload]);
     case ADD_TRIED_DATA:
       return (state = [...state, action.payload]);
     case REMOVE_TRIED_DATA:
       return (state = state.filter((item) => item.idtried !== action.payload));
     case UPDATE_TRIED:
-      const oldItem = state.find((item) => item.idtried === action.id);
-      if (oldItem !== undefined) {
-        const oldItemIndex = state.indexOf(oldItem);
-        const firstHalf = state.slice(0, oldItemIndex);
-        const secondHalf = state.slice(oldItemIndex + 1, state.length);
-        return (state = [
-          ...firstHalf,
-          {
-            idtried: oldItem.idtried,
-            name: action.payload.name,
-            description: action.payload.description,
-            user_id: oldItem.user_id,
-          },
-          ...secondHalf,
-        ]);
-      }
-      return;
-    case UPDATE_TRIED_NAME:
-      const oldName = state.find((item) => item.idtried === action.id);
-      if (oldName !== undefined) {
-        const oldNameIndex = state.indexOf(oldName);
-        const firstHalfName = state.slice(0, oldNameIndex);
-        const secondHalfName = state.slice(oldNameIndex + 1, state.length);
-        return (state = [
-          ...firstHalfName,
-          {
-            idtried: oldName.idtried,
-            name: action.payload,
-            description: oldName.description,
-            user_id: oldName.user_id,
-          },
-          ...secondHalfName,
-        ]);
-      }
-    case UPDATE_TRIED_DESCRIPTION:
-      const oldDescription = state.find((item) => item.idtried === action.id);
-      if (oldDescription !== undefined) {
-        const oldDescriptionIndex = state.indexOf(oldDescription);
-        const firstHalfDesc = state.slice(0, oldDescriptionIndex);
-        const secondHalfDesc = state.slice(
-          oldDescriptionIndex + 1,
-          state.length
-        );
-        return (state = [
-          ...firstHalfDesc,
-          {
-            idtried: oldDescription.idtried,
-            name: oldDescription.name,
-            description: action.payload,
-            user_id: oldDescription.user_id,
-          },
-          ...secondHalfDesc,
-        ]);
-      }
+      const stateClone = [...state];
+      const updatedEntry = stateClone.find((item) => {
+        return item.idtried === action.id;
+      });
+      updatedEntry!.description = action.payload.description;
+      updatedEntry!.name = action.payload.name;
+
+      return [...stateClone];
     case WIPE_ALL_DATA:
       return (state = []);
     default:

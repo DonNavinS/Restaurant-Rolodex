@@ -68,8 +68,8 @@ export default function Home() {
                   TOTAL
                 </Link>
                 <div className="flex flex-col items-center text-2xl">
-                  {totalDataDisplay.map((item) => {
-                    return <div>Name: {item.name}</div>;
+                  {totalDataDisplay.map((item, index) => {
+                    return <div key={index}>Name: {item.name}</div>;
                   })}
                 </div>
               </div>
@@ -82,8 +82,8 @@ export default function Home() {
                   TRIED
                 </Link>
                 <div className="flex flex-col items-center text-2xl">
-                  {triedDataDisplay.map((item) => {
-                    return <div>Name: {item.name}</div>;
+                  {triedDataDisplay.map((item, index) => {
+                    return <div key={index}>Name: {item.name}</div>;
                   })}
                 </div>
               </div>

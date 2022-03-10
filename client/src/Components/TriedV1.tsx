@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import {
   removeTriedDataAction,
   triedDataAction,
-  updateTriedDescription,
-  updateTriedName,
 } from "../actions/triedDataAction";
 import { pencilIcon } from "../icons/icons";
 import { GlobalState, TriedRestaurant } from "../Type";
@@ -40,23 +38,23 @@ export default function TriedV1() {
 
   useEffect(() => {
     getData();
-    //eslint-disable-next-line
   }, [username]);
 
   return (
     <div className="fade-in ">
-      {openModal && <EditModal setOpenModal={setOpenModal} id={id} />}
+      {openModal && (
+        <EditModal setOpenModal={setOpenModal} id={id} pageType={"tried"} />
+      )}
       {loggedIn && triedData ? (
         <div className="total-page">
           <AddAction table={"tried"} />
           <div>
             {triedData.map((item, index) => {
               return (
-                <div className="flex justify-around">
+                <div key={index} className="flex justify-around">
                   <div
                     style={{ width: "80%" }}
                     className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
-                    key={index}
                   >
                     <div className="flex justify-between ">
                       <div className="flex justify-center w-3/12 items-center">

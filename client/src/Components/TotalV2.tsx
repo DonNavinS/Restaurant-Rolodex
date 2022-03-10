@@ -1,24 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { apiClient } from "./ApiClient";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   removeDataAction,
   totalDataAction,
-  updateTotalDataDescription,
-  updateTotalDataName,
+  updateTotalData,
 } from "../actions/totalDataAction";
 import { wipeTriedData } from "../actions/triedDataAction";
 import { TotalRestaurant, GlobalState } from "../Type";
 import { pencilIcon } from "../icons/icons";
 import AddAction from "./AddAction";
+import EditModal from "./EditModal";
 
 export default function TotalV2() {
-  // const [retrievedData, setRetrievedData] = useState([]);
   const user_id = useSelector((state: GlobalState) => state.user_id);
   const username = useSelector((state: GlobalState) => state.username);
   const totalData = useSelector((state: GlobalState) => state.totalData);
   const loggedIn = useSelector((state: GlobalState) => state.auth);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -26,26 +28,13 @@ export default function TotalV2() {
     const response = await apiClient.get(`/total/${user_id}`);
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
-      // dispatch(wipeTriedData());
+      console.log(response);
     }
   };
 
   const removeItem = async (item: TotalRestaurant) => {
     const response = await apiClient.delete(`/total/remove/${item.idtotal}`);
     dispatch(removeDataAction(parseInt(response.data.id)));
-  };
-
-  const toggleNameUpdate = async (item: TotalRestaurant) => {
-    let updatedName = prompt("Enter new Restaurant Name");
-
-    if (updatedName === null) {
-      alert("No changes made");
-    } else {
-      apiClient.put(`/total/update/name/${item.idtotal}`, {
-        newName: updatedName,
-      });
-      dispatch(updateTotalDataName(item.idtotal, updatedName));
-    }
   };
 
   const moveToTried = (item: TotalRestaurant) => {
@@ -60,21 +49,22 @@ export default function TotalV2() {
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
   return (
-    <div className="fade-in">
+    <div className="fade-in ">
+      {openModal && (
+        <EditModal setOpenModal={setOpenModal} id={id} pageType={"total"} />
+      )}
       {loggedIn && totalData ? (
         <div className="total-page">
           <AddAction table={"total"} />
           <div>
             {totalData.map((item, index) => {
               return (
-                <div className="flex justify-around">
+                <div key={index} className="flex justify-around">
                   <div
-                    style={{ width: "90%" }}
+                    style={{ width: "80%" }}
                     className="p-2 hover:bg-blue-500 rounded hover:bg-opacity-80 transition duration-200"
-                    key={index}
                   >
                     <div className="flex justify-between ">
                       <div className="flex justify-center w-3/12 items-center">
@@ -84,21 +74,26 @@ export default function TotalV2() {
                         <span className="text-center">{item.description}</span>
                       </div>
                       <div className="flex gap-x-2">
-                        <button className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out">
-                          Edit
-                        </button>
-
                         <button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setId(item.idtotal);
+                          }}
                           className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
-                          onClick={() => moveToTried(item)}
                         >
-                          Move To Tried
+                          Edit
                         </button>
                         <button
                           className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
                           onClick={() => removeItem(item)}
                         >
                           Remove
+                        </button>
+                        <button
+                          className="font-medium bg-red-400 rounded hover:bg-red-500 hover:text-white  p-1 transition duration-200 ease-in-out"
+                          onClick={() => moveToTried(item)}
+                        >
+                          Move to Tried
                         </button>
                       </div>
                     </div>

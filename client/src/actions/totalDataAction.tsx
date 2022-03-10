@@ -2,8 +2,7 @@ import {
   ADD_TOTAL_DATA,
   TOTAL_DATA,
   REMOVE_TOTAL_DATA,
-  UPDATE_TOTAL_NAME,
-  UPDATE_TOTAL_DESCRIPTION,
+  UPDATE_TOTAL,
 } from "./index";
 export const totalDataAction = (data: any) => {
   return {
@@ -26,18 +25,17 @@ export const removeDataAction = (id: number) => {
   };
 };
 
-export const updateTotalDataName = (id: any, data: string) => {
+export const updateTotalData = (
+  id: number,
+  name: string,
+  description: string
+) => {
   return {
-    type: UPDATE_TOTAL_NAME,
+    type: UPDATE_TOTAL,
     id: id,
-    payload: data,
-  };
-};
-
-export const updateTotalDataDescription = (id: any, description: string) => {
-  return {
-    type: UPDATE_TOTAL_DESCRIPTION,
-    id: id,
-    payload: description,
+    payload: {
+      name: name,
+      description: description,
+    },
   };
 };

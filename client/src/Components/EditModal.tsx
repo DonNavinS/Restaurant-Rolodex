@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { updateTotalData } from "../actions/totalDataAction";
 import { updateTriedData } from "../actions/triedDataAction";
 import { Props } from "../Type";
 import { apiClient } from "./ApiClient";
 
-const EditModal: React.FC<Props> = ({ setOpenModal, id }) => {
+const EditModal: React.FC<Props> = ({ setOpenModal, id, pageType }) => {
   const [newName, setNewName] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const dispatch = useDispatch();
 
   const update = (id: number, name: string, description: string) => {
     apiClient
-      .put(`/tried/update/${id}`, {
+      .put(`/${pageType}/update/${id}`, {
         name: newName,
         description: newDescription,
       })
       .then((response) => console.log(response));
-    dispatch(updateTriedData(id, name, description));
+    pageType === "tried"
+      ? dispatch(updateTriedData(id, name, description))
+      : pageType === "total"
+      ? dispatch(updateTotalData(id, name, description))
+      : null;
   };
 
   return (
