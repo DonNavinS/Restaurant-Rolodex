@@ -37,60 +37,76 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      {!loggedInRedux ? (
-        <div className="flex-col text-center mt-4 ">
-          {/* USERNAME INPUT  */}
-          <input
-            className="m-2 rounded p-2 mr-9"
-            type="text"
-            placeholder="Enter Username"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-          <div className="flex justify-center">
-            {/* PASSWORD INPUT  */}
-            <input
-              className="m-2 rounded p-2"
-              type={!showPassword ? "password" : "text"}
-              placeholder="Enter Password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <button onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? openEyeIcon : closedEyeIcon}
-            </button>
+    <div className="logged-out-background fade-in">
+      <div
+        className="h-screen w-screen flex"
+        style={{ background: "rgba(0,0,0,0.6)" }}
+      >
+        {!loggedInRedux ? (
+          <div
+            style={{ background: "rgba(255,255,255,0.5)" }}
+            className="border-2 border-black border-opacity-50 rounded-lg h-3/4 w-1/3 m-auto flex flex-col justify-evenly items-center"
+          >
+            {/* USERNAME INPUT  */}
+            <h1 className="font-semibold text-4xl">Signup</h1>
+            <div className="flex justify-center gap-x-2">
+              <input
+                className="rounded p-1"
+                type="text"
+                placeholder="Enter Username"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              <span className="opacity-0">{openEyeIcon}</span>
+            </div>
+            <div className="flex justify-center gap-x-2">
+              {/* PASSWORD INPUT  */}
+              <input
+                className="rounded p-1"
+                type={!showPassword ? "password" : "text"}
+                placeholder="Enter Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <button
+                className="text-white"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? openEyeIcon : closedEyeIcon}
+              </button>
+            </div>
+            <div className="flex justify-center gap-x-2 ">
+              {/* CONFIRM PASSWORD INPUT */}
+              <input
+                className="rounded p-1"
+                type={!showConfirmPassword ? "password" : "text"}
+                placeholder="Confirm Password"
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
+              />
+              <button
+                className="text-white"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? openEyeIcon : closedEyeIcon}
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="m-2 bg-red-300 rounded hover:bg-red-500 hover:text-white  p-2 transition duration-300 ease-in-out"
+                onClick={createNewUser}
+              >
+                CREATE USER
+              </button>
+            </div>
           </div>
-          <div className="flex justify-center">
-            {/* CONFIRM PASSWORD INPUT */}
-            <input
-              className="m-2 rounded p-2"
-              type={!showConfirmPassword ? "password" : "text"}
-              placeholder="Confirm Password"
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            />
-            <button
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? openEyeIcon : closedEyeIcon}
-            </button>
-          </div>
-          <div>
-            <button
-              className="m-2 bg-blue-300 rounded hover:bg-blue-500  p-2 transition duration-300 ease-in-out"
-              onClick={createNewUser}
-            >
-              CREATE USER
-            </button>
-          </div>
-        </div>
-      ) : (
-        <Redirect to="/total" />
-      )}
+        ) : (
+          <Redirect to="/total" />
+        )}
+      </div>
     </div>
   );
 }

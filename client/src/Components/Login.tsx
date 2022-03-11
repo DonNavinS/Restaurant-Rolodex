@@ -76,34 +76,42 @@ export default function Login() {
   // }, []);
 
   return (
-    <div className="flex justify-center items-center h-96">
-      <section className="border-2 border-black border-opacity-50 rounded-lg shadow-md w-4/12 h-5/6">
-        {!loggedInRedux ? (
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="font-semibold text-4xl">Login</h1>
-            <input
-              className="m-2 rounded p-1"
-              type="text"
-              placeholder="Username"
-              onChange={setUsernameState}
-            />
-            <input
-              className="m-2 rounded p-1"
-              type="text"
-              placeholder="Password"
-              onChange={setPasswordState}
-            />
-            <button
-              className="m-2 bg-red-300 rounded hover:bg-red-500 hover:text-white  p-2 transition duration-300 ease-in-out"
-              onClick={login}
-            >
-              LOGIN
-            </button>
-          </div>
-        ) : (
-          <Redirect to="/home" />
-        )}
-      </section>
+    <div className="logged-out-background fade-in">
+      <div
+        style={{ background: "rgba(0,0,0,0.6" }}
+        className="h-screen w-screen flex-col-reverse flex"
+      >
+        <section
+          style={{ background: "rgba(211,211,211,0.7)" }}
+          className="h-3/4 m-auto border-2 border-black border-opacity-50 rounded-lg shadow-md w-4/12"
+        >
+          {!loggedInRedux ? (
+            <div className="flex flex-col items-center justify-center h-full gap-6 ">
+              <h1 className="font-semibold text-4xl text-black">Login</h1>
+              <input
+                className="m-2 rounded p-1"
+                type="text"
+                placeholder="Username"
+                onChange={setUsernameState}
+              />
+              <input
+                className="m-2 rounded p-1"
+                type="text"
+                placeholder="Password"
+                onChange={setPasswordState}
+              />
+              <button
+                className="m-2 bg-red-300 rounded hover:bg-red-500 hover:text-white  p-2 transition duration-300 ease-in-out"
+                onClick={login}
+              >
+                LOGIN
+              </button>
+            </div>
+          ) : (
+            <Redirect to="/home" />
+          )}
+        </section>
+      </div>
     </div>
   );
 }

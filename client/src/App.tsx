@@ -7,12 +7,14 @@ import Header from "./Components/Header";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usernameAction } from "./actions/usernameActions";
 import { loginAction } from "./actions/authActions";
 import { idAction } from "./actions/IdAction";
 
 function App() {
+  const [headerBG, setHeaderBG] = useState("");
+
   const dispatch = useDispatch();
   const username = localStorage.getItem("username");
   const user_id = localStorage.getItem("user_id");
@@ -34,9 +36,7 @@ function App() {
   return (
     <Router>
       <div className="bg-zinc-200 min-h-screen w-full fade-in">
-        <div>
-          <Header />
-        </div>
+        <Header setHeaderBG={setHeaderBG} headerBG={headerBG} />
         <div className="App">
           <Switch>
             <Route exact path="/home" component={Home} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { loginAction, logoutAction } from "../actions/authActions";
 import { totalDataAction } from "../actions/totalDataAction";
 import { triedDataAction } from "../actions/triedDataAction";
@@ -91,12 +91,7 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
-          <Link to="/login" className="pr-2 font-semibold hover:underline">
-            Login
-          </Link>
-          to see your restaurants!
-        </div>
+        <Redirect to="/login" />
       )}
     </div>
   );

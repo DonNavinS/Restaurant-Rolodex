@@ -103,10 +103,7 @@ export default function TotalV2() {
         </div>
       ) : (
         <div className="flex justify-center text-4xl font-semibold items-center translate-y-32">
-          <Link to="/login" className="pr-2 font-semibold hover:underline">
-            Login
-          </Link>
-          to see your restaurants!
+          Login to see your restaurants!
         </div>
       )}
     </div>

@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export interface Restaurant {
   name: string;
   description: string;
@@ -23,4 +25,6 @@ export interface Props {
   setOpenModal?: Function;
   id?: number;
   pageType?: string;
+  setHeaderBG?: (value: string) => void;
+  headerBG?: string;
 }

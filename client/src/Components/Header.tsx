@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../actions/authActions";
-import { GlobalState } from "../Type";
+import { GlobalState, Props } from "../Type";
 import { removeUsernameAction } from "../actions/usernameActions";
 
-export default function Header() {
-  const [headerBG, setHeaderBG] = useState("");
+const Header: React.FC<Props> = ({ setHeaderBG, headerBG }) => {
   const dispatch = useDispatch();
   const loggedIn = useSelector((state: GlobalState) => state.auth);
   const username = useSelector((state: GlobalState) => state.username);
@@ -20,43 +19,46 @@ export default function Header() {
   };
   return (
     <nav
-      className={`z-20 flex justify-around items-center fixed ${headerBG} text-white w-full text-2xl font-semibold`}
+      style={{ height: "10%" }}
+      className={`z-20 flex justify-around items-center fixed ${headerBG!}  text-white w-full text-2xl font-semibold`}
     >
       <div className="inline-flex gap-x-3 items-center">
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/home"
-          onClick={() => setHeaderBG("")}
+          onClick={() => setHeaderBG!("")}
         >
           HOME
         </Link>
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/total"
-          onClick={() => setHeaderBG("bg-blue-300")}
+          onClick={() => setHeaderBG!("bg-blue-300")}
         >
           TOTAL
         </Link>
         <Link
           className="bg-transparent link-underline:hover link-underline rounded"
           to="/tried"
-          onClick={() => setHeaderBG("bg-blue-300")}
+          onClick={() => setHeaderBG!("bg-blue-300")}
         >
           TRIED
         </Link>
       </div>
       {!loggedIn ? (
-        <div className="inline-flex">
+        <div className="inline-flex items-center gap-6">
           <Redirect to="/login" />
           <Link
             to="/signup"
-            className="p-2 bg-transparent hover:text-white rounded transition duration-300 ease-in-out"
+            className="bg-transparent link-underline:hover link-underline rounded "
+            onClick={() => setHeaderBG!("")}
           >
             SIGNUP
           </Link>
           <Link
             to="/login"
             className="bg-transparent link-underline:hover link-underline rounded"
+            onClick={() => setHeaderBG!("")}
           >
             LOGIN
           </Link>
@@ -74,4 +76,6 @@ export default function Header() {
       )}
     </nav>
   );
-}
+};
+
+export default Header;
