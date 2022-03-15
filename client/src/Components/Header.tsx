@@ -16,6 +16,7 @@ const Header: React.FC<Props> = ({ setHeaderBG, headerBG }) => {
     localStorage.removeItem("user_id");
     dispatch(logoutAction());
     dispatch(removeUsernameAction());
+    setHeaderBG!("");
   };
   return (
     <nav
@@ -47,7 +48,7 @@ const Header: React.FC<Props> = ({ setHeaderBG, headerBG }) => {
       </div>
       {!loggedIn ? (
         <div className="inline-flex items-center gap-6">
-          <Redirect to="/login" />
+          {/* <Redirect to="/home" /> */}
           <Link
             to="/signup"
             className="bg-transparent link-underline:hover link-underline rounded "
@@ -56,9 +57,11 @@ const Header: React.FC<Props> = ({ setHeaderBG, headerBG }) => {
             SIGNUP
           </Link>
           <Link
-            to="/login"
+            to={"/login"}
             className="bg-transparent link-underline:hover link-underline rounded"
-            onClick={() => setHeaderBG!("")}
+            onClick={() => {
+              setHeaderBG!("");
+            }}
           >
             LOGIN
           </Link>
@@ -68,7 +71,7 @@ const Header: React.FC<Props> = ({ setHeaderBG, headerBG }) => {
           <p className="p-2">Welcome {username}!</p>
           <button
             className="bg-transparent link-underline:hover link-underline rounded "
-            onClick={logout}
+            onClick={() => logout()}
           >
             LOGOUT
           </button>

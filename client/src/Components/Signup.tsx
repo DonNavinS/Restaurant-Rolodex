@@ -28,10 +28,11 @@ export default function Signup() {
           password: password,
         })
         .then((response) => {
-          console.log(response.data.insertId);
           dispatch(loginAction());
           dispatch(usernameAction(username));
           dispatch(idAction(response.data.insertId));
+          setShowPassword(false);
+          setShowConfirmPassword(false);
         });
     }
   };
@@ -43,7 +44,8 @@ export default function Signup() {
         style={{ background: "rgba(0,0,0,0.6)" }}
       >
         {!loggedInRedux ? (
-          <div
+          <form
+            onSubmit={createNewUser}
             style={{ background: "rgba(255,255,255,0.5)" }}
             className="border-2 border-black border-opacity-50 rounded-lg h-3/4 w-1/3 m-auto flex flex-col justify-evenly items-center"
           >
@@ -51,6 +53,7 @@ export default function Signup() {
             <h1 className="font-semibold text-4xl">Signup</h1>
             <div className="flex justify-center gap-x-2">
               <input
+                required
                 className="rounded p-1"
                 type="text"
                 placeholder="Enter Username"
@@ -63,6 +66,7 @@ export default function Signup() {
             <div className="flex justify-center gap-x-2">
               {/* PASSWORD INPUT  */}
               <input
+                required
                 className="rounded p-1"
                 type={!showPassword ? "password" : "text"}
                 placeholder="Enter Password"
@@ -80,6 +84,7 @@ export default function Signup() {
             <div className="flex justify-center gap-x-2 ">
               {/* CONFIRM PASSWORD INPUT */}
               <input
+                required
                 className="rounded p-1"
                 type={!showConfirmPassword ? "password" : "text"}
                 placeholder="Confirm Password"
@@ -101,8 +106,9 @@ export default function Signup() {
               >
                 CREATE USER
               </button>
+              <input type="submit" hidden />
             </div>
-          </div>
+          </form>
         ) : (
           <Redirect to="/total" />
         )}

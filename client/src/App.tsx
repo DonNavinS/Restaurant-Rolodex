@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import TotalV2 from "./Components/TotalV2";
 import TriedV1 from "./Components/TriedV1";
 import Home from "./Components/Home";
@@ -22,7 +27,7 @@ function App() {
   const updateRedux = () => {
     if (username) {
       dispatch(usernameAction(username));
-      dispatch(idAction(user_id));
+      dispatch(idAction(parseInt(user_id!)));
       dispatch(loginAction());
     } else {
       console.log("NOTHING TO UPDATE");
@@ -44,6 +49,7 @@ function App() {
             <Route exact path="/tried" component={TriedV1} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
+            <Redirect to={"/home"} />
           </Switch>
         </div>
       </div>

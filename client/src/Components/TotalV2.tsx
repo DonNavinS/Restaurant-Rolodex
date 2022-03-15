@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient } from "./ApiClient";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { removeDataAction, totalDataAction } from "../actions/totalDataAction";
 import { addTriedDataAction } from "../actions/triedDataAction";
 import { TotalRestaurant, GlobalState } from "../Type";
@@ -14,6 +13,7 @@ export default function TotalV2() {
   const username = useSelector((state: GlobalState) => state.username);
   const totalData = useSelector((state: GlobalState) => state.totalData);
   const loggedIn = useSelector((state: GlobalState) => state.auth);
+  const token = useSelector((state: GlobalState) => state.token);
 
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState(0);
@@ -21,7 +21,11 @@ export default function TotalV2() {
   const dispatch = useDispatch();
 
   const getData = async () => {
-    const response = await apiClient.get(`/total/${user_id}`);
+    const response = await apiClient.get(`/total/${user_id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
     if (totalData.length === 0) {
       dispatch(totalDataAction(response.data));
       console.log(response);

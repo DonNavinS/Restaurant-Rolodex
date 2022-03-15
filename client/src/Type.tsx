@@ -18,6 +18,7 @@ export interface GlobalState {
   user_id: Number;
   totalData: TotalRestaurant[];
   triedData: TriedRestaurant[];
+  token: string;
 }
 
 export interface Props {

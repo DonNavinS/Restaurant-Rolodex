@@ -5,9 +5,10 @@ import { usernameAction } from "../actions/usernameActions";
 import { idAction } from "../actions/IdAction";
 import { Redirect } from "react-router-dom";
 import { GlobalState } from "../Type";
-import { apiClient } from "./ApiClient";
+import { apiClient, apiClientLogin } from "./ApiClient";
 import { totalDataAction } from "../actions/totalDataAction";
 import { triedDataAction } from "../actions/triedDataAction";
+import { updateToken } from "../actions/tokenAction";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -16,19 +17,28 @@ export default function Login() {
   const dispatch = useDispatch();
   const loggedInRedux = useSelector((state: GlobalState) => state.auth);
 
-  const getTotalData = async (id: Number) => {
-    const totalResponse = await apiClient.get(`/total/${id}`);
+  const getTotalData = async (id: Number, token: string) => {
+    const totalResponse = await apiClient.get(`/total/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
     dispatch(totalDataAction(totalResponse.data));
     console.log(totalResponse);
   };
 
-  const getTriedData = async (id: Number) => {
-    const triedResponse = await apiClient.get(`tried/${id}`);
+  const getTriedData = async (id: Number, token: string) => {
+    const triedResponse = await apiClient.get(`tried/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
     dispatch(triedDataAction(triedResponse.data));
   };
 
-  const login = () => {
-    apiClient
+  const login = (e: any) => {
+    e.preventDefault();
+    apiClientLogin
       .post("/login", {
         username: username,
         password: password,
@@ -37,16 +47,17 @@ export default function Login() {
         if (response.data === "Invalid Credentials") {
           alert("Invalid Login Credentials");
         } else {
-          const userID = response.data.user.ID;
+          dispatch(updateToken(response.data.token));
+          const token = response.data.token;
+          const userID = response.data.user_id;
           dispatch(loginAction());
           dispatch(usernameAction(username));
           dispatch(idAction(userID));
-          localStorage.setItem("user_id", userID);
+          localStorage.setItem("user_id", `${userID}`);
           localStorage.setItem("username", username);
           localStorage.setItem("loggedIn", "true");
-          localStorage.setItem("token", response.data.token);
-          getTotalData(userID);
-          getTriedData(userID);
+          getTotalData(userID, token);
+          getTriedData(userID, token);
         }
       });
   };
@@ -61,27 +72,14 @@ export default function Login() {
   }) => {
     setPassword(e.target.value);
   };
-
-  // const checkForToken = () => {
-  //   if (!localStorage.getItem("token ")) {
-  //     dispatch(logoutAction());
-  //   } else {
-  //     dispatch(loginAction());
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkForToken();
-  //   //eslint-disable-next-line
-  // }, []);
-
   return (
     <div className="logged-out-background fade-in">
       <div
         style={{ background: "rgba(0,0,0,0.6" }}
         className="h-screen w-screen flex-col-reverse flex"
       >
-        <section
+        <form
+          onSubmit={login}
           style={{ background: "rgba(211,211,211,0.7)" }}
           className="h-3/4 m-auto border-2 border-black border-opacity-50 rounded-lg shadow-md w-4/12"
         >
@@ -93,13 +91,16 @@ export default function Login() {
                 type="text"
                 placeholder="Username"
                 onChange={setUsernameState}
+                required
               />
               <input
                 className="m-2 rounded p-1"
                 type="text"
                 placeholder="Password"
                 onChange={setPasswordState}
+                required
               />
+              <input type="submit" hidden />
               <button
                 className="m-2 bg-red-300 rounded hover:bg-red-500 hover:text-white  p-2 transition duration-300 ease-in-out"
                 onClick={login}
@@ -110,7 +111,7 @@ export default function Login() {
           ) : (
             <Redirect to="/home" />
           )}
-        </section>
+        </form>
       </div>
     </div>
   );

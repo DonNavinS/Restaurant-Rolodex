@@ -12,3 +12,4 @@ export const REMOVE_TRIED_DATA = "REMOVE_TRIED_DATA";
 export const UPDATE_TRIED = "UPDATE_TRIED";
 export const WIPE_ALL_DATA = "WIPE_ALL_DATA";
 export const REMOVE_USERNAME = "REMOVE_USERNAME";
+export const UPDATE_TOKEN = "UPDATE_TOKEN";

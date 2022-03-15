@@ -1,23 +1,23 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
-const { createToken, checkToken } = require("./JWT");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const { sign, verify } = require("jsonwebtoken");
 
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "LaptopWaterParis1027$",
-//   database: "rest-rolo",
-// });
-
-const db = mysql.createPool({
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "b6a3b0afd0bdbd",
-  password: "0aba06ee",
-  database: "heroku_c053088a3022d84",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "LaptopWaterParis1027$",
+  database: "rest-rolo",
 });
+
+// const db = mysql.createPool({
+//   host: "us-cdbr-east-05.cleardb.net",
+//   user: "b6a3b0afd0bdbd",
+//   password: "0aba06ee",
+//   database: "heroku_c053088a3022d84",
+// });
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,10 +28,17 @@ const buildFolder = path.join(__dirname, "..", "client", "dist");
 
 app.use("/", express.static(buildFolder));
 
-// app.get("(/*)?", (req, res) => {
-//   console.log("it made it in here");
-//   res.sendFile(path.join(buildFolder, "index.html"));
-// });
+// JWT MIDDLEWARE
+const checkToken = (req, res, next) => {
+  const token = req.headers["authorization"].split(" ")[1];
+  verify(token, "JWTSECRET", (err, result) => {
+    if (err) return res.send("Cannot verify JWT");
+
+    req.result = result;
+    console.log(result);
+    next();
+  });
+};
 
 // ROUTES FOR SIGNUP AND LOGIN
 app.post("/api/signup", (req, res) => {
@@ -54,31 +61,23 @@ app.post("/api/login", async (req, res) => {
     .promise()
     .query(`SELECT * FROM users WHERE username='${username}'`);
 
-  console.log(user[0][0]);
-
   if (user[0][0] === undefined || user[0][0].password !== password) {
     res.send("Invalid Credentials");
   } else if (
     user[0][0].username === username &&
     user[0][0].password === password
   ) {
-    const accessToken = createToken(user[0][0]);
-
-    // res.cookie("access_token", accessToken, {
-    //   maxAge: 1000 * 60 * 60,
-    // });
-    res.send({ user: user[0][0], token: accessToken });
-    console.log(user[0][0]);
+    const token = sign(
+      { username: user[0][0].username, user_id: user[0][0].ID },
+      "JWTSECRET"
+    );
+    res.send({ token, user_id: user[0][0].ID });
   }
 });
 
-app.get("/api/user/login", checkToken, (req, res) => {
-  res.send("WORKING");
-  console.log("WORKING");
-});
-
 // ROUTES FOR BOTH TABLES
-app.get("/api/:table/:id", (req, res) => {
+app.get("/api/:table/:id", checkToken, (req, res) => {
+  console.log(req.result);
   const id = req.params.id;
   const tableType = req.params.table;
   db.query(

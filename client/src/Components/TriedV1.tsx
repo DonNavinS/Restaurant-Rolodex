@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   removeTriedDataAction,
   triedDataAction,
@@ -20,10 +19,15 @@ export default function TriedV1() {
   const username = useSelector((state: GlobalState) => state.username);
   const user_id = useSelector((state: GlobalState) => state.user_id);
   const loggedIn = useSelector((state: GlobalState) => state.auth);
+  const token = useSelector((state: GlobalState) => state.token);
 
   const getData = async () => {
     if (user_id !== null) {
-      const response = await apiClient.get(`/tried/${user_id}`);
+      const response = await apiClient.get(`/tried/${user_id}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       if (triedData.length === 0) {
         dispatch(triedDataAction(response.data));
       }

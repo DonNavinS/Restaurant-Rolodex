@@ -17,20 +17,6 @@ export default function Home() {
   const triedDataDisplay = triedData.slice(-5).reverse();
   const totalDataDisplay = totalData.slice(-5).reverse();
 
-  // const getToken = () => {
-  //   return localStorage.getItem("token");
-  // };
-  // const checkForToken = () => {
-  //   const token = getToken();
-  //   console.log(token);
-
-  //   if (token) {
-  //     dispatch(loginAction());
-  //   } else {
-  //     dispatch(logoutAction());
-  //   }
-  // };
-
   const retrieveData = () => {
     if (loggedIn && totalData.length === 0 && triedData.length === 0) {
       apiClient.get(`/total/${user_id}`).then((response) => {
@@ -43,6 +29,7 @@ export default function Home() {
   };
 
   useEffect(() => retrieveData(), []);
+
   return (
     <div className="fade-in background">
       {loggedIn ? (
@@ -91,7 +78,12 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        <Redirect to="/login" />
+        <div
+          style={{ height: "100vh", background: "rgba(0,0,0,0.6)" }}
+          className="fade-in background flex justify-center items-center"
+        >
+          <div className="text-white ">please login to use</div>
+        </div>
       )}
     </div>
   );
